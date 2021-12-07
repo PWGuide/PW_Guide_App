@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    tools:context=".MenuActivity">
+
+    <Button
+        android:id="@+id/btn_table"
+        android:layout_width="166dp"
+        android:layout_height="140dp"
+        android:layout_marginStart="152dp"
+        android:layout_marginLeft="152dp"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/alfa_slab_one"
+        android:text="@string/timetable"
+        android:textColor="@color/button_text"
+        android:textSize="15.5sp"
+        app:backgroundTint="@color/button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btn_camera"
+        android:layout_width="166dp"
+        android:layout_height="140dp"
+        android:layout_marginStart="35dp"
+        android:layout_marginLeft="35dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="170dp"
+        android:layout_marginRight="170dp"
+        android:fontFamily="@font/alfa_slab_one"
+        android:text="@string/kamera"
+        android:textColor="@color/button_text"
+        android:textSize="15.5sp"
+        app:backgroundTint="@color/button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.206"
+        app:layout_constraintStart_toEndOf="@+id/btn_table"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btn_navig"
+        android:layout_width="166dp"
+        android:layout_height="140dp"
+        android:layout_marginStart="152dp"
+        android:layout_marginLeft="152dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="22dp"
+        android:fontFamily="@font/alfa_slab_one"
+        android:text="Nawigacja"
+        android:textColor="@color/button_text"
+        android:textSize="15.5sp"
+        app:backgroundTint="@color/button"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_table"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/btn_info"
+        android:layout_width="166dp"
+        android:layout_height="140dp"
+        android:layout_marginStart="35dp"
+        android:layout_marginLeft="35dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="170dp"
+        android:layout_marginRight="170dp"
+        android:layout_marginBottom="22dp"
+        android:fontFamily="@font/alfa_slab_one"
+        android:text="Informacje"
+        android:textColor="@color/button_text"
+        android:textSize="15.5sp"
+        app:backgroundTint="@color/button"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.209"
+        app:layout_constraintStart_toEndOf="@+id/btn_navig"
+        app:layout_constraintTop_toBottomOf="@+id/btn_camera"
+        app:layout_constraintVertical_bias="0.0" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

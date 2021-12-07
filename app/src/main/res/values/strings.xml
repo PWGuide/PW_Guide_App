@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">PWGuide</string>
+    <string name="kamera">Kamera</string>
+    <string name="timetable">Plan zajęć</string>
+    <string name="navigation">Nawigacja</string>
+    <string name="info">Informacje</string>
+</resources>
