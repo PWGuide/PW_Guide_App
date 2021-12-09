@@ -1796,6 +1796,7 @@ drawable ic_mtrl_chip_checked_black
 drawable ic_mtrl_chip_checked_circle
 drawable ic_mtrl_chip_close_circle
 drawable ic_splashscreen
+drawable mapka
 drawable material_cursor_drawable
 drawable material_ic_calendar_black_24dp
 drawable material_ic_clear_black_24dp
@@ -1829,6 +1830,7 @@ drawable notification_template_icon_bg
 drawable notification_template_icon_low_bg
 drawable notification_tile_bg
 drawable notify_panel_notification_icon_bg
+drawable pikachu
 drawable test_custom_background
 drawable tooltip_frame_dark
 drawable tooltip_frame_light
@@ -1938,7 +1940,6 @@ id btn_navig
 id btn_table
 id buttonPanel
 id cache_measures
-id callMeasure
 id cancel_button
 id carryVelocity
 id center
@@ -2050,9 +2051,11 @@ id ifRoom
 id ignore
 id ignoreRequest
 id image
+id imageView
 id immediateStop
 id included
 id info
+id informacjetxt
 id invisible
 id inward
 id italic
@@ -2143,7 +2146,6 @@ id notification_main_column
 id notification_main_column_container
 id off
 id on
-id onInterceptTouchReturnSwipe
 id outline
 id outward
 id overshoot
@@ -2466,6 +2468,7 @@ layout text_view_without_line_height
 mipmap ic_launcher
 mipmap ic_launcher_round
 plurals mtrl_badge_content_description
+raw zmierzch
 string abc_action_bar_home_description
 string abc_action_bar_up_description
 string abc_action_menu_overflow_description

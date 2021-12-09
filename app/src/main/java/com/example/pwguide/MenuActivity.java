@@ -20,6 +20,7 @@ public class MenuActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
+        getSupportActionBar().setTitle("Nawigator po PW");
 
         btn_table = findViewById(R.id.btn_table);
         btn_table.setOnClickListener(new View.OnClickListener() {
