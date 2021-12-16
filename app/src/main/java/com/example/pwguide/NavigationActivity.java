@@ -1,18 +1,18 @@
 package com.example.pwguide;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
-import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.ImageButton;
+import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 
 public class NavigationActivity extends AppCompatActivity {
+    TextView targetText, sourceText;
+    String target = "Gmach Główny\nSala 123";
+    String source = "Budynek Wydziału Elektrycznego\nSala 312";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +30,13 @@ public class NavigationActivity extends AppCompatActivity {
         sheetBehavior.setPeekHeight(300);
         sheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
 
+        targetText = findViewById(R.id.targetText);
+        sourceText = findViewById(R.id.sourceText);
+
+        addTargetName(target);
+        sourceText.setText(source);
+
+
         ImageButton backButton = findViewById(R.id.back_navigation);
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -37,6 +44,14 @@ public class NavigationActivity extends AppCompatActivity {
                 finish();
             }
         });
-
     }
+
+    public void addTargetName(String target) {
+        targetText.setText(target);
+    }
+
+    public void addSourceName(String source) {
+        targetText.setText(source);
+    }
+
 }
