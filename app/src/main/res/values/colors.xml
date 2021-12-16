@@ -10,8 +10,9 @@
 
 <!--    dodane definicje koloru-->
 
-    <color name="background">#083D77</color>
-    <color name="button">#F4D35E</color>
+    <color name="background">#304E9D</color>
+    <color name="dark_blue">#243C78</color>
+    <color name="button">#FFE924</color>
     <color name="button_text">#FFFFFFFF</color>
 
 </resources>
