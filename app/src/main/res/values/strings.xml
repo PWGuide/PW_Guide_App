@@ -4,4 +4,14 @@
     <string name="timetable">Plan zajęć</string>
     <string name="navigation">Nawigacja</string>
     <string name="info">Informacje</string>
+    <string name="wybierz_plan">Wybierz\nz planu</string>
+    <string name="wybierz_budynek">Wprowadź\nazwę budynku\noraz\nnumer sali</string>
+    <string name="sposob_przejscia">Wybierz sposób przejścia do kolejnej sali</string>
+    <string name="przejscie">Przejście do kolejnej sali</string>
+    <string name="plan">Wybierz budynek z planu</string>
+    <string name="wpisz_budynek">Wpisz nazwę budynku</string>
+    <string name="wpisz_sala">Wpisz nazwę sali</string>
+    <string name="potwierdz">Potwierdź wybór</string>
+    <string name="nazwa_budynku">Nazwa budynku</string>
+    <string name="nazwa_sali">Nazwa sali</string>
 </resources>
