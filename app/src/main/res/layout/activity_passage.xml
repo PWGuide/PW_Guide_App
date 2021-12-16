@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".PassageTypeActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/background"
+        tools:context=".PassageTypeActivity">
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="277dp"
+            android:layout_height="61dp"
+            android:layout_marginTop="56dp"
+            android:fontFamily="@font/alfa_slab_one"
+            android:gravity="center"
+            android:text="@string/sposob_przejscia"
+            android:textColor="@color/button"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toTopOf="@+id/btn_plan"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.512" />
+
+        <Button
+            android:id="@+id/btn_plan"
+            android:layout_width="219dp"
+            android:layout_height="95dp"
+            android:layout_marginBottom="20dp"
+            android:fontFamily="@font/alfa_slab_one"
+            android:text="@string/wybierz_plan"
+            android:textColor="@color/button_text"
+            android:textSize="15.5sp"
+            app:backgroundTint="@color/button"
+            app:layout_constraintBottom_toTopOf="@+id/btn_manual"
+            app:layout_constraintDimensionRatio="H,1:1"
+            app:layout_constraintEnd_toEndOf="@+id/textView"
+            app:layout_constraintHorizontal_bias="0.448"
+            app:layout_constraintStart_toStartOf="@+id/textView" />
+
+        <Button
+            android:id="@+id/btn_manual"
+            android:layout_width="221dp"
+            android:layout_height="140dp"
+            android:fontFamily="@font/alfa_slab_one"
+            android:text="@string/wybierz_budynek"
+            android:textColor="@color/button_text"
+            android:textSize="15.5sp"
+            app:backgroundTint="@color/button"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="H,1:1"
+            app:layout_constraintEnd_toEndOf="@+id/btn_plan"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="@+id/btn_plan"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.659" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

@@ -70,7 +70,7 @@ public class MenuActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MenuActivity.this, NavigationActivity.class);
+                Intent intent = new Intent(MenuActivity.this, PassageTypeActivity.class);
                 startActivity(intent);
             }
         });
