@@ -1,0 +1,110 @@
+[
+    {
+        "merged": "C:\\Users\\48536\\Desktop\\appapp\\PW_Guide_App\\app\\build\\intermediates\\merged_res\\debug\\mipmap-xxhdpi_ic_launcher.png.flat",
+        "source": "C:\\Users\\48536\\Desktop\\appapp\\PW_Guide_App\\app\\src\\main\\res\\mipmap-xxhdpi\\ic_launcher.png"
+    },
+    {
+        "merged": "C:\\Users\\48536\\Desktop\\appapp\\PW_Guide_App\\app\\build\\intermediates\\merged_res\\debug\\mipmap-xxhdpi_ic_launcher_round.png.flat",
+        "source": "C:\\Users\\48536\\Desktop\\appapp\\PW_Guide_App\\app\\src\\main\\res\\mipmap-xxhdpi\\ic_launcher_round.png"
+    },
+    {
+        "merged": "C:\\Users\\48536\\Desktop\\appapp\\PW_Guide_App\\app\\build\\intermediates\\merged_res\\debug\\mipmap-xhdpi_ic_launcher_round.png.flat",
+        "source": "C:\\Users\\48536\\Desktop\\appapp\\PW_Guide_App\\app\\src\\main\\res\\mipmap-xhdpi\\ic_launcher_round.png"
+    },
+    {
+        "merged": "C:\\Users\\48536\\Desktop\\appapp\\PW_Guide_App\\app\\build\\intermediates\\merged_res\\debug\\mipmap-hdpi_ic_launcher.png.flat",
+        "source": "C:\\Users\\48536\\Desktop\\appapp\\PW_Guide_App\\app\\src\\main\\res\\mipmap-hdpi\\ic_launcher.png"
+    },
+    {
+        "merged": "C:\\Users\\48536\\Desktop\\appapp\\PW_Guide_App\\app\\build\\intermediates\\merged_res\\debug\\mipmap-anydpi-v26_ic_launcher.xml.flat",
+        "source": "C:\\Users\\48536\\Desktop\\appapp\\PW_Guide_App\\app\\src\\main\\res\\mipmap-anydpi-v26\\ic_launcher.xml"
+    },
+    {
+        "merged": "C:\\Users\\48536\\Desktop\\appapp\\PW_Guide_App\\app\\build\\intermediates\\merged_res\\debug\\mipmap-mdpi_ic_launcher.png.flat",
+        "source": "C:\\Users\\48536\\Desktop\\appapp\\PW_Guide_App\\app\\src\\main\\res\\mipmap-mdpi\\ic_launcher.png"
+    },
+    {
+        "merged": "C:\\Users\\48536\\Desktop\\appapp\\PW_Guide_App\\app\\build\\intermediates\\merged_res\\debug\\mipmap-hdpi_ic_launcher_round.png.flat",
+        "source": "C:\\Users\\48536\\Desktop\\appapp\\PW_Guide_App\\app\\src\\main\\res\\mipmap-hdpi\\ic_launcher_round.png"
+    },
+    {
+        "merged": "C:\\Users\\48536\\Desktop\\appapp\\PW_Guide_App\\app\\build\\intermediates\\merged_res\\debug\\layout_activity_main.xml.flat",
+        "source": "C:\\Users\\48536\\Desktop\\appapp\\PW_Guide_App\\app\\src\\main\\res\\layout\\activity_main.xml"
+    },
+    {
+        "merged": "C:\\Users\\48536\\Desktop\\appapp\\PW_Guide_App\\app\\build\\intermediates\\merged_res\\debug\\layout_activity_timetable.xml.flat",
+        "source": "C:\\Users\\48536\\Desktop\\appapp\\PW_Guide_App\\app\\src\\main\\res\\layout\\activity_timetable.xml"
+    },
+    {
+        "merged": "C:\\Users\\48536\\Desktop\\appapp\\PW_Guide_App\\app\\build\\intermediates\\merged_res\\debug\\layout_activity_navigation.xml.flat",
+        "source": "C:\\Users\\48536\\Desktop\\appapp\\PW_Guide_App\\app\\src\\main\\res\\layout\\activity_navigation.xml"
+    },
+    {
+        "merged": "C:\\Users\\48536\\Desktop\\appapp\\PW_Guide_App\\app\\build\\intermediates\\merged_res\\debug\\mipmap-mdpi_ic_launcher_round.png.flat",
+        "source": "C:\\Users\\48536\\Desktop\\appapp\\PW_Guide_App\\app\\src\\main\\res\\mipmap-mdpi\\ic_launcher_round.png"
+    },
+    {
+        "merged": "C:\\Users\\48536\\Desktop\\appapp\\PW_Guide_App\\app\\build\\intermediates\\merged_res\\debug\\layout_activity_camera.xml.flat",
+        "source": "C:\\Users\\48536\\Desktop\\appapp\\PW_Guide_App\\app\\src\\main\\res\\layout\\activity_camera.xml"
+    },
+    {
+        "merged": "C:\\Users\\48536\\Desktop\\appapp\\PW_Guide_App\\app\\build\\intermediates\\merged_res\\debug\\drawable_mapka.png.flat",
+        "source": "C:\\Users\\48536\\Desktop\\appapp\\PW_Guide_App\\app\\src\\main\\res\\drawable\\mapka.png"
+    },
+    {
+        "merged": "C:\\Users\\48536\\Desktop\\appapp\\PW_Guide_App\\app\\build\\intermediates\\merged_res\\debug\\layout_activity_info.xml.flat",
+        "source": "C:\\Users\\48536\\Desktop\\appapp\\PW_Guide_App\\app\\src\\main\\res\\layout\\activity_info.xml"
+    },
+    {
+        "merged": "C:\\Users\\48536\\Desktop\\appapp\\PW_Guide_App\\app\\build\\intermediates\\merged_res\\debug\\drawable-v24_pikachu.png.flat",
+        "source": "C:\\Users\\48536\\Desktop\\appapp\\PW_Guide_App\\app\\src\\main\\res\\drawable-v24\\pikachu.png"
+    },
+    {
+        "merged": "C:\\Users\\48536\\Desktop\\appapp\\PW_Guide_App\\app\\build\\intermediates\\merged_res\\debug\\drawable_ic_launcher_background.xml.flat",
+        "source": "C:\\Users\\48536\\Desktop\\appapp\\PW_Guide_App\\app\\src\\main\\res\\drawable\\ic_launcher_background.xml"
+    },
+    {
+        "merged": "C:\\Users\\48536\\Desktop\\appapp\\PW_Guide_App\\app\\build\\intermediates\\merged_res\\debug\\raw_zmierzch.txt.flat",
+        "source": "C:\\Users\\48536\\Desktop\\appapp\\PW_Guide_App\\app\\src\\main\\res\\raw\\zmierzch.txt"
+    },
+    {
+        "merged": "C:\\Users\\48536\\Desktop\\appapp\\PW_Guide_App\\app\\build\\intermediates\\merged_res\\debug\\drawable-anydpi-v24_ic_launcher_foreground.xml.flat",
+        "source": "C:\\Users\\48536\\Desktop\\appapp\\PW_Guide_App\\app\\build\\generated\\res\\pngs\\debug\\drawable-anydpi-v24\\ic_launcher_foreground.xml"
+    },
+    {
+        "merged": "C:\\Users\\48536\\Desktop\\appapp\\PW_Guide_App\\app\\build\\intermediates\\merged_res\\debug\\mipmap-xxxhdpi_ic_launcher.png.flat",
+        "source": "C:\\Users\\48536\\Desktop\\appapp\\PW_Guide_App\\app\\src\\main\\res\\mipmap-xxxhdpi\\ic_launcher.png"
+    },
+    {
+        "merged": "C:\\Users\\48536\\Desktop\\appapp\\PW_Guide_App\\app\\build\\intermediates\\merged_res\\debug\\layout-land_activity_menu.xml.flat",
+        "source": "C:\\Users\\48536\\Desktop\\appapp\\PW_Guide_App\\app\\src\\main\\res\\layout-land\\activity_menu.xml"
+    },
+    {
+        "merged": "C:\\Users\\48536\\Desktop\\appapp\\PW_Guide_App\\app\\build\\intermediates\\merged_res\\debug\\layout_activity_menu.xml.flat",
+        "source": "C:\\Users\\48536\\Desktop\\appapp\\PW_Guide_App\\app\\src\\main\\res\\layout\\activity_menu.xml"
+    },
+    {
+        "merged": "C:\\Users\\48536\\Desktop\\appapp\\PW_Guide_App\\app\\build\\intermediates\\merged_res\\debug\\mipmap-anydpi-v26_ic_launcher_round.xml.flat",
+        "source": "C:\\Users\\48536\\Desktop\\appapp\\PW_Guide_App\\app\\src\\main\\res\\mipmap-anydpi-v26\\ic_launcher_round.xml"
+    },
+    {
+        "merged": "C:\\Users\\48536\\Desktop\\appapp\\PW_Guide_App\\app\\build\\intermediates\\merged_res\\debug\\drawable_ic_splashscreen.xml.flat",
+        "source": "C:\\Users\\48536\\Desktop\\appapp\\PW_Guide_App\\app\\src\\main\\res\\drawable\\ic_splashscreen.xml"
+    },
+    {
+        "merged": "C:\\Users\\48536\\Desktop\\appapp\\PW_Guide_App\\app\\build\\intermediates\\merged_res\\debug\\font_lobster.xml.flat",
+        "source": "C:\\Users\\48536\\Desktop\\appapp\\PW_Guide_App\\app\\src\\main\\res\\font\\lobster.xml"
+    },
+    {
+        "merged": "C:\\Users\\48536\\Desktop\\appapp\\PW_Guide_App\\app\\build\\intermediates\\merged_res\\debug\\mipmap-xxxhdpi_ic_launcher_round.png.flat",
+        "source": "C:\\Users\\48536\\Desktop\\appapp\\PW_Guide_App\\app\\src\\main\\res\\mipmap-xxxhdpi\\ic_launcher_round.png"
+    },
+    {
+        "merged": "C:\\Users\\48536\\Desktop\\appapp\\PW_Guide_App\\app\\build\\intermediates\\merged_res\\debug\\mipmap-xhdpi_ic_launcher.png.flat",
+        "source": "C:\\Users\\48536\\Desktop\\appapp\\PW_Guide_App\\app\\src\\main\\res\\mipmap-xhdpi\\ic_launcher.png"
+    },
+    {
+        "merged": "C:\\Users\\48536\\Desktop\\appapp\\PW_Guide_App\\app\\build\\intermediates\\merged_res\\debug\\font_alfa_slab_one.xml.flat",
+        "source": "C:\\Users\\48536\\Desktop\\appapp\\PW_Guide_App\\app\\src\\main\\res\\font\\alfa_slab_one.xml"
+    }
+]
