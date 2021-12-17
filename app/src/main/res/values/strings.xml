@@ -5,7 +5,7 @@
     <string name="navigation">Nawigacja</string>
     <string name="info">Informacje</string>
     <string name="wybierz_plan">Wybierz\nz planu</string>
-    <string name="wybierz_budynek">Wprowadź\nazwę budynku\noraz\nnumer sali</string>
+    <string name="wybierz_budynek">Wprowadź\nnazwę budynku\noraz\nnumer sali</string>
     <string name="sposob_przejscia">Wybierz sposób przejścia do kolejnej sali</string>
     <string name="przejscie">Przejście do kolejnej sali</string>
     <string name="plan">Wybierz budynek z planu</string>

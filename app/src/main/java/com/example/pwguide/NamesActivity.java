@@ -20,7 +20,7 @@ public class NamesActivity extends AppCompatActivity {
         button_confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(NamesActivity.this, PassageTypeActivity.class);
+                Intent intent = new Intent(NamesActivity.this, NavigationActivity.class);
                 startActivity(intent);
             }
         });

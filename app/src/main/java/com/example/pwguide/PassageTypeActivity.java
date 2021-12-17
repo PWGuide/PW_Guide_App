@@ -21,7 +21,7 @@ public class PassageTypeActivity extends AppCompatActivity {
         button_plan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(PassageTypeActivity.this, PlansActivity.class);
+                Intent intent = new Intent(PassageTypeActivity.this, TimetableActivity.class);
                 startActivity(intent);
             }
         });
