@@ -4,9 +4,9 @@
     <string name="timetable">Plan zajęć</string>
     <string name="navigation">Nawigacja</string>
     <string name="info">Informacje</string>
-    <string name="wybierz_plan">Wybierz\nz planu</string>
-    <string name="wybierz_budynek">Wprowadź\nnazwę budynku\noraz\nnumer sali</string>
-    <string name="sposob_przejscia">Wybierz sposób przejścia do kolejnej sali</string>
+    <string name="wybierz_plan">Na zewnątrz</string>
+    <string name="wybierz_budynek">Wewnatrz budynku</string>
+    <string name="sposob_przejscia">Wybierz gdzie się obecnie znajdujesz</string>
     <string name="przejscie">Przejście do kolejnej sali</string>
     <string name="plan">Wybierz budynek z planu</string>
     <string name="wpisz_budynek">Wpisz nazwę budynku</string>
@@ -14,4 +14,26 @@
     <string name="potwierdz">Potwierdź wybór</string>
     <string name="nazwa_budynku">Nazwa budynku</string>
     <string name="nazwa_sali">Nazwa sali</string>
+    <string name="select_build">Wybierz budynek</string>
+    <string name="select_hall">Wybierz salę</string>
+    <string name="Wybierz_punkt_początkowy">Wybierz punkt początkowy</string>
+
+
+    <string-array name="buildings">
+    <item>Gmach Główny</item>
+    <item>Gmach Elektrotechniki</item>
+    <item>Gmach Mechaniki</item>
+    <item>Stara Kotłownia</item>
+    <item> Budynek pod Kominem</item>
+    </string-array>
+
+
+    <string-array name="halls">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+    </string-array>
+
 </resources>

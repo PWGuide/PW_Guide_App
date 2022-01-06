@@ -6,36 +6,197 @@
     android:layout_height="match_parent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginBottom="16dp"
         android:background="@color/background"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
         tools:context=".PlansActivity">
 
+
+        <com.example.pwguide.InstantAutoComplete
+            android:id="@+id/build_list1"
+            android:layout_width="281dp"
+            android:layout_height="65dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="16dp"
+            android:completionHint="Wybierz budynek"
+            android:hint="@string/select_build"
+            android:minHeight="48dp"
+            android:textColor="@color/button_text"
+            android:textColorHint="@color/button_text"
+            android:visibility="visible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/b_select_plan2" />
+
+        <com.example.pwguide.InstantAutoComplete
+            android:id="@+id/build_list2"
+            android:layout_width="281dp"
+            android:layout_height="65dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="16dp"
+            android:completionHint="Wybierz budynek"
+            android:hint="@string/select_build"
+            android:minHeight="48dp"
+            android:textColor="@color/button_text"
+            android:textColorHint="@color/button_text"
+            android:visibility="visible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/b_take_photo" />
+
         <TextView
-            android:id="@+id/textView3"
-            android:layout_width="277dp"
-            android:layout_height="61dp"
-            android:layout_marginTop="56dp"
+            android:id="@+id/textView4"
+            android:layout_width="342dp"
+            android:layout_height="55dp"
+            android:layout_marginTop="15dp"
             android:fontFamily="@font/alfa_slab_one"
-            android:gravity="center"
-            android:text="@string/plan"
+            android:text="@string/Wybierz_punkt_początkowy"
             android:textColor="@color/button"
             android:textSize="20sp"
-            app:layout_constraintBottom_toTopOf="@+id/imageView4"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.64" />
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
-            android:id="@+id/imageView4"
-            android:layout_width="398dp"
-            android:layout_height="288dp"
-            android:layout_marginBottom="192dp"
+        <Button
+            android:id="@+id/b_select_plan"
+            android:layout_width="175dp"
+            android:layout_height="55dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="10dp"
+            android:backgroundTint="@color/button"
+            android:text="Wybierz z planu"
+            android:textColor="@color/button_text"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView4" />
+
+        <Button
+            android:id="@+id/b_take_photo"
+            android:layout_width="175dp"
+            android:layout_height="55dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="16dp"
+            android:backgroundTint="@color/button"
+            android:text="Zrób zdjęcie"
+            android:textColor="@color/button_text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView4" />
+
+        <Button
+            android:id="@+id/b_rozpocznij"
+            android:layout_width="175dp"
+            android:layout_height="55dp"
+            android:layout_marginBottom="16dp"
+            android:backgroundTint="@color/button"
+            android:text="Rozpocznij"
+            android:textColor="@color/button_text"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/textView3"
-            app:layout_constraintHorizontal_bias="0.504"
-            app:layout_constraintStart_toStartOf="@+id/textView3"
-            app:srcCompat="@drawable/plan_kampusu_pw_wydzial_elektryczny" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="342dp"
+            android:layout_height="55dp"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/alfa_slab_one"
+            android:text="Wybierz punkt końcowy"
+            android:textColor="@color/button"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/hall_list2" />
+
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="72dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginEnd="10dp"
+            android:fontFamily="@font/alfa_slab_one"
+            android:text="Budynek:"
+            android:textColor="@color/button"
+            app:layout_constraintEnd_toStartOf="@+id/build_list2"
+            app:layout_constraintTop_toBottomOf="@+id/b_select_plan" />
+
+        <TextView
+            android:id="@+id/textView7"
+            android:layout_width="72dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginEnd="10dp"
+            android:fontFamily="@font/alfa_slab_one"
+            android:text="Budynek:"
+            android:textColor="@color/button"
+            app:layout_constraintEnd_toStartOf="@+id/build_list1"
+            app:layout_constraintTop_toBottomOf="@+id/b_select_plan2" />
+
+        <Button
+            android:id="@+id/b_select_plan2"
+            android:layout_width="175dp"
+            android:layout_height="55dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="10dp"
+            android:backgroundTint="@color/button"
+            android:text="Wybierz z planu"
+            android:textColor="@color/button_text"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView5" />
+
+        <TextView
+            android:id="@+id/textView8"
+            android:layout_width="72dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="36dp"
+            android:layout_marginEnd="10dp"
+            android:fontFamily="@font/alfa_slab_one"
+            android:text="Sala:"
+            android:textColor="@color/button"
+            app:layout_constraintEnd_toStartOf="@+id/hall_list2"
+            app:layout_constraintTop_toBottomOf="@+id/textView6" />
+
+        <TextView
+            android:id="@+id/textView9"
+            android:layout_width="72dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="36dp"
+            android:layout_marginEnd="10dp"
+            android:fontFamily="@font/alfa_slab_one"
+            android:text="Sala:"
+            android:textColor="@color/button"
+            app:layout_constraintEnd_toStartOf="@+id/hall_list1"
+            app:layout_constraintTop_toBottomOf="@+id/textView7" />
+
+        <com.example.pwguide.InstantAutoComplete
+            android:id="@+id/hall_list1"
+            android:layout_width="281dp"
+            android:layout_height="65dp"
+            android:layout_marginEnd="16dp"
+            android:completionHint="Wybierz salę"
+            android:hint="@string/select_hall"
+            android:minHeight="48dp"
+            android:textColor="@color/button_text"
+            android:textColorHint="@color/button_text"
+            android:visibility="visible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/build_list1" />
+
+        <com.example.pwguide.InstantAutoComplete
+            android:id="@+id/hall_list2"
+            android:layout_width="281dp"
+            android:layout_height="65dp"
+            android:layout_marginEnd="16dp"
+            android:completionHint="Wybierz salę"
+            android:hint="@string/select_hall"
+            android:minHeight="48dp"
+            android:textColor="@color/button_text"
+            android:textColorHint="@color/button_text"
+            android:visibility="visible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/build_list2" />
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
