@@ -9,7 +9,6 @@
         android:id="@+id/constraintLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="16dp"
         android:background="@color/background"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -18,35 +17,64 @@
         tools:context=".InsideNavigation">
 
 
-        <com.example.pwguide.InstantAutoComplete
+        <AutoCompleteTextView
             android:id="@+id/build_list1"
-            android:layout_width="281dp"
+            android:layout_width="230dp"
             android:layout_height="65dp"
+            android:layout_marginStart="130dp"
             android:layout_marginTop="20dp"
-            android:layout_marginEnd="16dp"
             android:completionHint="Wybierz budynek"
             android:hint="@string/select_build"
             android:minHeight="48dp"
             android:textColor="@color/button_text"
             android:textColorHint="@color/button_text"
             android:visibility="visible"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/b_select_plan2" />
 
-        <com.example.pwguide.InstantAutoComplete
+        <ImageView
+            android:id="@+id/drop_down4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/build_list1"
+            android:layout_alignRight="@+id/build_list1"
+            android:layout_alignBottom="@+id/build_list1"
+            android:layout_marginStart="2dp"
+            android:layout_marginTop="483dp"
+            android:padding="5dp"
+            android:src="@mipmap/outline_arrow_drop_down_black_24"
+            app:layout_constraintStart_toEndOf="@+id/build_list1"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <AutoCompleteTextView
             android:id="@+id/build_list2"
-            android:layout_width="281dp"
+            android:layout_width="230dp"
             android:layout_height="65dp"
+            android:layout_marginStart="130dp"
             android:layout_marginTop="20dp"
-            android:layout_marginEnd="16dp"
             android:completionHint="Wybierz budynek"
             android:hint="@string/select_build"
             android:minHeight="48dp"
             android:textColor="@color/button_text"
             android:textColorHint="@color/button_text"
             android:visibility="visible"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/b_take_photo" />
+
+
+        <ImageView
+            android:id="@+id/drop_down3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/build_list2"
+            android:layout_alignRight="@+id/build_list2"
+            android:layout_alignBottom="@+id/build_list2"
+            android:layout_marginStart="2dp"
+            android:layout_marginTop="193dp"
+            android:padding="5dp"
+            android:src="@mipmap/outline_arrow_drop_down_black_24"
+            app:layout_constraintStart_toEndOf="@+id/build_list2"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/textView4"
@@ -178,33 +206,61 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView7" />
 
-        <com.example.pwguide.InstantAutoComplete
+        <AutoCompleteTextView
             android:id="@+id/hall_list1"
-            android:layout_width="281dp"
+            android:layout_width="230dp"
             android:layout_height="65dp"
-            android:layout_marginEnd="16dp"
+            android:layout_marginStart="130dp"
             android:completionHint="Wybierz salę"
             android:hint="@string/select_hall"
             android:minHeight="48dp"
             android:textColor="@color/button_text"
             android:textColorHint="@color/button_text"
             android:visibility="visible"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/build_list1" />
 
-        <com.example.pwguide.InstantAutoComplete
+        <ImageView
+            android:id="@+id/drop_down6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/hall_list1"
+            android:layout_alignRight="@+id/hall_list1"
+            android:layout_alignBottom="@+id/hall_list1"
+            android:layout_marginStart="2dp"
+            android:layout_marginTop="31dp"
+            android:padding="5dp"
+            android:src="@mipmap/outline_arrow_drop_down_black_24"
+            app:layout_constraintStart_toEndOf="@+id/hall_list1"
+            app:layout_constraintTop_toBottomOf="@+id/drop_down4" />
+
+        <AutoCompleteTextView
             android:id="@+id/hall_list2"
-            android:layout_width="281dp"
+            android:layout_width="230dp"
             android:layout_height="65dp"
-            android:layout_marginEnd="16dp"
+            android:layout_marginStart="130dp"
             android:completionHint="Wybierz salę"
             android:hint="@string/select_hall"
             android:minHeight="48dp"
             android:textColor="@color/button_text"
             android:textColorHint="@color/button_text"
             android:visibility="visible"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/build_list2" />
+
+        <ImageView
+            android:id="@+id/drop_down5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/hall_list2"
+            android:layout_alignRight="@+id/hall_list2"
+            android:layout_alignBottom="@+id/hall_list2"
+            android:layout_marginStart="2dp"
+            android:layout_marginTop="31dp"
+            android:padding="5dp"
+            android:src="@mipmap/outline_arrow_drop_down_black_24"
+            app:layout_constraintStart_toEndOf="@+id/hall_list2"
+            app:layout_constraintTop_toBottomOf="@+id/drop_down3" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

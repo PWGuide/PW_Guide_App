@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -42,14 +43,35 @@ public class OutsideNavigation extends AppCompatActivity {
         String[] halls = getResources().getStringArray(R.array.halls);
         //getSupportActionBar().setTitle("Plan");
         AutoCompleteTextView editText1 = findViewById(R.id.build_list3);
-        ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, buildings);
+        ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, buildings);
         editText1.setAdapter(adapter1);
         //editText.setThreshold(1);
         //String input = editText.getText().toString();
         //getSupportActionBar().setTitle("Plan");
         AutoCompleteTextView editText2 = findViewById(R.id.hall_list3);
-        ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, halls);
+        ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, halls);
         editText2.setAdapter(adapter2);
+
+
+        ImageView arrow1 = (ImageView)findViewById(R.id.drop_down);
+        ImageView arrow2 = (ImageView)findViewById(R.id.drop_down2);
+        final AutoCompleteTextView build_list = (AutoCompleteTextView)findViewById(R.id.build_list3);
+        final AutoCompleteTextView hall_list = (AutoCompleteTextView)findViewById(R.id.hall_list3);
+        build_list.setThreshold(1);
+        hall_list.setThreshold(1);
+
+        arrow1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                build_list.showDropDown();
+            }
+        });
+        arrow2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                hall_list.showDropDown();
+            }
+        });
 
 
     }

@@ -40,27 +40,41 @@
                 android:layout_width="175dp"
                 android:layout_height="55dp"
                 android:layout_marginStart="25dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="5dp"
                 android:backgroundTint="@color/button"
                 android:text="Wybierz z planu"
                 android:textColor="@color/button_text"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView10" />
 
-            <com.example.pwguide.InstantAutoComplete
+            <AutoCompleteTextView
                 android:id="@+id/build_list3"
-                android:layout_width="281dp"
+                android:layout_width="230dp"
                 android:layout_height="65dp"
+                android:layout_marginStart="130dp"
                 android:layout_marginTop="10dp"
-                android:layout_marginEnd="16dp"
                 android:completionHint="Wybierz budynek"
                 android:hint="@string/select_build"
                 android:minHeight="48dp"
                 android:textColor="@color/button_text"
                 android:textColorHint="@color/button_text"
                 android:visibility="visible"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/b_select_plan3" />
+
+            <ImageView
+                android:id="@+id/drop_down"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/build_list3"
+                android:layout_alignRight="@+id/build_list3"
+                android:layout_alignBottom="@+id/build_list3"
+                android:layout_marginStart="2dp"
+                android:layout_marginTop="279dp"
+                android:padding="5dp"
+                android:src="@mipmap/outline_arrow_drop_down_black_24"
+                app:layout_constraintStart_toEndOf="@+id/build_list3"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/textView11"
@@ -90,11 +104,11 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView11" />
 
-            <com.example.pwguide.InstantAutoComplete
+            <AutoCompleteTextView
                 android:id="@+id/hall_list3"
-                android:layout_width="281dp"
+                android:layout_width="230dp"
                 android:layout_height="65dp"
-                android:layout_marginEnd="16dp"
+                android:layout_marginStart="130dp"
                 android:layout_marginBottom="300dp"
                 android:completionHint="Wybierz salę"
                 android:hint="@string/select_hall"
@@ -103,8 +117,22 @@
                 android:textColorHint="@color/button_text"
                 android:visibility="visible"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/build_list3" />
+
+            <ImageView
+                android:id="@+id/drop_down2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/hall_list3"
+                android:layout_alignRight="@+id/hall_list3"
+                android:layout_alignBottom="@+id/hall_list3"
+                android:layout_marginStart="2dp"
+                android:layout_marginTop="43dp"
+                android:padding="5dp"
+                android:src="@mipmap/outline_arrow_drop_down_black_24"
+                app:layout_constraintStart_toEndOf="@+id/hall_list3"
+                app:layout_constraintTop_toBottomOf="@+id/drop_down" />
 
             <Button
                 android:id="@+id/b_rozpocznij2"
