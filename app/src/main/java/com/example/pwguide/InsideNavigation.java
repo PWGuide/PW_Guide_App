@@ -9,7 +9,7 @@ import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class PlansActivity extends AppCompatActivity {
+public class InsideNavigation extends AppCompatActivity {
 
     Button b_select_plan;
     Button b_take_photo;
@@ -19,7 +19,7 @@ public class PlansActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_plans);
+        setContentView(R.layout.activity_inside_navigation);
 
         String[] buildings = getResources().getStringArray(R.array.buildings);
         String[] halls = getResources().getStringArray(R.array.halls);
@@ -47,26 +47,26 @@ public class PlansActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(PlansActivity.this, TimetableActivity.class);
+                Intent intent = new Intent(InsideNavigation.this, TimetableActivity.class);
                 startActivity(intent);
             }
         });
-        b_take_photo = findViewById(R.id.b_select_plan);
+        b_take_photo = findViewById(R.id.b_take_photo);
         b_take_photo.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(PlansActivity.this, CameraActivity.class);
+                Intent intent = new Intent(InsideNavigation.this, CameraActivity.class);
                 startActivity(intent);
             }
         });
 
-        b_select_plan2 = findViewById(R.id.b_select_plan);
+        b_select_plan2 = findViewById(R.id.b_select_plan2);
         b_select_plan2.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(PlansActivity.this, TimetableActivity.class);
+                Intent intent = new Intent(InsideNavigation.this, TimetableActivity.class);
                 startActivity(intent);
             }
         });
@@ -76,7 +76,7 @@ public class PlansActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(PlansActivity.this, NavigationActivity.class);
+                Intent intent = new Intent(InsideNavigation.this, NavigationActivity.class);
                 startActivity(intent);
             }
         });

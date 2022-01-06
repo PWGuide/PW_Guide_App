@@ -14,9 +14,9 @@
         <activity android:name=".CameraActivity" />
         <activity android:name=".InfoActivity" />
         <activity android:name=".MenuActivity" />
-        <activity android:name=".NamesActivity" />
-        <activity android:name=".PassageTypeActivity" />
-        <activity android:name=".PlansActivity" />
+        <activity android:name=".OutsideNavigation" />
+        <activity android:name=".NavigationMenuActivity" />
+        <activity android:name=".InsideNavigation" />
         <activity android:name=".MainActivity"
                 android:exported="true">
             <intent-filter>

@@ -15,7 +15,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        tools:context=".PlansActivity">
+        tools:context=".InsideNavigation">
 
 
         <com.example.pwguide.InstantAutoComplete
@@ -52,12 +52,12 @@
             android:id="@+id/textView4"
             android:layout_width="342dp"
             android:layout_height="55dp"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="15dp"
             android:fontFamily="@font/alfa_slab_one"
             android:text="@string/Wybierz_punkt_początkowy"
             android:textColor="@color/button"
             android:textSize="20sp"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -101,12 +101,12 @@
             android:id="@+id/textView5"
             android:layout_width="342dp"
             android:layout_height="55dp"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="20dp"
             android:fontFamily="@font/alfa_slab_one"
             android:text="Wybierz punkt końcowy"
             android:textColor="@color/button"
             android:textSize="20sp"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/hall_list2" />
 
@@ -114,24 +114,28 @@
             android:id="@+id/textView6"
             android:layout_width="72dp"
             android:layout_height="30dp"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="40dp"
             android:layout_marginEnd="10dp"
             android:fontFamily="@font/alfa_slab_one"
             android:text="Budynek:"
             android:textColor="@color/button"
             app:layout_constraintEnd_toStartOf="@+id/build_list2"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/b_select_plan" />
 
         <TextView
             android:id="@+id/textView7"
             android:layout_width="72dp"
             android:layout_height="30dp"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="40dp"
             android:layout_marginEnd="10dp"
             android:fontFamily="@font/alfa_slab_one"
             android:text="Budynek:"
             android:textColor="@color/button"
             app:layout_constraintEnd_toStartOf="@+id/build_list1"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/b_select_plan2" />
 
         <Button
@@ -150,24 +154,28 @@
             android:id="@+id/textView8"
             android:layout_width="72dp"
             android:layout_height="30dp"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="36dp"
             android:layout_marginEnd="10dp"
             android:fontFamily="@font/alfa_slab_one"
             android:text="Sala:"
             android:textColor="@color/button"
             app:layout_constraintEnd_toStartOf="@+id/hall_list2"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView6" />
 
         <TextView
             android:id="@+id/textView9"
             android:layout_width="72dp"
             android:layout_height="30dp"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="36dp"
             android:layout_marginEnd="10dp"
             android:fontFamily="@font/alfa_slab_one"
             android:text="Sala:"
             android:textColor="@color/button"
             app:layout_constraintEnd_toStartOf="@+id/hall_list1"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView7" />
 
         <com.example.pwguide.InstantAutoComplete

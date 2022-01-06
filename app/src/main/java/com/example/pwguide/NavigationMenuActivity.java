@@ -7,12 +7,12 @@ import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class PassageTypeActivity extends AppCompatActivity {
+public class NavigationMenuActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_passage);
+        setContentView(R.layout.activity_navigation_menu);
         //getSupportActionBar().setTitle("Wybór przejścia");
 
         Button button_plan = findViewById(R.id.btn_plan);
@@ -21,7 +21,7 @@ public class PassageTypeActivity extends AppCompatActivity {
         button_plan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(PassageTypeActivity.this, NamesActivity.class);
+                Intent intent = new Intent(NavigationMenuActivity.this, OutsideNavigation.class);
                 startActivity(intent);
             }
         });
@@ -29,7 +29,7 @@ public class PassageTypeActivity extends AppCompatActivity {
         button_manual.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(PassageTypeActivity.this, PlansActivity.class);
+                Intent intent = new Intent(NavigationMenuActivity.this, InsideNavigation.class);
                 startActivity(intent);
             }
         });
