@@ -2,8 +2,8 @@
     <!-- Base application theme. -->
     <style name="Theme.PWGuide" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">#8e9aaf</item>
-        <item name="colorPrimaryVariant">#8e9aaf</item>
+        <item name="colorPrimary">#083D77</item>
+        <item name="colorPrimaryVariant">#000000</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/teal_200</item>

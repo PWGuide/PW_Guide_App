@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".TimetableActivity"
+    android:orientation="vertical">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/app_bar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/Theme.PWGuide">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/background"
+            app:layout_scrollFlags="scroll|enterAlways"
+            app:popupTheme="@style/Theme.PWGuide" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="0dp"
+        android:background="@color/background"
+        android:clipToPadding="false"
+        android:theme="@style/Theme.PWGuide"
+        app:layout_anchor="@+id/include"
+        app:layout_anchorGravity="top|center"
+        app:layout_constraintTop_toBottomOf="@id/app_bar_layout"
+        app:tabBackground="@drawable/tab_background"
+        app:tabGravity="fill"
+        app:tabIndicator="@color/background"
+        app:tabIndicatorHeight="0dp"
+        app:tabMode="scrollable"
+        app:tabPaddingEnd="20dp"
+        app:tabPaddingStart="20dp"
+        app:tabSelectedTextColor="@color/background">
+
+    </com.google.android.material.tabs.TabLayout>
+
+
+    <include
+        android:id="@+id/include"
+        layout="@layout/content_main"
+        android:background="@color/background" />
+
+</LinearLayout>
