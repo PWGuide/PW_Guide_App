@@ -33,7 +33,8 @@ public class TimetableActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timetable);
-        getSupportActionBar().setTitle("Plaan zajęć");
+        getSupportActionBar().setTitle("Plan zajęć");
+        //getSupportActionBar().hide();
         initAll();
     }
 
