@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/add_from_isod"
+        android:title="Pobierz plan z ISODa" />
+    <item android:id="@+id/add_from_usos"
+        android:title="Pobierz plan z USOSa" />
+    <item android:id="@+id/edit_days"
+        android:title="Edytuj dni tygodnia" />
+    <item android:id="@+id/clear_timetable"
+        android:title="Wyczyść plan zajęć" />
+</menu>

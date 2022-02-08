@@ -41,7 +41,7 @@
     <string name="room">Room</string>
     <string name="time">Time</string>
     <string name="save">Save</string>
-    <string name="cancel">Cancel</string>
+    <string name="cancel">Anuluj</string>
     <string name="time_to_dialog">To:</string>
     <string name="time_from_dialog">From:</string>
     <string name="subject_dialog">Subject:</string>
@@ -60,6 +60,9 @@
     <string name="select_hall">Numer sali</string>
     <string name="Wybierz_punkt_początkowy">Wybierz punkt początkowy</string>
 
+    <string name="timetable_username">Nazwa użytkownika:</string>
+    <string name="timetable_apiKey">Klucz API:</string>
+    <string name="download">Pobierz</string>
 
     <string-array name="buildings">
     <item>Gmach Główny</item>

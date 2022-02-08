@@ -21,4 +21,6 @@
     <color name="colorPrimary">#77085F</color>
     <color name="colorPrimaryDark">#083D77</color>
     <color name="colorAccent">#F4D35E</color>
+
+    <color name="secondary_action">#848484</color>
 </resources>
