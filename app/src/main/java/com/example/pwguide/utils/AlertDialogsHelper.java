@@ -37,11 +37,13 @@ import org.xdty.preference.colorpicker.ColorPickerSwatch;
 
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -342,19 +344,22 @@ public class AlertDialogsHelper {
                 try {
                     TimetableISOD timetableISOD = timetableDownload.downloadTimetableFromISOD(username, apiKey);
                     if(timetableISOD != null) {
+                        Random random = new Random();
+                        SimpleDateFormat format24 = new SimpleDateFormat("HH:mm");
                         for (TimetableISOD.Subject sub: timetableISOD.getPlanItems()
                         ) {
                             final Week week = new Week();
                             DbHelper dbHelper = new DbHelper(activity);
-                            ColorDrawable buttonColor = new ColorDrawable();
-                            buttonColor.setColor(Color.parseColor("#AC9EE5")); //dodać losowy kolor
+                            int[] mColors = activity.getResources().getIntArray(R.array.default_colors);
+                            int no_color = random.nextInt(mColors.length);
+                            int selected_color = mColors[no_color];
                             week.setSubject(sub.getCourseName());
                             String fragment = WeekDay.valueOf(sub.getDayOfWeek()).getDayName();
                             week.setFragment(fragment);
                             week.setRoom(sub.getRoom());
-                            week.setColor(buttonColor.getColor());
-                            week.setFromTime(sub.getStartTime()); //poprawić godziny
-                            week.setToTime(sub.getEndTime());
+                            week.setColor(selected_color);
+                            week.setFromTime(format24.format(sub.getStartTime()));
+                            week.setToTime(format24.format(sub.getEndTime()));
                             dbHelper.insertWeek(week);
 
                         }

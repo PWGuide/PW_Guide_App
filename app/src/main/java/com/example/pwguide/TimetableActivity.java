@@ -123,7 +123,7 @@ public class TimetableActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.add_from_isod: //alert taki żeby się nie wyłączał przy kliknięciu poza
+            case R.id.add_from_isod:
                 isodAlert.show();
                 return true;
             case R.id.add_from_usos:

@@ -2,6 +2,9 @@ package com.example.pwguide.adapters;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.graphics.Color;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -90,6 +93,10 @@ public class WeekAdapter extends ArrayAdapter<Week> {
                 final PopupMenu popup = new PopupMenu(mActivity, holder.popup);
                 final DbHelper db = new DbHelper(mActivity);
                 popup.getMenuInflater().inflate(R.menu.popup_menu, popup.getMenu());
+                MenuItem item = popup.getMenu().getItem(1);
+                SpannableString spannableString = new SpannableString(item.getTitle().toString());
+                spannableString.setSpan(new ForegroundColorSpan(Color.parseColor("#CE0000")), 0, spannableString.length(), 0);
+                item.setTitle(spannableString);
                 popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     public boolean onMenuItemClick(MenuItem item) {
                         switch (item.getItemId()) {

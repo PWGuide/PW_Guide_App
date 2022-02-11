@@ -11,54 +11,80 @@
         android:id="@+id/textView2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:textStyle="bold"
+        android:textColor="@color/button_text"
+        android:textSize="20sp"
         android:text="Wybierz dni:" />
 
     <LinearLayout
         android:id="@+id/checkbox_list"
-        android:layout_width="match_parent"
+        android:layout_width="200dp"
+        android:layout_gravity="center"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <CheckBox
             android:id="@+id/checkBox_monday"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
+            android:layoutDirection="rtl"
+            android:textColor="@color/button_text"
+            android:textSize="16sp"
             android:text="@string/monday" />
 
         <CheckBox
             android:id="@+id/checkBox_tuesday"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
+            android:layoutDirection="rtl"
+            android:textColor="@color/button_text"
+            android:textSize="16sp"
             android:text="@string/tuesday" />
 
         <CheckBox
             android:id="@+id/checkBox_wednesday"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
+            android:layoutDirection="rtl"
+            android:textColor="@color/button_text"
+            android:textSize="16sp"
             android:text="@string/wednesday" />
 
         <CheckBox
             android:id="@+id/checkBox_thursday"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
+            android:layoutDirection="rtl"
+            android:textColor="@color/button_text"
+            android:textSize="16sp"
             android:text="@string/thursday" />
 
         <CheckBox
             android:id="@+id/checkBox_friday"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
+            android:layoutDirection="rtl"
+            android:textColor="@color/button_text"
+            android:textSize="16sp"
             android:text="@string/friday" />
 
         <CheckBox
             android:id="@+id/checkBox_saturday"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
+            android:layoutDirection="rtl"
+            android:textColor="@color/button_text"
+            android:textSize="16sp"
             android:text="@string/saturday" />
 
         <CheckBox
             android:id="@+id/checkBox_sunday"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
+            android:layoutDirection="rtl"
+            android:textColor="@color/button_text"
+            android:textSize="16sp"
             android:text="@string/sunday" />
     </LinearLayout>
 

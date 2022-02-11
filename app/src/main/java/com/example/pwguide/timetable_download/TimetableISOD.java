@@ -1,6 +1,11 @@
 package com.example.pwguide.timetable_download;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import java.text.DateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -32,8 +37,12 @@ public class TimetableISOD {
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static class Subject {
         String courseName;
-        String startTime;
-        String endTime;
+        @JsonFormat
+                (shape = JsonFormat.Shape.STRING, pattern = "hh:mm:ss aa")
+        Date startTime;
+        @JsonFormat
+                (shape = JsonFormat.Shape.STRING, pattern = "hh:mm:ss aa")
+        Date endTime;
         int dayOfWeek;
         String building;
         String room;
@@ -48,19 +57,19 @@ public class TimetableISOD {
             this.courseName = courseName;
         }
 
-        public String getStartTime() {
+        public Date getStartTime() {
             return startTime;
         }
 
-        public void setStartTime(String startTime) {
+        public void setStartTime(Date startTime) {
             this.startTime = startTime;
         }
 
-        public String getEndTime() {
+        public Date getEndTime() {
             return endTime;
         }
 
-        public void setEndTime(String endTime) {
+        public void setEndTime(Date endTime) {
             this.endTime = endTime;
         }
 
