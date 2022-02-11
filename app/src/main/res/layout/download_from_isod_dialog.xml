@@ -57,6 +57,7 @@ android:padding="15dp">
             android:layout_weight=".7"
             android:imeOptions="actionDone"
             android:singleLine="true"
+            android:inputType="textPassword"
             android:textColor="@color/white"
             android:textColorHighlight="#F44336"
             android:textColorHint="@color/white"
