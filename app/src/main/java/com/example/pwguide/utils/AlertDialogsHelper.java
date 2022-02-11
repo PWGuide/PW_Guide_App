@@ -3,33 +3,44 @@ package com.example.pwguide.utils;
 
 import android.app.Activity;
 import android.app.TimePickerDialog;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.content.ContextCompat;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.pwguide.R;
+import com.example.pwguide.TimetableActivity;
 import com.example.pwguide.adapters.FragmentsTabAdapter;
 import com.example.pwguide.adapters.WeekAdapter;
 import com.example.pwguide.model.Week;
+import com.example.pwguide.model.WeekDay;
+import com.example.pwguide.timetable_download.TimetableDownload;
+import com.example.pwguide.timetable_download.TimetableISOD;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
 import org.xdty.preference.colorpicker.ColorPickerDialog;
 import org.xdty.preference.colorpicker.ColorPickerSwatch;
 
+import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -283,7 +294,7 @@ public class AlertDialogsHelper {
                     Matcher fragment = Pattern.compile("(.*Fragment)").matcher(adapter.getItem(viewPager.getCurrentItem()).toString());
                     ColorDrawable buttonColor = (ColorDrawable) select_color.getBackground();
                     week.setSubject(subject.getText().toString());
-                    week.setFragment(fragment.find() ? fragment.group() : null);
+                    week.setFragment(fragment.find() ? fragment.group().replace("Fragment", "") : null);
                     week.setRoom(room.getText().toString());
                     week.setColor(buttonColor.getColor());
                     dbHelper.insertWeek(week);
@@ -300,5 +311,116 @@ public class AlertDialogsHelper {
         });
     }
 
+    public static AlertDialog createAddFromISODDialog(Activity activity, View alertLayout, FragmentsTabAdapter adapter){
+        final AlertDialog.Builder alert = new AlertDialog.Builder(activity);
+        alert.setView(alertLayout);
+        alert.setCancelable(false);
+        final AlertDialog dialog = alert.create();
 
+        Button cancel = alertLayout.findViewById(R.id.timetable_cancel);
+        Button download = alertLayout.findViewById(R.id.timetable_download);
+        EditText usernameView = alertLayout.findViewById(R.id.timetable_username);
+        EditText apiKeyView = alertLayout.findViewById(R.id.timetable_apiKey);
+
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                usernameView.getText().clear();
+                apiKeyView.getText().clear();
+                usernameView.requestFocus();
+                dialog.dismiss();
+            }
+        });
+
+        download.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String username = usernameView.getText().toString();
+                String apiKey = apiKeyView.getText().toString();
+
+                TimetableDownload timetableDownload = new TimetableDownload();
+                try {
+                    TimetableISOD timetableISOD = timetableDownload.downloadTimetableFromISOD(username, apiKey);
+                    if(timetableISOD != null) {
+                        for (TimetableISOD.Subject sub: timetableISOD.getPlanItems()
+                        ) {
+                            final Week week = new Week();
+                            DbHelper dbHelper = new DbHelper(activity);
+                            ColorDrawable buttonColor = new ColorDrawable();
+                            buttonColor.setColor(Color.parseColor("#AC9EE5")); //dodać losowy kolor
+                            week.setSubject(sub.getCourseName());
+                            String fragment = WeekDay.valueOf(sub.getDayOfWeek()).getDayName();
+                            week.setFragment(fragment);
+                            week.setRoom(sub.getRoom());
+                            week.setColor(buttonColor.getColor());
+                            week.setFromTime(sub.getStartTime()); //poprawić godziny
+                            week.setToTime(sub.getEndTime());
+                            dbHelper.insertWeek(week);
+
+                        }
+                        adapter.notifyDataSetChanged();
+                        dialog.dismiss();
+                        usernameView.getText().clear();
+                        apiKeyView.getText().clear();
+                        usernameView.requestFocus();
+                    } else {
+                        Toast toast = Toast.makeText(activity, "Nie udało się pobrać planu zajęć.", Toast.LENGTH_SHORT);
+                        toast.show();
+                    }
+                } catch (URISyntaxException e) {
+                    e.printStackTrace();
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        return dialog;
+    }
+
+    public static AlertDialog createClearTimetableDialog(Activity activity, View alertLayout, FragmentsTabAdapter adapter){
+        final AlertDialog.Builder alert = new AlertDialog.Builder(activity);
+        alert.setView(alertLayout);
+        alert.setCancelable(false);
+        final AlertDialog dialog = alert.create();
+
+        Button cancel = alertLayout.findViewById(R.id.clear_timetable_cancel);
+        Button clear = alertLayout.findViewById(R.id.clear_timetable);
+        LinearLayout daysList = alertLayout.findViewById(R.id.checkbox_list);
+        final int childCount = daysList.getChildCount();
+
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        clear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DbHelper dbHelper = new DbHelper(activity);
+                for(int i = 0; i < childCount; i++) {
+                    CheckBox box = (CheckBox) daysList.getChildAt(i);
+                    if(box.isChecked()) {
+                        dbHelper.deleteWeeksByDay(WeekDay.valueOf(i + 1).getDayName());
+                    }
+                }
+                adapter.notifyDataSetChanged();
+                dialog.dismiss();
+            }
+        });
+
+        dialog.setOnShowListener(new DialogInterface.OnShowListener() {
+            @Override
+            public void onShow(DialogInterface dialog) {
+                for(int i = 0; i < childCount; i++) {
+                    CheckBox box = (CheckBox) daysList.getChildAt(i);
+                    box.setChecked(true);
+                }
+            }
+        });
+
+        return dialog;
+    }
 }

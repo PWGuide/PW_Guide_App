@@ -81,6 +81,12 @@ public class DbHelper extends SQLiteOpenHelper {
         db.close();
     }
 
+    public void deleteWeeksByDay(String day) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TIMETABLE, WEEK_FRAGMENT + " = ? ", new String[]{String.valueOf(day)});
+        db.close();
+    }
+
     public void updateWeek(Week week) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -107,6 +113,7 @@ public class DbHelper extends SQLiteOpenHelper {
             week.setFromTime(cursor.getString(cursor.getColumnIndex(WEEK_FROM_TIME)));
             week.setToTime(cursor.getString(cursor.getColumnIndex(WEEK_TO_TIME)));
             week.setColor(cursor.getInt(cursor.getColumnIndex(WEEK_COLOR)));
+            System.out.println(cursor.getString(cursor.getColumnIndex(WEEK_FRAGMENT)));
             weeklist.add(week);
         }
         return weeklist;

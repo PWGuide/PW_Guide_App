@@ -16,7 +16,7 @@
     <color name="button">#F4D35E</color>
     <color name="button_text">#FFFFFFFF</color>
 
-
+    <color name="danger">#CE0000</color>
 
     <color name="colorPrimary">#77085F</color>
     <color name="colorPrimaryDark">#083D77</color>

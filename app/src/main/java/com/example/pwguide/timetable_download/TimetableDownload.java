@@ -1,6 +1,5 @@
 package com.example.pwguide.timetable_download;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.apache.http.HttpEntity;
@@ -10,8 +9,6 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
-import org.apache.http.impl.client.HttpClients;
-import org.apache.http.params.HttpParams;
 import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
@@ -37,7 +34,7 @@ public class TimetableDownload {
         builder.addParameter("apikey", apiKey);
 
         URI uri = builder.build().toURL().toURI();
-        System.out.println(uri);
+        //System.out.println(uri);
         int timeout = 5;
         RequestConfig config = RequestConfig.custom()
                 .setConnectTimeout(timeout * 1000)
@@ -48,7 +45,6 @@ public class TimetableDownload {
         try (CloseableHttpClient httpClient =  HttpClientBuilder.create().setDefaultRequestConfig(config).build()) {
             HttpGet request = new HttpGet(uri);
             try (CloseableHttpResponse response = httpClient.execute(request)) {
-
                 if(response.getStatusLine().getStatusCode() == 200) {
                     HttpEntity entity = response.getEntity();
                     if (entity != null) {

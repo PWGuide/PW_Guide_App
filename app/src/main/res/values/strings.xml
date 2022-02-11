@@ -16,13 +16,13 @@
     <string name="action_settings">Settings</string>
 
     <!-- Fragments strings -->
-    <string name="monday">Monday</string>
-    <string name="tuesday">Tuesday</string>
-    <string name="wednesday">Wednesday</string>
-    <string name="thursday">Thursday</string>
-    <string name="friday">Friday</string>
-    <string name="saturday">Saturday</string>
-    <string name="sunday">Sunday</string>
+    <string name="monday">Poniedziałek</string>
+    <string name="tuesday">Wtorek</string>
+    <string name="wednesday">Środa</string>
+    <string name="thursday">Czwartek</string>
+    <string name="friday">Piątek</string>
+    <string name="saturday">Sobota</string>
+    <string name="sunday">Niedziela</string>
     <string name="select_snackbar">Please, select one item.</string>
     <string name="selected">Selected</string>
 
@@ -33,14 +33,15 @@
     <string name="field_error">field can not be empty!</string>
     <string name="time_error">Time field can not be empty!</string>
     <string name="week">Week</string>
-    <string name="delete">Delete</string>
-    <string name="edit">Edit</string>
+    <string name="delete">Usuń</string>
+    <string name="edit">Edytuj</string>
+    <string name="clear">Wyczyść</string>
 
     <string name="add_subject">Add subject</string>
     <string name="edit_subject">Edit subject</string>
     <string name="room">Room</string>
     <string name="time">Time</string>
-    <string name="save">Save</string>
+    <string name="save">Zapisz</string>
     <string name="cancel">Anuluj</string>
     <string name="time_to_dialog">To:</string>
     <string name="time_from_dialog">From:</string>

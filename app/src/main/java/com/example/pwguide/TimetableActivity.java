@@ -50,6 +50,8 @@ public class TimetableActivity extends AppCompatActivity {
 
     private FragmentsTabAdapter adapter;
     private ViewPager viewPager;
+    private AlertDialog isodAlert;
+    private AlertDialog clearTimetableAlert;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +68,11 @@ public class TimetableActivity extends AppCompatActivity {
         setupFragments();
         setupCustomDialog();
 
+        final View addFromISODAlertLayout = getLayoutInflater().inflate(R.layout.download_from_isod_dialog, null);
+        isodAlert = AlertDialogsHelper.createAddFromISODDialog(this, addFromISODAlertLayout, adapter);
+
+        final View clearTimetableAlertLayout = getLayoutInflater().inflate(R.layout.dialog_clear_timetable, null);
+        clearTimetableAlert = AlertDialogsHelper.createClearTimetableDialog(this, clearTimetableAlertLayout, adapter);
     }
 
     private void setupFragments() {
@@ -116,61 +123,8 @@ public class TimetableActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.add_from_isod:
-                final AlertDialog.Builder alert = new AlertDialog.Builder(TimetableActivity.this);
-                final View alertLayout = getLayoutInflater().inflate(R.layout.download_from_isod_dialog, null);
-                alert.setView(alertLayout);
-                final AlertDialog dialog = alert.create();
-                Button cancel = alertLayout.findViewById(R.id.timetable_cancel);
-                Button download = alertLayout.findViewById(R.id.timetable_download);
-                cancel.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        dialog.dismiss();
-                    }
-                });
-                download.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        EditText usernameView = alertLayout.findViewById(R.id.timetable_username);
-                        EditText apiKeyView = alertLayout.findViewById(R.id.timetable_apiKey);
-
-                        String username = usernameView.getText().toString();
-                        String apiKey = apiKeyView.getText().toString();
-
-                        TimetableDownload timetableDownload = new TimetableDownload();
-                        try {
-                            TimetableISOD timetableISOD = timetableDownload.downloadTimetableFromISOD(username, apiKey);
-                            dialog.dismiss();
-                            if(timetableISOD != null) {
-                                for (TimetableISOD.Subject sub: timetableISOD.getPlanItems()
-                                     ) {
-                                    final Week week = new Week();
-                                    DbHelper dbHelper = new DbHelper(TimetableActivity.this);
-                                    ColorDrawable buttonColor = new ColorDrawable();
-                                    buttonColor.setColor(Color.parseColor("#AC9EE5")); //dodać losowy kolor
-                                    week.setSubject(sub.getCourseName());
-                                    String fragment = WeekDay.valueOf(sub.getDayOfWeek()).getDayName();
-                                    week.setFragment(fragment);
-                                    week.setRoom(sub.getRoom());
-                                    week.setColor(buttonColor.getColor());
-                                    week.setFromTime(sub.getStartTime()); //poprawić godziny
-                                    week.setToTime(sub.getEndTime());
-                                    dbHelper.insertWeek(week);
-                                    adapter.notifyDataSetChanged();
-                                }
-                            } else {
-                                Toast toast = Toast.makeText(TimetableActivity.this, "Nie udało się pobrać planu zajęć.", Toast.LENGTH_SHORT);
-                                toast.show();
-                            }
-                        } catch (URISyntaxException e) {
-                            e.printStackTrace();
-                        } catch (MalformedURLException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                });
-                dialog.show();
+            case R.id.add_from_isod: //alert taki żeby się nie wyłączał przy kliknięciu poza
+                isodAlert.show();
                 return true;
             case R.id.add_from_usos:
                 //pobieranie z USOSa
@@ -179,10 +133,12 @@ public class TimetableActivity extends AppCompatActivity {
                 //przejść do ustawień jakie dni są widoczne
                 return true;
             case R.id.clear_timetable:
-                //usunąć wszystkie zajęcia
+                clearTimetableAlert.show();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
+
+
 }
