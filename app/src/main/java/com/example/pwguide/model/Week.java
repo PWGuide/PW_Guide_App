@@ -5,18 +5,27 @@ package com.example.pwguide.model;
  */
 public class Week {
 
-    private String subject, fragment, building, room, fromtime, totime, time;
+    private String subject, fragment, building, room, fromtime, totime, time, type;
     private int id, color;
 
     public Week() {}
 
-    public Week(String subject, String building, String room, String fromtime, String totime, int color) {
+    public Week(String subject, String type, String building, String room, String fromtime, String totime, int color) {
         this.subject = subject;
+        this.type = type;
         this.building = building;
         this.room = room;
         this.fromtime = fromtime;
         this.totime = totime;
         this.color = color;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public String getBuilding() {

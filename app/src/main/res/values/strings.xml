@@ -54,6 +54,8 @@
     <string name="choose_color">Wybierz kolor</string>
     <string name="building">Budynek</string>
     <string name="building_dialog">Budynek:</string>
+    <string name="class_type_dialog">Typ zajęć:</string>
+    <string name="class_type">Typ zajęć</string>
 
     <!-- Notification -->
     <string name="notification_title">Today\'s lessons</string>

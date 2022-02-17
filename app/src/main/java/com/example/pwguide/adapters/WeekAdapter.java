@@ -41,6 +41,7 @@ public class WeekAdapter extends ArrayAdapter<Week> {
 
     private static class ViewHolder {
         TextView subject;
+        ImageView type;
         TextView time;
         TextView building;
         TextView room;
@@ -61,13 +62,14 @@ public class WeekAdapter extends ArrayAdapter<Week> {
     @Override
     public View getView(final int position, View convertView, @NonNull ViewGroup parent) {
         String subject = Objects.requireNonNull(getItem(position)).getSubject();
+        String type = Objects.requireNonNull(getItem(position)).getType();
         String time_from = Objects.requireNonNull(getItem(position)).getFromTime();
         String time_to = Objects.requireNonNull(getItem(position)).getToTime();
         String building = Objects.requireNonNull(getItem(position)).getBuilding();
         String room = Objects.requireNonNull(getItem(position)).getRoom();
         int color = getItem(position).getColor();
 
-        week = new Week(subject ,building, room, time_from, time_to, color);
+        week = new Week(subject, type, building, room, time_from, time_to, color);
         final ViewHolder holder;
 
         if(convertView == null){
@@ -75,6 +77,7 @@ public class WeekAdapter extends ArrayAdapter<Week> {
             convertView = inflater.inflate(mResource, parent, false);
             holder= new ViewHolder();
             holder.subject = convertView.findViewById(R.id.subject);
+            holder.type = convertView.findViewById(R.id.class_type);
             holder.time = convertView.findViewById(R.id.time);
             holder.building = convertView.findViewById(R.id.building);
             holder.room = convertView.findViewById(R.id.room);
@@ -87,6 +90,7 @@ public class WeekAdapter extends ArrayAdapter<Week> {
         }
 
         holder.subject.setText(week.getSubject());
+        holder.type.setImageResource(pickIconForClassType(week.getType()));
         holder.building.setText(week.getBuilding());
         holder.room.setText(week.getRoom());
         holder.time.setText(week.getFromTime() + " - " + week.getToTime());
@@ -128,6 +132,26 @@ public class WeekAdapter extends ArrayAdapter<Week> {
         hidePopUpMenu(holder);
 
         return convertView;
+    }
+
+    private int pickIconForClassType(String type) {
+        System.out.println(type);
+        switch (type) {
+            case "L":
+                return R.drawable.ic_laboratory;
+            case "W":
+                return R.drawable.ic_lecture;
+            case "C":
+                return R.drawable.ic_exercise;
+            case "JO":
+                return R.drawable.ic_foreign_language;
+            case "P":
+                return R.drawable.ic_project;
+            case "WF":
+                return R.drawable.ic_pe;
+            default:
+                return R.drawable.ic_lecture;
+        }
     }
 
     public ArrayList<Week> getWeekList() {

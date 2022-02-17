@@ -21,6 +21,7 @@ public class DbHelper extends SQLiteOpenHelper {
     private static final String TIMETABLE = "timetable";
     private static final String WEEK_ID = "id";
     private static final String WEEK_SUBJECT = "subject";
+    private static final String WEEK_TYPE = "type";
     private static final String WEEK_FRAGMENT = "fragment";
     private static final String WEEK_ROOM = "room";
     private static final String WEEK_BUILDING = "building";
@@ -38,6 +39,7 @@ public class DbHelper extends SQLiteOpenHelper {
         String CREATE_TIMETABLE = "CREATE TABLE " + TIMETABLE + "("
                 + WEEK_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                 + WEEK_SUBJECT + " TEXT,"
+                + WEEK_TYPE + " TEXT,"
                 + WEEK_FRAGMENT + " TEXT,"
                 + WEEK_BUILDING + " TEXT,"
                 + WEEK_ROOM + " TEXT,"
@@ -68,6 +70,7 @@ public class DbHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(WEEK_SUBJECT, week.getSubject());
+        contentValues.put(WEEK_TYPE, week.getType());
         contentValues.put(WEEK_FRAGMENT, week.getFragment());
         contentValues.put(WEEK_BUILDING, week.getBuilding());
         contentValues.put(WEEK_ROOM, week.getRoom());
@@ -95,6 +98,7 @@ public class DbHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(WEEK_SUBJECT, week.getSubject());
+        contentValues.put(WEEK_TYPE, week.getType());
         contentValues.put(WEEK_BUILDING, week.getBuilding());
         contentValues.put(WEEK_ROOM, week.getRoom());
         contentValues.put(WEEK_FROM_TIME, week.getFromTime());
@@ -114,12 +118,12 @@ public class DbHelper extends SQLiteOpenHelper {
             week = new Week();
             week.setId(cursor.getInt(cursor.getColumnIndex(WEEK_ID)));
             week.setSubject(cursor.getString(cursor.getColumnIndex(WEEK_SUBJECT)));
+            week.setType(cursor.getString(cursor.getColumnIndex(WEEK_TYPE)));
             week.setBuilding(cursor.getString(cursor.getColumnIndex(WEEK_BUILDING)));
             week.setRoom(cursor.getString(cursor.getColumnIndex(WEEK_ROOM)));
             week.setFromTime(cursor.getString(cursor.getColumnIndex(WEEK_FROM_TIME)));
             week.setToTime(cursor.getString(cursor.getColumnIndex(WEEK_TO_TIME)));
             week.setColor(cursor.getInt(cursor.getColumnIndex(WEEK_COLOR)));
-            System.out.println(cursor.getString(cursor.getColumnIndex(WEEK_FRAGMENT)));
             weeklist.add(week);
         }
         return weeklist;

@@ -46,6 +46,34 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight=".3"
+            android:text="@string/class_type_dialog"
+            android:textAlignment="textStart"
+            android:textColor="@color/button_text"
+            android:textSize="14sp" />
+
+        <EditText
+            android:id="@+id/class_type_dialog"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".7"
+            android:imeOptions="actionDone"
+            android:singleLine="true"
+            android:textColor="@color/white"
+            android:textColorHighlight="#F44336"
+            android:textColorHint="@color/white"
+            android:textColorLink="#F44336" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".3"
             android:text="@string/building_dialog"
             android:textAlignment="textStart"
             android:textColor="@color/white"
@@ -57,9 +85,11 @@
             android:layout_height="wrap_content"
             android:layout_weight=".7"
             android:imeOptions="actionDone"
-            android:inputType="number"
             android:singleLine="true"
-            android:textColor="@color/white" />
+            android:textColor="@color/white"
+            android:textColorHighlight="#F44336"
+            android:textColorHint="@color/white"
+            android:textColorLink="#F44336"  />
     </LinearLayout>
 
     <LinearLayout
