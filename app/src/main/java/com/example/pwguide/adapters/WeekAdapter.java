@@ -135,7 +135,6 @@ public class WeekAdapter extends ArrayAdapter<Week> {
     }
 
     private int pickIconForClassType(String type) {
-        System.out.println(type);
         switch (type) {
             case "L":
                 return R.drawable.ic_laboratory;
