@@ -1,5 +1,6 @@
 package com.example.pwguide.utils;
 
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -22,6 +23,7 @@ public class DbHelper extends SQLiteOpenHelper {
     private static final String WEEK_SUBJECT = "subject";
     private static final String WEEK_FRAGMENT = "fragment";
     private static final String WEEK_ROOM = "room";
+    private static final String WEEK_BUILDING = "building";
     private static final String WEEK_FROM_TIME = "fromtime";
     private static final String WEEK_TO_TIME = "totime";
     private static final String WEEK_COLOR = "color";
@@ -37,6 +39,7 @@ public class DbHelper extends SQLiteOpenHelper {
                 + WEEK_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                 + WEEK_SUBJECT + " TEXT,"
                 + WEEK_FRAGMENT + " TEXT,"
+                + WEEK_BUILDING + " TEXT,"
                 + WEEK_ROOM + " TEXT,"
                 + WEEK_FROM_TIME + " TEXT,"
                 + WEEK_TO_TIME + " TEXT,"
@@ -66,6 +69,7 @@ public class DbHelper extends SQLiteOpenHelper {
         ContentValues contentValues = new ContentValues();
         contentValues.put(WEEK_SUBJECT, week.getSubject());
         contentValues.put(WEEK_FRAGMENT, week.getFragment());
+        contentValues.put(WEEK_BUILDING, week.getBuilding());
         contentValues.put(WEEK_ROOM, week.getRoom());
         contentValues.put(WEEK_FROM_TIME, week.getFromTime());
         contentValues.put(WEEK_TO_TIME, week.getToTime());
@@ -91,6 +95,7 @@ public class DbHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(WEEK_SUBJECT, week.getSubject());
+        contentValues.put(WEEK_BUILDING, week.getBuilding());
         contentValues.put(WEEK_ROOM, week.getRoom());
         contentValues.put(WEEK_FROM_TIME, week.getFromTime());
         contentValues.put(WEEK_TO_TIME, week.getToTime());
@@ -109,6 +114,7 @@ public class DbHelper extends SQLiteOpenHelper {
             week = new Week();
             week.setId(cursor.getInt(cursor.getColumnIndex(WEEK_ID)));
             week.setSubject(cursor.getString(cursor.getColumnIndex(WEEK_SUBJECT)));
+            week.setBuilding(cursor.getString(cursor.getColumnIndex(WEEK_BUILDING)));
             week.setRoom(cursor.getString(cursor.getColumnIndex(WEEK_ROOM)));
             week.setFromTime(cursor.getString(cursor.getColumnIndex(WEEK_FROM_TIME)));
             week.setToTime(cursor.getString(cursor.getColumnIndex(WEEK_TO_TIME)));

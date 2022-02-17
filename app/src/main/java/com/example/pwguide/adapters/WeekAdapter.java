@@ -42,6 +42,7 @@ public class WeekAdapter extends ArrayAdapter<Week> {
     private static class ViewHolder {
         TextView subject;
         TextView time;
+        TextView building;
         TextView room;
         ImageView popup;
         CardView cardView;
@@ -62,10 +63,11 @@ public class WeekAdapter extends ArrayAdapter<Week> {
         String subject = Objects.requireNonNull(getItem(position)).getSubject();
         String time_from = Objects.requireNonNull(getItem(position)).getFromTime();
         String time_to = Objects.requireNonNull(getItem(position)).getToTime();
+        String building = Objects.requireNonNull(getItem(position)).getBuilding();
         String room = Objects.requireNonNull(getItem(position)).getRoom();
         int color = getItem(position).getColor();
 
-        week = new Week(subject,room, time_from, time_to, color);
+        week = new Week(subject ,building, room, time_from, time_to, color);
         final ViewHolder holder;
 
         if(convertView == null){
@@ -74,6 +76,7 @@ public class WeekAdapter extends ArrayAdapter<Week> {
             holder= new ViewHolder();
             holder.subject = convertView.findViewById(R.id.subject);
             holder.time = convertView.findViewById(R.id.time);
+            holder.building = convertView.findViewById(R.id.building);
             holder.room = convertView.findViewById(R.id.room);
             holder.popup = convertView.findViewById(R.id.popupbtn);
             holder.cardView = convertView.findViewById(R.id.week_cardview);
@@ -84,6 +87,7 @@ public class WeekAdapter extends ArrayAdapter<Week> {
         }
 
         holder.subject.setText(week.getSubject());
+        holder.building.setText(week.getBuilding());
         holder.room.setText(week.getRoom());
         holder.time.setText(week.getFromTime() + " - " + week.getToTime());
         holder.cardView.setCardBackgroundColor(week.getColor());

@@ -56,6 +56,8 @@ public class AlertDialogsHelper {
         final HashMap<Integer, EditText> editTextHashs = new HashMap<>();
         final EditText subject = alertLayout.findViewById(R.id.subject_dialog);
         editTextHashs.put(R.string.subject, subject);
+        final EditText building = alertLayout.findViewById(R.id.building_dialog);
+        editTextHashs.put(R.string.building, building);
         final EditText room = alertLayout.findViewById(R.id.room_dialog);
         editTextHashs.put(R.string.room, room);
         final TextView from_time = alertLayout.findViewById(R.id.from_time);
@@ -64,6 +66,7 @@ public class AlertDialogsHelper {
         final Week week = adapter.get(position);
 
         subject.setText(week.getSubject());
+        building.setText(week.getBuilding());
         room.setText(week.getRoom());
         from_time.setText(week.getFromTime());
         to_time.setText(week.getToTime());
@@ -171,6 +174,7 @@ public class AlertDialogsHelper {
                     WeekAdapter weekAdapter = (WeekAdapter) listView.getAdapter(); // In order to get notifyDataSetChanged() method.
                     ColorDrawable buttonColor = (ColorDrawable) select_color.getBackground();
                     week.setSubject(subject.getText().toString());
+                    week.setBuilding(subject.getText().toString());
                     week.setRoom(room.getText().toString());
                     week.setColor(buttonColor.getColor());
                     db.updateWeek(week);
@@ -185,6 +189,8 @@ public class AlertDialogsHelper {
         final HashMap<Integer, EditText> editTextHashs = new HashMap<>();
         final EditText subject = alertLayout.findViewById(R.id.subject_dialog);
         editTextHashs.put(R.string.subject, subject);
+        final EditText building = alertLayout.findViewById(R.id.building_dialog);
+        editTextHashs.put(R.string.building, building);
         final EditText room = alertLayout.findViewById(R.id.room_dialog);
         editTextHashs.put(R.string.room, room);
         final TextView from_time = alertLayout.findViewById(R.id.from_time);
@@ -297,11 +303,13 @@ public class AlertDialogsHelper {
                     ColorDrawable buttonColor = (ColorDrawable) select_color.getBackground();
                     week.setSubject(subject.getText().toString());
                     week.setFragment(fragment.find() ? fragment.group().replace("Fragment", "") : null);
+                    week.setBuilding(building.getText().toString());
                     week.setRoom(room.getText().toString());
                     week.setColor(buttonColor.getColor());
                     dbHelper.insertWeek(week);
                     adapter.notifyDataSetChanged();
                     subject.getText().clear();
+                    building.getText().clear();
                     room.getText().clear();
                     from_time.setText(R.string.select_time);
                     to_time.setText(R.string.select_time);
@@ -356,6 +364,7 @@ public class AlertDialogsHelper {
                             week.setSubject(sub.getCourseName());
                             String fragment = WeekDay.valueOf(sub.getDayOfWeek()).getDayName();
                             week.setFragment(fragment);
+                            week.setBuilding(sub.getBuilding());
                             week.setRoom(sub.getRoom());
                             week.setColor(selected_color);
                             week.setFromTime(format24.format(sub.getStartTime()));
