@@ -70,12 +70,13 @@
     <string name="download">Pobierz</string>
 
     <string-array name="buildings">
-    <item>Gmach Główny</item>
-    <item>Gmach Elektrotechniki</item>
-    <item>Gmach Mechaniki</item>
-    <item>Stara Kotłownia</item>
-    <item> Budynek pod Kominem</item>
+        <item>Gmach Główny</item>
+        <item>Gmach Elektrotechniki</item>
+        <item>Gmach Mechaniki</item>
+        <item>Stara Kotłownia</item>
+        <item> Budynek pod Kominem</item>
     </string-array>
+    <string name="google_maps_key">AIzaSyB94HpJvYTNgVxnFMd-iz2JGc1RnVWAO20</string>
 
 
     <string-array name="halls">

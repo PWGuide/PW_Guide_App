@@ -21,6 +21,7 @@ import android.location.Location;
 import android.os.Build;;
 import android.widget.Toast;
 
+import com.example.pwguide.navigation.Building;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;;
@@ -28,6 +29,7 @@ import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class OutsideNavigation extends AppCompatActivity {
@@ -40,6 +42,8 @@ public class OutsideNavigation extends AppCompatActivity {
     LocationRequest locationRequest;
     LocationCallback locationCallBack;
     FusedLocationProviderClient fusedLocationProviderClient;
+
+    ArrayList<Building> buildings = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,24 +74,21 @@ public class OutsideNavigation extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        b_rozpocznij = findViewById(R.id.b_rozpocznij2);
-        b_rozpocznij.setOnClickListener(new View.OnClickListener() {
 
-            @Override
-            public void onClick(View v) {
-                //Intent intent = new Intent(OutsideNavigation.this, NavigationActivity.class);
-                //startActivity(intent);
-                startLocationUpdates();
-                Toast.makeText(getBaseContext(), "Szerokość geograficzna: "+ lat + " długość: " + lon + " Adres: " + address , Toast.LENGTH_SHORT ).show();
-            }
-        });
+        buildings.add(new Building("Gmach Główny", 52.22082029751707, 21.010043041354443));
+        buildings.add(new Building("Gmach Elektrotechniki", 52.221491504548844, 21.00610232600991));
+        buildings.add(new Building("Gmach Mechaniki",  52.22096539698025, 21.008062654846032));
+        buildings.add(new Building("Stara Kotłownia",  52.220968233478914, 21.00848696833765));
 
-
-        String[] buildings = getResources().getStringArray(R.array.buildings);
+        ArrayList<String> build_name = new ArrayList<>();
+        for(Building building:buildings ){
+            build_name.add(building.getName());
+        }
+        //String[] buildings = getResources().getStringArray(R.array.buildings);
         String[] halls = getResources().getStringArray(R.array.halls);
         //getSupportActionBar().setTitle("Plan");
         AutoCompleteTextView editText1 = findViewById(R.id.build_list3);
-        ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, buildings);
+        ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, build_name);
         editText1.setAdapter(adapter1);
         //editText.setThreshold(1);
         //String input = editText.getText().toString();
@@ -114,6 +115,35 @@ public class OutsideNavigation extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 hall_list.showDropDown();
+            }
+        });
+
+        b_rozpocznij = findViewById(R.id.b_rozpocznij2);
+        b_rozpocznij.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                //Intent intent = new Intent(OutsideNavigation.this, NavigationActivity.class);
+                //startActivity(intent);
+                startLocationUpdates();
+                String building = editText2.getText().toString();
+
+                int index = 0;
+                for(int i = 0; i < buildings.size(); i++) {
+                    if (buildings.get(i).getName().equals(building)) {
+                        index = i;
+                    }
+                }
+
+                Intent intent = new Intent(OutsideNavigation.this, MapOutsideActivity.class);
+                intent.putExtra("slat", lat);
+                intent.putExtra("slon", lon);
+                intent.putExtra("dlat", buildings.get(index).getLatitude());
+                intent.putExtra("dlon", buildings.get(index).getLongitude());
+                intent.putExtra("source_address", address);
+                intent.putExtra("dest_address", buildings.get(index).getName());
+                startActivity(intent);
+                //Toast.makeText(getBaseContext(), "Szerokość geograficzna: "+ lat + " długość: " + lon + " Adres: " + address , Toast.LENGTH_SHORT ).show();
             }
         });
 
