@@ -1,27 +1,22 @@
 package com.example.pwguide;
 
+import android.content.Intent;
+import android.graphics.Color;
+import android.net.Uri;
+import android.os.Bundle;
+import android.os.StrictMode;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-
 import androidx.viewpager.widget.ViewPager;
-
-
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.os.Bundle;
-import android.os.StrictMode;
-import android.text.SpannableString;
-import android.text.style.ForegroundColorSpan;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Toast;
 
 import com.example.pwguide.adapters.FragmentsTabAdapter;
 import com.example.pwguide.fragments.FridayFragment;
@@ -31,19 +26,25 @@ import com.example.pwguide.fragments.SundayFragment;
 import com.example.pwguide.fragments.ThursdayFragment;
 import com.example.pwguide.fragments.TuesdayFragment;
 import com.example.pwguide.fragments.WednesdayFragment;
-import com.example.pwguide.model.Week;
-import com.example.pwguide.model.WeekDay;
-import com.example.pwguide.timetable_download.TimetableDownload;
-import com.example.pwguide.timetable_download.TimetableISOD;
+import com.example.pwguide.timetable_download.OAuthAuthenticator;
+import com.example.pwguide.timetable_download.UsosApiPaths;
 import com.example.pwguide.utils.AlertDialogsHelper;
-import com.example.pwguide.utils.DbHelper;
 import com.google.android.material.tabs.TabLayout;
 
+import org.apache.http.HttpEntity;
+import org.apache.http.client.config.RequestConfig;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.utils.URIBuilder;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.util.EntityUtils;
+
+import java.io.IOException;
 import java.net.MalformedURLException;
+import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Calendar;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class TimetableActivity extends AppCompatActivity {
 
@@ -51,6 +52,7 @@ public class TimetableActivity extends AppCompatActivity {
     private FragmentsTabAdapter adapter;
     private ViewPager viewPager;
     private AlertDialog isodAlert;
+    private AlertDialog usosAlert;
     private AlertDialog clearTimetableAlert;
 
     @Override
@@ -61,6 +63,7 @@ public class TimetableActivity extends AppCompatActivity {
         setContentView(R.layout.activity_timetable);
         getSupportActionBar().setTitle("Plan zajęć");
         //getSupportActionBar().hide();
+
         initAll();
     }
 
@@ -127,7 +130,60 @@ public class TimetableActivity extends AppCompatActivity {
                 isodAlert.show();
                 return true;
             case R.id.add_from_usos:
-                //pobieranie z USOSa
+                OAuthAuthenticator oAuthAuthenticator = new OAuthAuthenticator();
+                int timeout = 5;
+                RequestConfig config = RequestConfig.custom()
+                        .setConnectTimeout(timeout * 1000)
+                        .setConnectionRequestTimeout(timeout * 1000).build();
+
+                try (CloseableHttpClient httpClient =  HttpClientBuilder.create().setDefaultRequestConfig(config).build()) {
+                    //String uri_request_token = oAuthAuthenticator.generateOauthHeader("GET");
+                    String uri_request_token = oAuthAuthenticator.generateOAuthUriForUSOS("GET", UsosApiPaths.REQUEST_TOKEN_PATH, new String[][]{{"scopes", "studies"}, {"oauth_callback", "oob"}}, null);
+                    HttpGet request_token = new HttpGet(uri_request_token);
+                    try (CloseableHttpResponse response = httpClient.execute(request_token)) {
+                        if(response.getStatusLine().getStatusCode() == 200) {
+                            HttpEntity entity = response.getEntity();
+                            if (entity != null) {
+                                String result = EntityUtils.toString(entity);
+                                System.out.println("Result: " + result);
+                                String token = result.replace("oauth_token=", "");
+                                int id = token.indexOf("&");
+                                token = token.substring(0, id);
+                                int start = result.indexOf("=", result.indexOf("=") + 1);
+                                int end = result.indexOf("&", start+1);
+                                String secret_token = result.substring(start + 1, end);
+                                URIBuilder builder = new URIBuilder();
+                                builder.setScheme("https");
+                                builder.setHost("apps.usos.pw.edu.pl");
+                                builder.setPath("/services/oauth/authorize");
+                                builder.addParameter("oauth_token", token);
+                                URI auth_uri = null;
+                                try {
+                                    auth_uri = builder.build().toURL().toURI();
+                                    System.out.println(auth_uri);
+                                } catch (URISyntaxException e) {
+                                    e.printStackTrace();
+                                } catch (MalformedURLException e) {
+                                    e.printStackTrace();
+                                }
+                                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(auth_uri.toString()));
+                                startActivity(browserIntent);
+                                final View addFromUSOSAlertLayout = getLayoutInflater().inflate(R.layout.dialog_usos_pin, null);
+                                System.out.println("TOKEN: " + token);
+                                System.out.println("SECRET TOKEN: " + secret_token);
+                                usosAlert = AlertDialogsHelper.createEnterPINDialog(this, addFromUSOSAlertLayout, adapter, token, secret_token);
+                                usosAlert.show();
+                            }
+                        } else {
+                            System.out.println(response.getStatusLine());
+                            HttpEntity entity = response.getEntity();
+                            System.out.println(EntityUtils.toString(entity));
+                        }
+
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
                 return true;
             case R.id.edit_days:
                 //przejść do ustawień jakie dni są widoczne
@@ -139,6 +195,4 @@ public class TimetableActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
-
-
 }

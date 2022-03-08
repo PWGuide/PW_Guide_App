@@ -22,26 +22,34 @@ import androidx.core.content.ContextCompat;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.pwguide.R;
-import com.example.pwguide.TimetableActivity;
 import com.example.pwguide.adapters.FragmentsTabAdapter;
 import com.example.pwguide.adapters.WeekAdapter;
 import com.example.pwguide.model.Week;
 import com.example.pwguide.model.WeekDay;
+import com.example.pwguide.timetable_download.OAuthAuthenticator;
 import com.example.pwguide.timetable_download.TimetableDownload;
 import com.example.pwguide.timetable_download.TimetableISOD;
+import com.example.pwguide.timetable_download.UsosApiPaths;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
+import org.apache.http.HttpEntity;
+import org.apache.http.client.config.RequestConfig;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.util.EntityUtils;
 import org.xdty.preference.colorpicker.ColorPickerDialog;
 import org.xdty.preference.colorpicker.ColorPickerSwatch;
 
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.regex.Matcher;
@@ -442,6 +450,77 @@ public class AlertDialogsHelper {
                     box.setChecked(true);
                 }
             }
+        });
+
+        return dialog;
+    }
+
+    public static AlertDialog createEnterPINDialog(Activity activity, View alertLayout, FragmentsTabAdapter adapter, String token, String secret_token){
+        final AlertDialog.Builder alert = new AlertDialog.Builder(activity);
+        alert.setView(alertLayout);
+        alert.setCancelable(false);
+        final AlertDialog dialog = alert.create();
+
+        Button cancel = alertLayout.findViewById(R.id.usos_cancel);
+        Button contin = alertLayout.findViewById(R.id.usos_continue);
+        EditText pinText = alertLayout.findViewById(R.id.usos_pin);
+
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        contin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                System.out.println(pinText.getText());
+                dialog.dismiss();
+                OAuthAuthenticator oAuthAuthenticator = new OAuthAuthenticator();
+                //String uri = oAuthAuthenticator.generateOauthHeaderAccessToken("POST", token, secret_token, pinText.getText().toString());
+                String uri = oAuthAuthenticator.generateOAuthUriForUSOS("POST", UsosApiPaths.ACCESS_TOKEN_PATH, new String[][]{{"oauth_token", token}, {"oauth_verifier", pinText.getText().toString()}}, secret_token);
+                int timeout = 5;
+                RequestConfig config = RequestConfig.custom()
+                        .setConnectTimeout(timeout * 1000)
+                        .setConnectionRequestTimeout(timeout * 1000).build();
+                HttpPost request = new HttpPost(uri);
+                try (CloseableHttpClient httpClient = HttpClientBuilder.create().setDefaultRequestConfig(config).build()) {
+                    try (CloseableHttpResponse response = httpClient.execute(request)) {
+                        if (response.getStatusLine().getStatusCode() == 200) {
+                            HttpEntity entity = response.getEntity();
+                            if (entity != null) {
+                                String result = EntityUtils.toString(entity);
+                                System.out.println("Result access: " + result);
+                                String token = result.replace("oauth_token=", "");
+                                int id = token.indexOf("&");
+                                token = token.substring(0, id);
+                                int start = result.indexOf("=", result.indexOf("=") + 1);
+                                String secret_token = result.substring(start + 1);
+                                //String uri_download_tt = oAuthAuthenticator.generateOauthHeaderDownloadTT("POST", token, secret_token);
+                                String uri_download_tt = oAuthAuthenticator.generateOAuthUriForUSOS("POST", UsosApiPaths.STUDENT_TIMETABLE_PATH, new String[][]{{"oauth_token", token}}, secret_token);
+                                HttpPost request_tt = new HttpPost(uri_download_tt);
+                                try (CloseableHttpResponse response_tt = httpClient.execute(request_tt)) {
+                                    if (response.getStatusLine().getStatusCode() == 200) {
+                                        HttpEntity entity_tt = response_tt.getEntity();
+                                        if (entity != null) {
+                                            String result_tt = EntityUtils.toString(entity_tt);
+                                            System.out.println("Result: " + result_tt);
+                                        }
+                                    }
+                                }
+                            }
+                        } else {
+                            System.out.println(response.getStatusLine());
+                            HttpEntity entity = response.getEntity();
+                            System.out.println(EntityUtils.toString(entity));
+                        }
+                    }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+
         });
 
         return dialog;

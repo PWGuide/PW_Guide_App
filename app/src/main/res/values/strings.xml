@@ -69,6 +69,9 @@
     <string name="timetable_apiKey">Klucz API:</string>
     <string name="download">Pobierz</string>
 
+    <string name="continuee">Kontyuuj</string>
+    <string name="pin">PIN:</string>
+
     <string-array name="buildings">
         <item>Gmach Główny</item>
         <item>Gmach Elektrotechniki</item>
