@@ -508,6 +508,8 @@ public class AlertDialogsHelper {
                                                 if (entityTt != null) {
                                                     String resultTt = EntityUtils.toString(entityTt);
                                                     System.out.println("Result: " + resultTt);
+                                                    Toast toast = Toast.makeText(activity, "Plan zajęć został pobrany.", Toast.LENGTH_SHORT);
+                                                    toast.show();
                                                 }
                                             } else {
                                                 Toast toast = Toast.makeText(activity, "Nie udało się pobrać planu zajęć.", Toast.LENGTH_SHORT);
