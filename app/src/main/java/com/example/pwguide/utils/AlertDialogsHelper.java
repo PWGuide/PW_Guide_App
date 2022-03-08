@@ -455,7 +455,7 @@ public class AlertDialogsHelper {
         return dialog;
     }
 
-    public static AlertDialog createEnterPINDialog(Activity activity, View alertLayout, FragmentsTabAdapter adapter, String token, String secret_token){
+    public static AlertDialog createEnterPINDialog(Activity activity, View alertLayout, FragmentsTabAdapter adapter, String requestToken, String secretRequestToken){
         final AlertDialog.Builder alert = new AlertDialog.Builder(activity);
         alert.setView(alertLayout);
         alert.setCancelable(false);
@@ -475,52 +475,60 @@ public class AlertDialogsHelper {
         contin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                System.out.println(pinText.getText());
-                dialog.dismiss();
                 OAuthAuthenticator oAuthAuthenticator = new OAuthAuthenticator();
-                //String uri = oAuthAuthenticator.generateOauthHeaderAccessToken("POST", token, secret_token, pinText.getText().toString());
-                String uri = oAuthAuthenticator.generateOAuthUriForUSOS("POST", UsosApiPaths.ACCESS_TOKEN_PATH, new String[][]{{"oauth_token", token}, {"oauth_verifier", pinText.getText().toString()}}, secret_token);
-                int timeout = 5;
-                RequestConfig config = RequestConfig.custom()
-                        .setConnectTimeout(timeout * 1000)
-                        .setConnectionRequestTimeout(timeout * 1000).build();
-                HttpPost request = new HttpPost(uri);
-                try (CloseableHttpClient httpClient = HttpClientBuilder.create().setDefaultRequestConfig(config).build()) {
-                    try (CloseableHttpResponse response = httpClient.execute(request)) {
-                        if (response.getStatusLine().getStatusCode() == 200) {
-                            HttpEntity entity = response.getEntity();
-                            if (entity != null) {
-                                String result = EntityUtils.toString(entity);
-                                System.out.println("Result access: " + result);
-                                String token = result.replace("oauth_token=", "");
-                                int id = token.indexOf("&");
-                                token = token.substring(0, id);
-                                int start = result.indexOf("=", result.indexOf("=") + 1);
-                                String secret_token = result.substring(start + 1);
-                                //String uri_download_tt = oAuthAuthenticator.generateOauthHeaderDownloadTT("POST", token, secret_token);
-                                String uri_download_tt = oAuthAuthenticator.generateOAuthUriForUSOS("POST", UsosApiPaths.STUDENT_TIMETABLE_PATH, new String[][]{{"oauth_token", token}}, secret_token);
-                                HttpPost request_tt = new HttpPost(uri_download_tt);
-                                try (CloseableHttpResponse response_tt = httpClient.execute(request_tt)) {
-                                    if (response.getStatusLine().getStatusCode() == 200) {
-                                        HttpEntity entity_tt = response_tt.getEntity();
-                                        if (entity != null) {
-                                            String result_tt = EntityUtils.toString(entity_tt);
-                                            System.out.println("Result: " + result_tt);
+                String accessTokenUri = oAuthAuthenticator.generateOAuthUriForUSOS("POST", UsosApiPaths.ACCESS_TOKEN_PATH, new String[][]{{"oauth_token", requestToken}, {"oauth_verifier", pinText.getText().toString()}}, secretRequestToken);
+                if (accessTokenUri != null) {
+                    int timeout = 5;
+                    RequestConfig config = RequestConfig.custom()
+                            .setConnectTimeout(timeout * 1000)
+                            .setConnectionRequestTimeout(timeout * 1000).build();
+
+                    try (CloseableHttpClient httpClient = HttpClientBuilder.create().setDefaultRequestConfig(config).build()) {
+                        HttpPost requestAccessToken = new HttpPost(accessTokenUri);
+                        try (CloseableHttpResponse responseAccessToken = httpClient.execute(requestAccessToken)) {
+                            if (responseAccessToken.getStatusLine().getStatusCode() == 200) {
+                                dialog.dismiss();
+                                HttpEntity entityAccessToken = responseAccessToken.getEntity();
+                                if (entityAccessToken != null) {
+                                    String result = EntityUtils.toString(entityAccessToken);
+
+                                    String accessToken = result.replace("oauth_token=", "");
+                                    int id = accessToken.indexOf("&");
+                                    accessToken = accessToken.substring(0, id);
+                                    int start = result.indexOf("=", result.indexOf("=") + 1);
+                                    String secretAccessToken = result.substring(start + 1);
+
+                                    String uriDownloadTt = oAuthAuthenticator.generateOAuthUriForUSOS("POST", UsosApiPaths.STUDENT_TIMETABLE_PATH, new String[][]{{"oauth_token", accessToken}}, secretAccessToken);
+
+                                    if(uriDownloadTt != null) {
+                                        HttpPost requestTt = new HttpPost(uriDownloadTt);
+                                        try (CloseableHttpResponse responseTt = httpClient.execute(requestTt)) {
+                                            if (responseTt.getStatusLine().getStatusCode() == 200) {
+                                                HttpEntity entityTt = responseTt.getEntity();
+                                                if (entityTt != null) {
+                                                    String resultTt = EntityUtils.toString(entityTt);
+                                                    System.out.println("Result: " + resultTt);
+                                                }
+                                            } else {
+                                                Toast toast = Toast.makeText(activity, "Nie udało się pobrać planu zajęć.", Toast.LENGTH_SHORT);
+                                                toast.show();
+                                            }
                                         }
                                     }
                                 }
+                            } else {
+                                System.out.println(responseAccessToken.getStatusLine());
+                                HttpEntity entity = responseAccessToken.getEntity();
+                                System.out.println(EntityUtils.toString(entity));
+                                Toast toast = Toast.makeText(activity, "Nie udało się przeprowadzić autoryzacji aplikacji. Upewnij się, że PIN jest poprawny.", Toast.LENGTH_SHORT);
+                                toast.show();
                             }
-                        } else {
-                            System.out.println(response.getStatusLine());
-                            HttpEntity entity = response.getEntity();
-                            System.out.println(EntityUtils.toString(entity));
                         }
-                    }
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
                 }
-
+            }
         });
 
         return dialog;
