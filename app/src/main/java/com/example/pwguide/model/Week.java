@@ -25,7 +25,29 @@ public class Week {
     }
 
     public void setType(String type) {
-        this.type = type;
+        String t = type.length() > 2 ? type.substring(0,3) : type;
+        switch (t) {
+            case "Wyk":
+                this.type = "W";
+                break;
+            case "Ćwi":
+                this.type = "C";
+                break;
+            case "Lab":
+                this.type = "L";
+                break;
+            case "Wyc":
+                this.type = "WF";
+                break;
+            case "Pro":
+                this.type = "P";
+                break;
+            case "Jęz":
+                this.type = "JO";
+                break;
+            default:
+                this.type = type;
+        }
     }
 
     public String getBuilding() {

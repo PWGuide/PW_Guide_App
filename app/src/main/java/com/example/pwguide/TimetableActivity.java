@@ -28,6 +28,7 @@ import com.example.pwguide.fragments.ThursdayFragment;
 import com.example.pwguide.fragments.TuesdayFragment;
 import com.example.pwguide.fragments.WednesdayFragment;
 import com.example.pwguide.timetable_download.OAuthAuthenticator;
+import com.example.pwguide.timetable_download.USOSTimetableDownload;
 import com.example.pwguide.timetable_download.UsosApiPaths;
 import com.example.pwguide.utils.AlertDialogsHelper;
 import com.google.android.material.tabs.TabLayout;
@@ -131,7 +132,7 @@ public class TimetableActivity extends AppCompatActivity {
                 isodAlert.show();
                 return true;
             case R.id.add_from_usos:
-                USOSAuthorization();
+                USOSTimetableDownload.USOSAuthorization(this, adapter, usosAlert);
                 return true;
             case R.id.edit_days:
                 //przejść do ustawień jakie dni są widoczne
@@ -141,67 +142,6 @@ public class TimetableActivity extends AppCompatActivity {
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
-        }
-    }
-
-    private void USOSAuthorization() {
-        OAuthAuthenticator oAuthAuthenticator = new OAuthAuthenticator();
-
-        int timeout = 5;
-        RequestConfig config = RequestConfig.custom()
-                .setConnectTimeout(timeout * 1000)
-                .setConnectionRequestTimeout(timeout * 1000).build();
-
-        try (CloseableHttpClient httpClient =  HttpClientBuilder.create().setDefaultRequestConfig(config).build()) {
-            String uriRequestToken = oAuthAuthenticator.generateOAuthUriForUSOS("GET", UsosApiPaths.REQUEST_TOKEN_PATH, new String[][]{{"scopes", "studies"}, {"oauth_callback", "oob"}}, null);
-
-            if (uriRequestToken != null) {
-                HttpGet requestTokenRequest = new HttpGet(uriRequestToken);
-                try (CloseableHttpResponse response = httpClient.execute(requestTokenRequest)) {
-                    if (response.getStatusLine().getStatusCode() == 200) {
-                        HttpEntity entity = response.getEntity();
-                        if (entity != null) {
-                            String result = EntityUtils.toString(entity);
-
-                            String requestToken = result.replace("oauth_token=", "");
-                            int id = requestToken.indexOf("&");
-                            requestToken = requestToken.substring(0, id);
-                            int start = result.indexOf("=", result.indexOf("=") + 1);
-                            int end = result.indexOf("&", start + 1);
-                            String secretRequestToken = result.substring(start + 1, end);
-
-                            URIBuilder builder = new URIBuilder();
-                            builder.setScheme("https");
-                            builder.setHost(UsosApiPaths.HOST_NAME);
-                            builder.setPath(UsosApiPaths.AUTHORIZE_PATH);
-                            builder.addParameter("oauth_token", requestToken);
-                            URI auth_uri = null;
-                            try {
-                                auth_uri = builder.build().toURL().toURI();
-                            } catch (URISyntaxException e) {
-                                e.printStackTrace();
-                            } catch (MalformedURLException e) {
-                                e.printStackTrace();
-                            }
-
-                            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(auth_uri.toString()));
-                            startActivity(browserIntent);
-
-                            final View addFromUSOSAlertLayout = getLayoutInflater().inflate(R.layout.dialog_usos_pin, null);
-                            usosAlert = AlertDialogsHelper.createEnterPINDialog(this, addFromUSOSAlertLayout, adapter, requestToken, secretRequestToken);
-                            usosAlert.show();
-                        }
-                    } else {
-                        System.out.println(response.getStatusLine());
-                        HttpEntity entity = response.getEntity();
-                        System.out.println(EntityUtils.toString(entity));
-                        Toast toast = Toast.makeText(this, "Autoryzacja aplikacji nie powiodła się.", Toast.LENGTH_SHORT);
-                        toast.show();
-                    }
-                }
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 }

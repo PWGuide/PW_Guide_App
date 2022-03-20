@@ -48,6 +48,7 @@ public class OAuthAuthenticator
             signatureString = method + "&" +
                     URLEncoder.encode( "https://" + UsosApiPaths.HOST_NAME + path, StandardCharsets.UTF_8.toString()) + "&" +
                     URLEncoder.encode(parametersList.toString(), StandardCharsets.UTF_8.toString());
+            signatureString = signatureString.replace("%7C", "%257C");
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
             return null;
@@ -90,6 +91,7 @@ public class OAuthAuthenticator
             e.printStackTrace();
             return null;
         }
+
         return uri.toString();
     }
 

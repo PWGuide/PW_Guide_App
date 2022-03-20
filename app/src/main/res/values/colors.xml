@@ -15,6 +15,7 @@
     <color name="dark_blue">#243C78</color>
     <color name="button">#F4D35E</color>
     <color name="button_text">#FFFFFFFF</color>
+    <color name="transparent">#00000000</color>
 
     <color name="danger">#CE0000</color>
 

@@ -51,17 +51,15 @@
             android:textColor="@color/button_text"
             android:textSize="14sp" />
 
-        <EditText
-            android:id="@+id/class_type_dialog"
-            android:layout_width="0dp"
+        <Spinner
+            android:id="@+id/class_type_spinner"
             android:layout_height="wrap_content"
-            android:layout_weight=".7"
-            android:imeOptions="actionDone"
-            android:singleLine="true"
-            android:textColor="@color/white"
-            android:textColorHighlight="#F44336"
-            android:textColorHint="@color/white"
-            android:textColorLink="#F44336" />
+            android:layout_width="0dp"
+            android:backgroundTint="@color/button_text"
+            android:popupBackground="@drawable/yellow_outline"
+            android:spinnerMode="dropdown"
+            android:textAlignment="textStart"
+            android:layout_weight=".7"/>
     </LinearLayout>
 
     <LinearLayout

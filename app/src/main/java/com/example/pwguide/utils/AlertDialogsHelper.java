@@ -8,11 +8,13 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -27,9 +29,12 @@ import com.example.pwguide.adapters.WeekAdapter;
 import com.example.pwguide.model.Week;
 import com.example.pwguide.model.WeekDay;
 import com.example.pwguide.timetable_download.OAuthAuthenticator;
-import com.example.pwguide.timetable_download.TimetableDownload;
+import com.example.pwguide.timetable_download.ISODTimetableDownload;
 import com.example.pwguide.timetable_download.TimetableISOD;
+import com.example.pwguide.timetable_download.TimetableUSOS;
+import com.example.pwguide.timetable_download.USOSTimetableDownload;
 import com.example.pwguide.timetable_download.UsosApiPaths;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -64,8 +69,11 @@ public class AlertDialogsHelper {
         final HashMap<Integer, EditText> editTextHashs = new HashMap<>();
         final EditText subject = alertLayout.findViewById(R.id.subject_dialog);
         editTextHashs.put(R.string.subject, subject);
-        final EditText class_type = alertLayout.findViewById(R.id.class_type_dialog);
-        editTextHashs.put(R.string.class_type, class_type);
+        final Spinner class_type = alertLayout.findViewById(R.id.class_type_spinner);
+        ArrayAdapter<CharSequence> spinnerAdapter = ArrayAdapter.createFromResource(activity,
+                R.array.class_types, R.layout.textview_to_spinner);
+        spinnerAdapter.setDropDownViewResource(R.layout.textview_to_spinner);
+        class_type.setAdapter(spinnerAdapter);
         final EditText building = alertLayout.findViewById(R.id.building_dialog);
         editTextHashs.put(R.string.building, building);
         final EditText room = alertLayout.findViewById(R.id.room_dialog);
@@ -76,8 +84,10 @@ public class AlertDialogsHelper {
         final Week week = adapter.get(position);
 
         subject.setText(week.getSubject());
-        class_type.setText(week.getType());
         building.setText(week.getBuilding());
+        ArrayAdapter<CharSequence> spinnerAdapter2 = ArrayAdapter.createFromResource(activity,
+                R.array.class_types_abbr, R.layout.textview_to_spinner);
+        class_type.setSelection(spinnerAdapter2.getPosition(week.getType()));
         room.setText(week.getRoom());
         from_time.setText(week.getFromTime());
         to_time.setText(week.getToTime());
@@ -131,7 +141,6 @@ public class AlertDialogsHelper {
             @Override
             public void onClick(View v) {
                 int mSelectedColor = ContextCompat.getColor(activity, R.color.white);
-                select_color.setBackgroundColor(mSelectedColor);
                 int[] mColors = activity.getResources().getIntArray(R.array.default_colors);
                 ColorPickerDialog dialog = ColorPickerDialog.newInstance(R.string.color_picker_default_title,
                         mColors,
@@ -145,7 +154,8 @@ public class AlertDialogsHelper {
                     @Override
                     public void onColorSelected(int color) {
                         select_color.setBackgroundColor(color);
-                        select_color.setText("color selected");
+                        select_color.setText("Kolor wybrany");
+                        System.out.println(color);
                     }
                 });
                 dialog.show(activity.getFragmentManager(), "color_dialog");
@@ -185,7 +195,7 @@ public class AlertDialogsHelper {
                     WeekAdapter weekAdapter = (WeekAdapter) listView.getAdapter(); // In order to get notifyDataSetChanged() method.
                     ColorDrawable buttonColor = (ColorDrawable) select_color.getBackground();
                     week.setSubject(subject.getText().toString());
-                    week.setType(class_type.getText().toString());
+                    week.setType(class_type.getSelectedItem().toString());
                     week.setBuilding(building.getText().toString());
                     week.setRoom(room.getText().toString());
                     week.setColor(buttonColor.getColor());
@@ -201,8 +211,11 @@ public class AlertDialogsHelper {
         final HashMap<Integer, EditText> editTextHashs = new HashMap<>();
         final EditText subject = alertLayout.findViewById(R.id.subject_dialog);
         editTextHashs.put(R.string.subject, subject);
-        final EditText class_type = alertLayout.findViewById(R.id.class_type_dialog);
-        editTextHashs.put(R.string.class_type, class_type);
+        final Spinner class_type = alertLayout.findViewById(R.id.class_type_spinner);
+        ArrayAdapter<CharSequence> spinnerAdapter = ArrayAdapter.createFromResource(activity,
+                R.array.class_types, R.layout.textview_to_spinner);
+        spinnerAdapter.setDropDownViewResource(R.layout.textview_to_spinner);
+        class_type.setAdapter(spinnerAdapter);
         final EditText building = alertLayout.findViewById(R.id.building_dialog);
         editTextHashs.put(R.string.building, building);
         final EditText room = alertLayout.findViewById(R.id.room_dialog);
@@ -270,7 +283,7 @@ public class AlertDialogsHelper {
                     @Override
                     public void onColorSelected(int color) {
                         select_color.setBackgroundColor(color);
-                        select_color.setText("color selected");
+                        select_color.setText("Kolor wybrany");
                     }
                 });
                 dialog.show(activity.getFragmentManager(), "color_dialog");
@@ -316,7 +329,7 @@ public class AlertDialogsHelper {
                     Matcher fragment = Pattern.compile("(.*Fragment)").matcher(adapter.getItem(viewPager.getCurrentItem()).toString());
                     ColorDrawable buttonColor = (ColorDrawable) select_color.getBackground();
                     week.setSubject(subject.getText().toString());
-                    week.setType(class_type.getText().toString());
+                    week.setType(class_type.getSelectedItem().toString());
                     week.setFragment(fragment.find() ? fragment.group().replace("Fragment", "") : null);
                     week.setBuilding(building.getText().toString());
                     week.setRoom(room.getText().toString());
@@ -324,7 +337,6 @@ public class AlertDialogsHelper {
                     dbHelper.insertWeek(week);
                     adapter.notifyDataSetChanged();
                     subject.getText().clear();
-                    class_type.getText().clear();
                     building.getText().clear();
                     room.getText().clear();
                     from_time.setText(R.string.select_time);
@@ -364,7 +376,7 @@ public class AlertDialogsHelper {
                 String username = usernameView.getText().toString();
                 String apiKey = apiKeyView.getText().toString();
 
-                TimetableDownload timetableDownload = new TimetableDownload();
+                ISODTimetableDownload timetableDownload = new ISODTimetableDownload();
                 try {
                     TimetableISOD timetableISOD = timetableDownload.downloadTimetableFromISOD(username, apiKey);
                     if(timetableISOD != null) {
@@ -475,64 +487,11 @@ public class AlertDialogsHelper {
         contin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                OAuthAuthenticator oAuthAuthenticator = new OAuthAuthenticator();
-                String accessTokenUri = oAuthAuthenticator.generateOAuthUriForUSOS("POST", UsosApiPaths.ACCESS_TOKEN_PATH, new String[][]{{"oauth_token", requestToken}, {"oauth_verifier", pinText.getText().toString()}}, secretRequestToken);
-                if (accessTokenUri != null) {
-                    int timeout = 5;
-                    RequestConfig config = RequestConfig.custom()
-                            .setConnectTimeout(timeout * 1000)
-                            .setConnectionRequestTimeout(timeout * 1000).build();
-
-                    try (CloseableHttpClient httpClient = HttpClientBuilder.create().setDefaultRequestConfig(config).build()) {
-                        HttpPost requestAccessToken = new HttpPost(accessTokenUri);
-                        try (CloseableHttpResponse responseAccessToken = httpClient.execute(requestAccessToken)) {
-                            if (responseAccessToken.getStatusLine().getStatusCode() == 200) {
-                                dialog.dismiss();
-                                HttpEntity entityAccessToken = responseAccessToken.getEntity();
-                                if (entityAccessToken != null) {
-                                    String result = EntityUtils.toString(entityAccessToken);
-
-                                    String accessToken = result.replace("oauth_token=", "");
-                                    int id = accessToken.indexOf("&");
-                                    accessToken = accessToken.substring(0, id);
-                                    int start = result.indexOf("=", result.indexOf("=") + 1);
-                                    String secretAccessToken = result.substring(start + 1);
-
-                                    String uriDownloadTt = oAuthAuthenticator.generateOAuthUriForUSOS("POST", UsosApiPaths.STUDENT_TIMETABLE_PATH, new String[][]{{"oauth_token", accessToken}}, secretAccessToken);
-
-                                    if(uriDownloadTt != null) {
-                                        HttpPost requestTt = new HttpPost(uriDownloadTt);
-                                        try (CloseableHttpResponse responseTt = httpClient.execute(requestTt)) {
-                                            if (responseTt.getStatusLine().getStatusCode() == 200) {
-                                                HttpEntity entityTt = responseTt.getEntity();
-                                                if (entityTt != null) {
-                                                    String resultTt = EntityUtils.toString(entityTt);
-                                                    System.out.println("Result: " + resultTt);
-                                                    Toast toast = Toast.makeText(activity, "Plan zajęć został pobrany.", Toast.LENGTH_SHORT);
-                                                    toast.show();
-                                                }
-                                            } else {
-                                                Toast toast = Toast.makeText(activity, "Nie udało się pobrać planu zajęć.", Toast.LENGTH_SHORT);
-                                                toast.show();
-                                            }
-                                        }
-                                    }
-                                }
-                            } else {
-                                System.out.println(responseAccessToken.getStatusLine());
-                                HttpEntity entity = responseAccessToken.getEntity();
-                                System.out.println(EntityUtils.toString(entity));
-                                Toast toast = Toast.makeText(activity, "Nie udało się przeprowadzić autoryzacji aplikacji. Upewnij się, że PIN jest poprawny.", Toast.LENGTH_SHORT);
-                                toast.show();
-                            }
-                        }
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
+                USOSTimetableDownload.downloadTimetableFromUSOS(activity, adapter, dialog, requestToken, pinText.getText().toString(), secretRequestToken);
             }
         });
 
         return dialog;
     }
+
 }

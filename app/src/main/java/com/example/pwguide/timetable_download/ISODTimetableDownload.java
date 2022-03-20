@@ -17,10 +17,10 @@ import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 
-public class TimetableDownload {
+public class ISODTimetableDownload {
     URIBuilder builder;
 
-    public TimetableDownload() {
+    public ISODTimetableDownload() {
         this.builder = new URIBuilder();
     }
 
@@ -34,7 +34,6 @@ public class TimetableDownload {
         builder.addParameter("apikey", apiKey);
 
         URI uri = builder.build().toURL().toURI();
-        //System.out.println(uri);
         int timeout = 5;
         RequestConfig config = RequestConfig.custom()
                 .setConnectTimeout(timeout * 1000)
