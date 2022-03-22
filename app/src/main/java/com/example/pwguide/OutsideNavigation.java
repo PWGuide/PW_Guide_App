@@ -1,6 +1,8 @@
 package com.example.pwguide;
 
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -38,6 +40,7 @@ public class OutsideNavigation extends AppCompatActivity {
     Button b_select_plan;
     Button b_rozpocznij;
     String lat, lon, altitude, accuracy, speed, address;
+    String source_address, dest_address;
 
     LocationRequest locationRequest;
     LocationCallback locationCallBack;
@@ -123,8 +126,6 @@ public class OutsideNavigation extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                //Intent intent = new Intent(OutsideNavigation.this, NavigationActivity.class);
-                //startActivity(intent);
                 startLocationUpdates();
                 String building = editText2.getText().toString();
 
@@ -134,15 +135,9 @@ public class OutsideNavigation extends AppCompatActivity {
                         index = i;
                     }
                 }
-
-                Intent intent = new Intent(OutsideNavigation.this, MapOutsideActivity.class);
-                intent.putExtra("slat", lat);
-                intent.putExtra("slon", lon);
-                intent.putExtra("dlat", buildings.get(index).getLatitude());
-                intent.putExtra("dlon", buildings.get(index).getLongitude());
-                intent.putExtra("source_address", address);
-                intent.putExtra("dest_address", buildings.get(index).getName());
-                startActivity(intent);
+                source_address = address;
+                dest_address = buildings.get(index).getName();
+                DisplayTrack(source_address.trim(),dest_address.trim());
                 //Toast.makeText(getBaseContext(), "Szerokość geograficzna: "+ lat + " długość: " + lon + " Adres: " + address , Toast.LENGTH_SHORT ).show();
             }
         });
@@ -224,5 +219,19 @@ public class OutsideNavigation extends AppCompatActivity {
 
     }
 
-
+    private void DisplayTrack(String sSource, String sDestination){
+        try{
+            Uri uri = Uri.parse("https://www.google.co.in/maps/dir/" + sSource + "/" + sDestination);
+            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+            intent.setPackage("com.google.android.apps.maps");
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+        }catch (ActivityNotFoundException e){
+            //google map nie jest zainstalowane
+            Uri uri = Uri.parse("https://play.google.com/store/apps/details?id=com.google.android.apps.maps");
+            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+        }
+    }
 }
