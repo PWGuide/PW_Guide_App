@@ -4,6 +4,7 @@ package com.example.pwguide.utils;
 import android.app.Activity;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.text.TextUtils;
@@ -21,48 +22,45 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.pwguide.R;
+import com.example.pwguide.TimetableActivity;
 import com.example.pwguide.adapters.FragmentsTabAdapter;
 import com.example.pwguide.adapters.WeekAdapter;
+import com.example.pwguide.fragments.FridayFragment;
+import com.example.pwguide.fragments.MondayFragment;
+import com.example.pwguide.fragments.SaturdayFragment;
+import com.example.pwguide.fragments.SundayFragment;
+import com.example.pwguide.fragments.ThursdayFragment;
+import com.example.pwguide.fragments.TuesdayFragment;
+import com.example.pwguide.fragments.WednesdayFragment;
 import com.example.pwguide.model.Week;
 import com.example.pwguide.model.WeekDay;
-import com.example.pwguide.timetable_download.OAuthAuthenticator;
 import com.example.pwguide.timetable_download.ISODTimetableDownload;
 import com.example.pwguide.timetable_download.TimetableISOD;
-import com.example.pwguide.timetable_download.TimetableUSOS;
 import com.example.pwguide.timetable_download.USOSTimetableDownload;
-import com.example.pwguide.timetable_download.UsosApiPaths;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.client.config.RequestConfig;
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClientBuilder;
-import org.apache.http.util.EntityUtils;
 import org.xdty.preference.colorpicker.ColorPickerDialog;
 import org.xdty.preference.colorpicker.ColorPickerSwatch;
 
-import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/**
- * Created by Ulan on 22.10.2018.
- */
 public class AlertDialogsHelper {
 
     public static void getEditSubjectDialog(final Activity activity, final View alertLayout, final ArrayList<Week> adapter, final ListView listView, int position) {
@@ -355,6 +353,13 @@ public class AlertDialogsHelper {
         alert.setCancelable(false);
         final AlertDialog dialog = alert.create();
 
+        List<String> sems = getPossibleSemesters();
+        final Spinner semesterSpinner = alertLayout.findViewById(R.id.isod_timetable_spinner);
+        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(activity, R.layout.textview_to_spinner, sems);
+        spinnerAdapter.setDropDownViewResource(R.layout.textview_to_spinner);
+        semesterSpinner.setAdapter(spinnerAdapter);
+        semesterSpinner.setSelection(spinnerAdapter.getPosition(sems.get(1)));
+
         Button cancel = alertLayout.findViewById(R.id.timetable_cancel);
         Button download = alertLayout.findViewById(R.id.timetable_download);
         EditText usernameView = alertLayout.findViewById(R.id.timetable_username);
@@ -363,10 +368,11 @@ public class AlertDialogsHelper {
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                dialog.dismiss();
                 usernameView.getText().clear();
                 apiKeyView.getText().clear();
                 usernameView.requestFocus();
-                dialog.dismiss();
+                semesterSpinner.setSelection(spinnerAdapter.getPosition(sems.get(1)));
             }
         });
 
@@ -378,7 +384,8 @@ public class AlertDialogsHelper {
 
                 ISODTimetableDownload timetableDownload = new ISODTimetableDownload();
                 try {
-                    TimetableISOD timetableISOD = timetableDownload.downloadTimetableFromISOD(username, apiKey);
+                    String semester = semesterSpinner.getSelectedItem().toString();
+                    TimetableISOD timetableISOD = timetableDownload.downloadTimetableFromISOD(username, apiKey, semester);
                     if(timetableISOD != null) {
                         Random random = new Random();
                         SimpleDateFormat format24 = new SimpleDateFormat("HH:mm");
@@ -391,7 +398,7 @@ public class AlertDialogsHelper {
                             int selected_color = mColors[no_color];
                             week.setSubject(sub.getCourseName());
                             week.setType(sub.getTypeOfClasses());
-                            String fragment = WeekDay.valueOf(sub.getDayOfWeek()).getDayName();
+                            String fragment = WeekDay.valueOf(sub.getDayOfWeek()).getDayNameEN();
                             week.setFragment(fragment);
                             week.setBuilding(sub.getBuilding());
                             week.setRoom(sub.getRoom());
@@ -405,7 +412,11 @@ public class AlertDialogsHelper {
                         dialog.dismiss();
                         usernameView.getText().clear();
                         apiKeyView.getText().clear();
+                        semesterSpinner.setSelection(spinnerAdapter.getPosition(sems.get(1)));
                         usernameView.requestFocus();
+
+                        Toast toast = Toast.makeText(activity, "Plan zajęć został pobrany.", Toast.LENGTH_SHORT);
+                        toast.show();
                     } else {
                         Toast toast = Toast.makeText(activity, "Nie udało się pobrać planu zajęć.", Toast.LENGTH_SHORT);
                         toast.show();
@@ -419,6 +430,26 @@ public class AlertDialogsHelper {
         });
 
         return dialog;
+    }
+
+    private static List<String> getPossibleSemesters() {
+        List<String> spinnerArray =  new ArrayList<>();
+        int year = Calendar.getInstance().get(Calendar.YEAR);
+        int month = Calendar.getInstance().get(Calendar.MONTH);
+        if( month < 8 && month > 0) {
+            spinnerArray.add(year + "Z");
+            spinnerArray.add(year + "L");
+            spinnerArray.add((year-1) + "Z");
+        } else if(month > 7){
+            spinnerArray.add((year+1) + "L");
+            spinnerArray.add(year + "Z");
+            spinnerArray.add(year + "L");
+        } else {
+            spinnerArray.add(year + "L");
+            spinnerArray.add((year-1) + "Z");
+            spinnerArray.add((year-1) + "L");
+        }
+        return spinnerArray;
     }
 
     public static AlertDialog createClearTimetableDialog(Activity activity, View alertLayout, FragmentsTabAdapter adapter){
@@ -446,7 +477,7 @@ public class AlertDialogsHelper {
                 for(int i = 0; i < childCount; i++) {
                     CheckBox box = (CheckBox) daysList.getChildAt(i);
                     if(box.isChecked()) {
-                        dbHelper.deleteWeeksByDay(WeekDay.valueOf(i + 1).getDayName());
+                        dbHelper.deleteWeeksByDay(WeekDay.valueOf(i + 1).getDayNameEN());
                     }
                 }
                 adapter.notifyDataSetChanged();
@@ -466,6 +497,108 @@ public class AlertDialogsHelper {
 
         return dialog;
     }
+
+    public static AlertDialog createSelectDaysToDisplayDialog(Activity activity, View alertLayout, FragmentsTabAdapter adapter, SharedPreferences sharedPreferences){
+        final AlertDialog.Builder alert = new AlertDialog.Builder(activity);
+        alert.setView(alertLayout);
+        alert.setCancelable(false);
+        final AlertDialog dialog = alert.create();
+
+        Button cancel = alertLayout.findViewById(R.id.days_display_cancel);
+        Button save = alertLayout.findViewById(R.id.days_display_save);
+        LinearLayout daysList = alertLayout.findViewById(R.id.days_display_checkbox_list);
+        final int childCount = daysList.getChildCount();
+
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                for(int i = 0; i < childCount; i++) {
+                    CheckBox box = (CheckBox) daysList.getChildAt(i);
+                    if(!box.isChecked()) {
+                        removeDisplayedDay(box.getText().toString(), adapter, sharedPreferences);
+                    } else {
+                        addDisplayedDay(box.getText().toString(), adapter, sharedPreferences);
+                    }
+                }
+                adapter.notifyDataSetChanged();
+                dialog.dismiss();
+            }
+        });
+
+        dialog.setOnShowListener(new DialogInterface.OnShowListener() {
+            @Override
+            public void onShow(DialogInterface dialog) {
+                Set<String> activeDays = new HashSet<>();
+                Set<String> activeDaysPref = sharedPreferences.getStringSet(TimetableActivity.DISPLAYED_DAYS_PREFERENCE, activeDays);
+                for(int i = 0; i < childCount; i++) {
+                    CheckBox box = (CheckBox) daysList.getChildAt(i);
+                    box.setChecked(activeDaysPref.contains(box.getText().toString()));
+                }
+            }
+        });
+
+        return dialog;
+    }
+
+    private static void addDisplayedDay(String day, FragmentsTabAdapter adapter, SharedPreferences preferences) {
+        switch (day) {
+            case "Poniedziałek":
+                addDay(day, adapter, preferences, new MondayFragment());
+                break;
+            case "Wtorek":
+                addDay(day, adapter, preferences, new TuesdayFragment());
+                break;
+            case "Środa":
+                addDay(day, adapter, preferences, new WednesdayFragment());
+                break;
+            case "Czwartek":
+                addDay(day, adapter, preferences, new ThursdayFragment());
+                break;
+            case "Piątek":
+                addDay(day, adapter, preferences, new FridayFragment());
+                break;
+            case "Sobota":
+                addDay(day, adapter, preferences, new SaturdayFragment());
+                break;
+            case "Niedziela":
+                addDay(day, adapter, preferences, new SundayFragment());
+                break;
+            default:
+                break;
+        }
+    }
+
+    private static void addDay(String day, FragmentsTabAdapter adapter, SharedPreferences preferences, Fragment fragment) {
+        Set<String> activeDays = new HashSet<>();
+        Set<String> activeDaysPref = preferences.getStringSet(TimetableActivity.DISPLAYED_DAYS_PREFERENCE, activeDays);
+        if(!activeDaysPref.contains(day)) {
+            adapter.addFragment(fragment, day);
+            SharedPreferences.Editor editor = preferences.edit();
+            activeDays.addAll(activeDaysPref);
+            activeDays.add(day);
+            editor.putStringSet(TimetableActivity.DISPLAYED_DAYS_PREFERENCE, activeDays);
+            editor.apply();
+        }
+    }
+
+    private static void removeDisplayedDay(String day, FragmentsTabAdapter adapter, SharedPreferences preferences) {
+        Set<String> activeDays = new HashSet<>();
+        Set<String> activeDaysPref = preferences.getStringSet(TimetableActivity.DISPLAYED_DAYS_PREFERENCE, activeDays);
+        adapter.removeFragment(day);
+        SharedPreferences.Editor editor = preferences.edit();
+        activeDays.addAll(activeDaysPref);
+        activeDays.remove(day);
+        editor.putStringSet(TimetableActivity.DISPLAYED_DAYS_PREFERENCE, activeDays);
+        editor.apply();
+    }
+
 
     public static AlertDialog createEnterPINDialog(Activity activity, View alertLayout, FragmentsTabAdapter adapter, String requestToken, String secretRequestToken){
         final AlertDialog.Builder alert = new AlertDialog.Builder(activity);
@@ -493,5 +626,4 @@ public class AlertDialogsHelper {
 
         return dialog;
     }
-
 }

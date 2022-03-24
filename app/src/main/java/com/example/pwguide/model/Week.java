@@ -1,11 +1,8 @@
 package com.example.pwguide.model;
 
-/**
- * Created by Ulan on 07.09.2018.
- */
 public class Week {
 
-    private String subject, fragment, building, room, fromtime, totime, time, type;
+    private String subject, fragment, building, room, fromtime, totime, type;
     private int id, color;
 
     public Week() {}

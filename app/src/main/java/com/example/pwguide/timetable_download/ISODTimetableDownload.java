@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Calendar;
 
 public class ISODTimetableDownload {
     URIBuilder builder;
@@ -24,13 +25,13 @@ public class ISODTimetableDownload {
         this.builder = new URIBuilder();
     }
 
-    public TimetableISOD downloadTimetableFromISOD(String username, String apiKey) throws URISyntaxException, MalformedURLException {
+    public TimetableISOD downloadTimetableFromISOD(String username, String apiKey, String semester) throws URISyntaxException, MalformedURLException {
         builder.setScheme("https");
         builder.setHost("isod.ee.pw.edu.pl");
         builder.setPath("/isod-portal/wapi");
         builder.addParameter("q", "myplan");
         builder.addParameter("username", username);
-        builder.addParameter("semester", "2021Z"); //do poprawy
+        builder.addParameter("semester", semester);
         builder.addParameter("apikey", apiKey);
 
         URI uri = builder.build().toURL().toURI();

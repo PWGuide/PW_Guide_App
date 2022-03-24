@@ -172,7 +172,7 @@ public class USOSTimetableDownload {
             week.setSubject(sub.getCourseName());
             week.setType(sub.getClasstype());
             int day = sub.getStartTime().getDay() > 0 ? sub.getStartTime().getDay() : 7;
-            String fragment = WeekDay.valueOf(day).getDayName();
+            String fragment = WeekDay.valueOf(day).getDayNameEN();
             week.setFragment(fragment);
             week.setBuilding(sub.getBuilding());
             week.setRoom(sub.getRoom());

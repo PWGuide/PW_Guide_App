@@ -1,6 +1,8 @@
 package com.example.pwguide;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
@@ -17,6 +19,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.pwguide.adapters.FragmentsTabAdapter;
@@ -27,6 +30,7 @@ import com.example.pwguide.fragments.SundayFragment;
 import com.example.pwguide.fragments.ThursdayFragment;
 import com.example.pwguide.fragments.TuesdayFragment;
 import com.example.pwguide.fragments.WednesdayFragment;
+import com.example.pwguide.model.WeekDay;
 import com.example.pwguide.timetable_download.OAuthAuthenticator;
 import com.example.pwguide.timetable_download.USOSTimetableDownload;
 import com.example.pwguide.timetable_download.UsosApiPaths;
@@ -47,6 +51,8 @@ import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Calendar;
+import java.util.HashSet;
+import java.util.Set;
 
 public class TimetableActivity extends AppCompatActivity {
 
@@ -56,6 +62,11 @@ public class TimetableActivity extends AppCompatActivity {
     private AlertDialog isodAlert;
     private AlertDialog usosAlert;
     private AlertDialog clearTimetableAlert;
+    private AlertDialog chooseDaysToDisplayAlert;
+    private final String STORAGE_NAME = "timetablePreferences";
+    public static final String DISPLAYED_DAYS_PREFERENCE = "displayed_days";
+    private SharedPreferences sharedPreferences;
+    private Set<String> displayedDays;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,8 +76,28 @@ public class TimetableActivity extends AppCompatActivity {
         setContentView(R.layout.activity_timetable);
         getSupportActionBar().setTitle("Plan zajęć");
         //getSupportActionBar().hide();
+        initDaysSet();
+        sharedPreferences = getSharedPreferences(STORAGE_NAME, Context.MODE_PRIVATE);
+        if(!sharedPreferences.contains(DISPLAYED_DAYS_PREFERENCE)) {
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putStringSet(DISPLAYED_DAYS_PREFERENCE, displayedDays);
+            editor.apply();
+        } else {
+            displayedDays = sharedPreferences.getStringSet(DISPLAYED_DAYS_PREFERENCE, displayedDays);
+        }
 
         initAll();
+    }
+
+    private void initDaysSet() {
+        displayedDays = new HashSet<>();
+        displayedDays.add(WeekDay.MONDAY.getDayNamePL());
+        displayedDays.add(WeekDay.TUESDAY.getDayNamePL());
+        displayedDays.add(WeekDay.WEDNESDAY.getDayNamePL());
+        displayedDays.add(WeekDay.THURSDAY.getDayNamePL());
+        displayedDays.add(WeekDay.FRIDAY.getDayNamePL());
+        displayedDays.add(WeekDay.SATURDAY.getDayNamePL());
+        displayedDays.add(WeekDay.SUNDAY.getDayNamePL());
     }
 
     private void initAll() {
@@ -78,6 +109,9 @@ public class TimetableActivity extends AppCompatActivity {
 
         final View clearTimetableAlertLayout = getLayoutInflater().inflate(R.layout.dialog_clear_timetable, null);
         clearTimetableAlert = AlertDialogsHelper.createClearTimetableDialog(this, clearTimetableAlertLayout, adapter);
+
+        final View chooseDaysToDisplayAlertLayout = getLayoutInflater().inflate(R.layout.dialog_choose_days_to_display, null);
+        chooseDaysToDisplayAlert = AlertDialogsHelper.createSelectDaysToDisplayDialog(this, chooseDaysToDisplayAlertLayout, adapter, sharedPreferences);
     }
 
     private void setupFragments() {
@@ -86,16 +120,41 @@ public class TimetableActivity extends AppCompatActivity {
         TabLayout tabLayout = findViewById(R.id.tabLayout);
         Calendar calendar = Calendar.getInstance();
         int day = calendar.get(Calendar.DAY_OF_WEEK);
-        adapter.addFragment(new MondayFragment(), getResources().getString(R.string.monday));
-        adapter.addFragment(new TuesdayFragment(), getResources().getString(R.string.tuesday));
-        adapter.addFragment(new WednesdayFragment(), getResources().getString(R.string.wednesday));
-        adapter.addFragment(new ThursdayFragment(), getResources().getString(R.string.thursday));
-        adapter.addFragment(new FridayFragment(), getResources().getString(R.string.friday));
-        adapter.addFragment(new SaturdayFragment(), getResources().getString(R.string.saturday));
-        adapter.addFragment(new SundayFragment(), getResources().getString(R.string.sunday));
+        for (String dayName : displayedDays) {
+            addFragment(dayName);
+        }
         viewPager.setAdapter(adapter);
-        viewPager.setCurrentItem(day == 1 ? 6 : day - 2, true);
+        int position = adapter.getPosition(day);
+        viewPager.setCurrentItem(Math.max(position, 0), true);
         tabLayout.setupWithViewPager(viewPager);
+    }
+
+    private void addFragment(String dayName) {
+        switch (dayName) {
+            case "Poniedziałek":
+                adapter.addFragment(new MondayFragment(), WeekDay.MONDAY.getDayNamePL());
+                break;
+            case "Wtorek":
+                adapter.addFragment(new TuesdayFragment(), WeekDay.TUESDAY.getDayNamePL());
+                break;
+            case "Środa":
+                adapter.addFragment(new WednesdayFragment(), WeekDay.WEDNESDAY.getDayNamePL());
+                break;
+            case "Czwartek":
+                adapter.addFragment(new ThursdayFragment(), WeekDay.THURSDAY.getDayNamePL());
+                break;
+            case "Piątek":
+                adapter.addFragment(new FridayFragment(), WeekDay.FRIDAY.getDayNamePL());
+                break;
+            case "Sobota":
+                adapter.addFragment(new SaturdayFragment(), WeekDay.SATURDAY.getDayNamePL());
+                break;
+            case "Niedziela":
+                adapter.addFragment(new SundayFragment(), WeekDay.SUNDAY.getDayNamePL());
+                break;
+            default:
+                break;
+        }
     }
 
 
@@ -135,7 +194,7 @@ public class TimetableActivity extends AppCompatActivity {
                 USOSTimetableDownload.USOSAuthorization(this, adapter, usosAlert);
                 return true;
             case R.id.edit_days:
-                //przejść do ustawień jakie dni są widoczne
+                chooseDaysToDisplayAlert.show();
                 return true;
             case R.id.clear_timetable:
                 clearTimetableAlert.show();

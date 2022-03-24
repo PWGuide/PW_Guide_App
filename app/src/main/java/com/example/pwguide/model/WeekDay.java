@@ -4,35 +4,46 @@ import java.util.HashMap;
 import java.util.Map;
 
 public enum WeekDay {
-    MONDAY("Monday", 1),
-    TUESDAY("Tuesday", 2),
-    WEDNESDAY("Wednesday", 3),
-    THURSDAY("Thursday", 4),
-    FRIDAY("Friday", 5),
-    SATURDAY("Saturday", 6),
-    SUNDAY("Sunday", 7);
+    MONDAY("Poniedziałek","Monday", 1),
+    TUESDAY("Wtorek", "Tuesday", 2),
+    WEDNESDAY("Środa", "Wednesday", 3),
+    THURSDAY("Czwartek","Thursday", 4),
+    FRIDAY("Piątek","Friday", 5),
+    SATURDAY("Sobota", "Saturday", 6),
+    SUNDAY("Niedziela", "Sunday", 7);
 
-    private String dayName;
-    private int dayNumber;
-    private static Map<Integer, WeekDay> map = new HashMap<>();
+    private final String dayNameEN;
+    private final String dayNamePL;
+    private final int dayNumber;
+    private final static Map<Integer, WeekDay> map = new HashMap<>();
+    private final static Map<String, Integer> mapByNum = new HashMap<>();
 
-    WeekDay(String dayName, int dayNumber) {
-        this.dayName = dayName;
+    WeekDay(String dayNamePL, String dayNameEN, int dayNumber) {
+        this.dayNamePL = dayNamePL;
+        this.dayNameEN = dayNameEN;
         this.dayNumber = dayNumber;
     }
 
-    public String getDayName() {
-        return dayName;
+    public String getDayNameEN() {
+        return dayNameEN;
+    }
+
+    public String getDayNamePL() {
+        return dayNamePL;
     }
 
     static {
         for (WeekDay weekDay : WeekDay.values()) {
             map.put(weekDay.dayNumber, weekDay);
+            mapByNum.put(weekDay.dayNamePL, weekDay.dayNumber);
         }
     }
 
     public static WeekDay valueOf(int dayNumber) {
-        System.out.println(dayNumber);
-        return (WeekDay) map.get(dayNumber);
+        return map.get(dayNumber);
+    }
+
+    public static int valueByPL(String dayNamePolish) {
+        return mapByNum.get(dayNamePolish);
     }
 }

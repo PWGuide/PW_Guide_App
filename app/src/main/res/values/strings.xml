@@ -23,6 +23,13 @@
     <string name="friday">Piątek</string>
     <string name="saturday">Sobota</string>
     <string name="sunday">Niedziela</string>
+    <string name="monday_en">Monday</string>
+    <string name="tuesday_en">Tuesday</string>
+    <string name="wednesday_en">Wednesday</string>
+    <string name="thursday_en">Thursday</string>
+    <string name="friday_en">Friday</string>
+    <string name="saturday_en">Saturday</string>
+    <string name="sunday_en">Sunday</string>
     <string name="select_snackbar">Please, select one item.</string>
     <string name="selected">Selected</string>
 
@@ -56,6 +63,7 @@
     <string name="building_dialog">Budynek:</string>
     <string name="class_type_dialog">Typ zajęć:</string>
     <string name="class_type">Typ zajęć</string>
+    <string name="semester">Semestr:</string>
 
     <!-- Notification -->
     <string name="notification_title">Today\'s lessons</string>
@@ -72,12 +80,15 @@
     <string name="continuee">Kontyuuj</string>
     <string name="pin">PIN:</string>
 
+    <string name="clear_days">Wybierz dni do wyczyszczenia:</string>
+    <string name="choose_days">Widoczne dni:</string>
+
     <string-array name="buildings">
         <item>Gmach Główny</item>
         <item>Gmach Elektrotechniki</item>
         <item>Gmach Mechaniki</item>
         <item>Stara Kotłownia</item>
-        <item> Budynek pod Kominem</item>
+        <item>Budynek pod Kominem</item>
     </string-array>
 
     <string-array name="class_types">

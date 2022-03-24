@@ -8,24 +8,24 @@
     android:padding="15dp">
 
     <TextView
-        android:id="@+id/days_dialog_title"
+        android:id="@+id/days_display_dialog_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAlignment="center"
         android:textStyle="bold"
         android:textColor="@color/button_text"
         android:textSize="20sp"
-        android:text="@string/clear_days" />
+        android:text="@string/choose_days" />
 
     <LinearLayout
-        android:id="@+id/checkbox_list"
+        android:id="@+id/days_display_checkbox_list"
         android:layout_width="200dp"
         android:layout_gravity="center"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <CheckBox
-            android:id="@+id/checkBox_monday"
+            android:id="@+id/days_display_checkBox_monday"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layoutDirection="rtl"
@@ -34,7 +34,7 @@
             android:text="@string/monday" />
 
         <CheckBox
-            android:id="@+id/checkBox_tuesday"
+            android:id="@+id/days_display_checkBox_tuesday"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layoutDirection="rtl"
@@ -43,7 +43,7 @@
             android:text="@string/tuesday" />
 
         <CheckBox
-            android:id="@+id/checkBox_wednesday"
+            android:id="@+id/days_display_checkBox_wednesday"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layoutDirection="rtl"
@@ -52,7 +52,7 @@
             android:text="@string/wednesday" />
 
         <CheckBox
-            android:id="@+id/checkBox_thursday"
+            android:id="@+id/days_display_checkBox_thursday"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layoutDirection="rtl"
@@ -61,7 +61,7 @@
             android:text="@string/thursday" />
 
         <CheckBox
-            android:id="@+id/checkBox_friday"
+            android:id="@+id/days_display_checkBox_friday"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layoutDirection="rtl"
@@ -70,7 +70,7 @@
             android:text="@string/friday" />
 
         <CheckBox
-            android:id="@+id/checkBox_saturday"
+            android:id="@+id/days_display_checkBox_saturday"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layoutDirection="rtl"
@@ -79,7 +79,7 @@
             android:text="@string/saturday" />
 
         <CheckBox
-            android:id="@+id/checkBox_sunday"
+            android:id="@+id/days_display_checkBox_sunday"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layoutDirection="rtl"
@@ -94,7 +94,7 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/clear_timetable_cancel"
+            android:id="@+id/days_display_cancel"
             style="@style/Widget.AppCompat.Button.ButtonBar.AlertDialog"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -103,13 +103,13 @@
             android:text="@string/cancel" />
 
         <Button
-            android:id="@+id/clear_timetable"
+            android:id="@+id/days_display_save"
             style="@style/Widget.AppCompat.Button.ButtonBar.AlertDialog"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:textColor="@color/danger"
-            android:text="@string/clear" />
+            android:textColor="@color/colorAccent"
+            android:text="@string/save" />
 
     </LinearLayout>
 
