@@ -11,6 +11,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -31,6 +32,7 @@ import com.example.pwguide.navigation.Building;
 ;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class OutsideNavigation extends AppCompatActivity implements LocationListener {
 
@@ -41,6 +43,12 @@ public class OutsideNavigation extends AppCompatActivity implements LocationList
     LocationManager locationManager;
     String source_latitude, source_longitude;
     String dest_latitude, dest_longitude;
+
+    ArrayList<String> rooms1 = new ArrayList<>(Arrays.asList("1", "2", "3", "4"));
+    ArrayList<String> rooms2 = new ArrayList<>(Arrays.asList("11", "12", "13", "14"));
+    ArrayList<String> rooms3 = new ArrayList<>(Arrays.asList("21", "22", "23", "24"));
+    ArrayList<String> rooms4 = new ArrayList<>(Arrays.asList("31", "32", "33", "34"));
+    int main_index = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,43 +65,95 @@ public class OutsideNavigation extends AppCompatActivity implements LocationList
             }
         });
 
-        buildings.add(new Building("Gmach Główny", 52.22082029751707, 21.010043041354443));
-        buildings.add(new Building("Gmach Elektrotechniki", 52.221491504548844, 21.00610232600991));
-        buildings.add(new Building("Gmach Mechaniki",  52.22096539698025, 21.008062654846032));
-        buildings.add(new Building("Stara Kotłownia",  52.220968233478914, 21.00848696833765));
+        buildings.add(new Building("Gmach Główny", 52.22082029751707, 21.010043041354443, rooms1));
+        buildings.add(new Building("Gmach Elektrotechniki", 52.221491504548844, 21.00610232600991, rooms2));
+        buildings.add(new Building("Gmach Mechaniki",  52.22096539698025, 21.008062654846032, rooms3));
+        buildings.add(new Building("Stara Kotłownia",  52.220968233478914, 21.00848696833765, rooms4));
 
         ArrayList<String> build_name = new ArrayList<>();
         for(Building building:buildings ){
             build_name.add(building.getName());
         }
-        //String[] buildings = getResources().getStringArray(R.array.buildings);
+
         String[] halls = getResources().getStringArray(R.array.halls);
 
         AutoCompleteTextView editText1 = findViewById(R.id.build_list3);
         ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, build_name);
         editText1.setAdapter(adapter1);
 
-        AutoCompleteTextView editText2 = findViewById(R.id.hall_list3);
-        ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, halls);
-        editText2.setAdapter(adapter2);
-
         ImageView arrow1 = (ImageView)findViewById(R.id.drop_down);
-        ImageView arrow2 = (ImageView)findViewById(R.id.drop_down2);
+
         final AutoCompleteTextView build_list = (AutoCompleteTextView)findViewById(R.id.build_list3);
         final AutoCompleteTextView hall_list = (AutoCompleteTextView)findViewById(R.id.hall_list3);
+
         build_list.setThreshold(1);
-        hall_list.setThreshold(1);
 
         arrow1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 build_list.showDropDown();
+
+                String building = build_list.getText().toString();
+                int index = 0;
+                for (int i = 0; i < buildings.size(); i++) {
+                    if (buildings.get(i).getName().equals(building)) {
+                        System.out.println(buildings.get(i).getName());
+                        index = i;
+                    }
+                }
+                main_index = index;
+                AutoCompleteTextView editText2 = findViewById(R.id.hall_list3);
+                ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(getBaseContext(), android.R.layout.simple_dropdown_item_1line, buildings.get(index).getRooms());
+                editText2.setAdapter(adapter2);
+                ImageView arrow2 = (ImageView)findViewById(R.id.drop_down2);
+                hall_list.setThreshold(1);
+
+                arrow2.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        hall_list.showDropDown();
+                        String building = build_list.getText().toString();
+                        int index = 0;
+                        for (int i = 0; i < buildings.size(); i++) {
+                            if (buildings.get(i).getName().equals(building)) {
+                                System.out.println(buildings.get(i).getName());
+                                index = i;
+                            }
+                        }
+                        main_index = index;
+                        AutoCompleteTextView editText2 = findViewById(R.id.hall_list3);
+                        ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(getBaseContext(), android.R.layout.simple_dropdown_item_1line, buildings.get(index).getRooms());
+                        editText2.setAdapter(adapter2);
+                        hall_list.setThreshold(1);
+                    }
+                });
             }
         });
-        arrow2.setOnClickListener(new View.OnClickListener() {
+
+        editText1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onClick(View view) {
-                hall_list.showDropDown();
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String building = build_list.getText().toString();
+                int index = 0;
+                for (int i = 0; i < buildings.size(); i++) {
+                    if (buildings.get(i).getName().equals(building)) {
+                        System.out.println(buildings.get(i).getName());
+                        index = i;
+                    }
+                }
+                main_index = index;
+                AutoCompleteTextView editText2 = findViewById(R.id.hall_list3);
+                ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(getBaseContext(), android.R.layout.simple_dropdown_item_1line, buildings.get(index).getRooms());
+                editText2.setAdapter(adapter2);
+                ImageView arrow2 = (ImageView)findViewById(R.id.drop_down2);
+                hall_list.setThreshold(1);
+
+                arrow2.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        hall_list.showDropDown();
+                    }
+                });
             }
         });
 
@@ -104,23 +164,38 @@ public class OutsideNavigation extends AppCompatActivity implements LocationList
             @Override
             public void onClick(View v) {
 
-                String building = build_list.getText().toString();
-                System.out.println(building);
-                int index = 0;
-                for(int i = 0; i < buildings.size(); i++) {
-                    if (buildings.get(i).getName().equals(building)) {
-                        System.out.println(buildings.get(i).getName());
-                        index = i;
-                    }
+                if (build_list.getText().toString().isEmpty()){
+                    Toast.makeText(getBaseContext(), "Musisz podać nazwę budynku", Toast.LENGTH_SHORT).show();
                 }
-                dest_latitude = String.valueOf(buildings.get(index).getLatitude());
-                dest_longitude = String.valueOf(buildings.get(index).getLongitude());
+                else if(!build_name.contains(build_list.getText().toString())){
+                    Toast.makeText(getBaseContext(), "Niepoprawna nazwa budynku", Toast.LENGTH_SHORT).show();
 
-                locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-                if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-                    OnGPS();
-                } else {
-                    getLocation(dest_latitude, dest_longitude);
+                }
+                else if(!buildings.get(main_index).getRooms().contains(hall_list.getText().toString())){
+                    Toast.makeText(getBaseContext(), "Niepoprawny numer sali dla wybranego budynku", Toast.LENGTH_SHORT).show();
+
+                }
+
+                else {
+
+                    String building = build_list.getText().toString();
+                    System.out.println(building);
+                    int index = 0;
+                    for (int i = 0; i < buildings.size(); i++) {
+                        if (buildings.get(i).getName().equals(building)) {
+                            System.out.println(buildings.get(i).getName());
+                            index = i;
+                        }
+                    }
+                    dest_latitude = String.valueOf(buildings.get(index).getLatitude());
+                    dest_longitude = String.valueOf(buildings.get(index).getLongitude());
+
+                    locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+                    if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+                        OnGPS();
+                    } else {
+                        getLocation(dest_latitude, dest_longitude);
+                    }
                 }
             }
         });
