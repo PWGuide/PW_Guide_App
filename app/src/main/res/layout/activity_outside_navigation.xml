@@ -128,7 +128,7 @@
                 android:layout_alignRight="@+id/hall_list3"
                 android:layout_alignBottom="@+id/hall_list3"
                 android:layout_marginStart="2dp"
-                android:layout_marginTop="43dp"
+                android:layout_marginTop="32dp"
                 android:padding="5dp"
                 android:src="@mipmap/outline_arrow_drop_down_black_24"
                 app:layout_constraintStart_toEndOf="@+id/hall_list3"
