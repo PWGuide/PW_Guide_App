@@ -6,6 +6,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 
@@ -13,6 +14,9 @@ public class NavigationActivity extends AppCompatActivity {
     TextView targetText, sourceText;
     String target = "Gmach Główny\nSala 123";
     String source = "Budynek Wydziału Elektrycznego\nSala 312";
+    private NavigationCanvas canvas;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,9 +30,12 @@ public class NavigationActivity extends AppCompatActivity {
                 View.SYSTEM_UI_FLAG_FULLSCREEN | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
         decorView.setSystemUiVisibility(uiOptions);
 
-        BottomSheetBehavior<View> sheetBehavior = BottomSheetBehavior.from(findViewById(R.id.sheet_navigation));
-        sheetBehavior.setPeekHeight(300);
-        sheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+//        BottomSheetBehavior<View> sheetBehavior = BottomSheetBehavior.from(findViewById(R.id.sheet_navigation));
+//        sheetBehavior.setPeekHeight(300);
+//        sheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+
+        canvas = findViewById(R.id.navigation_canvas);
+
 
         targetText = findViewById(R.id.targetText);
         sourceText = findViewById(R.id.sourceText);
