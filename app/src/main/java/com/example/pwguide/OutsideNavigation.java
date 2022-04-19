@@ -28,9 +28,12 @@ import android.location.Location;
 ;
 import android.widget.Toast;
 
+import com.example.pwguide.dijkstraAlgorithm.ProgramAlgorithm;
 import com.example.pwguide.navigation.Building;
 ;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -43,10 +46,12 @@ public class OutsideNavigation extends AppCompatActivity implements LocationList
     LocationManager locationManager;
     String source_latitude, source_longitude;
     String dest_latitude, dest_longitude;
+    private final ProgramAlgorithm programAlgorithm = new ProgramAlgorithm();
+
 
     ArrayList<String> rooms1 = new ArrayList<>(Arrays.asList("1", "2", "3", "4"));
     ArrayList<String> rooms2 = new ArrayList<>(Arrays.asList("11", "12", "13", "14"));
-    ArrayList<String> rooms3 = new ArrayList<>(Arrays.asList("21", "22", "23", "24"));
+    ArrayList<String> rooms3 = new ArrayList<>(Arrays.asList( "22", "23", "24"));
     ArrayList<String> rooms4 = new ArrayList<>(Arrays.asList("31", "32", "33", "34"));
     int main_index = 0;
 
@@ -180,6 +185,18 @@ public class OutsideNavigation extends AppCompatActivity implements LocationList
 
                     String building = build_list.getText().toString();
                     System.out.println(building);
+
+                    String buldingName  = buildings.get(main_index).getName();
+                    buldingName = buldingName.replaceAll("\\s+","");
+                    buldingName = buldingName + ".txt";
+
+                    try {
+                        InputStream input = getBaseContext().getAssets().open(buldingName);
+                        programAlgorithm.programExcute(hall_list.getText().toString(),input);
+                    } catch (IOException e) {
+//                        throw new IllegalArgumentException("File has to be accessible!");
+                    }
+
                     int index = 0;
                     for (int i = 0; i < buildings.size(); i++) {
                         if (buildings.get(i).getName().equals(building)) {

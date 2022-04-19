@@ -10,12 +10,19 @@ import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.pwguide.dijkstraAlgorithm.ProgramAlgorithm;
+
+import java.io.IOException;
+import java.io.InputStream;
+
 public class InsideNavigation extends AppCompatActivity {
 
     Button b_select_plan;
     Button b_take_photo;
     Button b_select_plan2;
     Button b_rozpocznij;
+
+    private final ProgramAlgorithm programAlgorithm = new ProgramAlgorithm();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -119,6 +126,20 @@ public class InsideNavigation extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(InsideNavigation.this, NavigationActivity.class);
                 startActivity(intent);
+
+                String buldingName = build_list1.getText().toString();
+
+                buldingName = buldingName.replaceAll("\\s+","");
+                buldingName = buldingName + ".txt";
+                System.out.println(buldingName);
+
+                try {
+                    InputStream input = getBaseContext().getAssets().open(buldingName);
+                    programAlgorithm.programExcute(hall_list1.getText().toString(),input);
+                } catch (IOException e) {
+                       // throw new IllegalArgumentException("File has to be accessible!");
+                }
+
             }
         });
 
