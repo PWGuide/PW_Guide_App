@@ -27,6 +27,7 @@ public class NavigationCanvas extends View {
     private double dx,dy;
     private ScaleGestureDetector mScaleGestureDetector;
     private GestureDetector mGestureListener;
+    private boolean isScaled = false;
 
     public NavigationCanvas(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
@@ -81,18 +82,24 @@ public class NavigationCanvas extends View {
                     dy = motionEvent.getRawY();
                     break;
                 case MotionEvent.ACTION_MOVE:
-                    translateX += (int) (motionEvent.getRawX() - dx);
-                    translateY += (int) (motionEvent.getRawY() - dy);
-                    if(translateX < translateXMin || translateX > translateXMax) {
-                        translateX -= (int) (motionEvent.getRawX() - dx);
+                    if(!isScaled) {
+                        translateX += (int) (motionEvent.getRawX() - dx);
+                        translateY += (int) (motionEvent.getRawY() - dy);
+                        if (translateX < translateXMin || translateX > translateXMax) {
+                            translateX -= (int) (motionEvent.getRawX() - dx);
+                        }
+                        if (translateY < translateYMin || translateY > translateYMax) {
+                            translateY -= (int) (motionEvent.getRawY() - dy);
+                        }
+                        dx = motionEvent.getRawX();
+                        dy = motionEvent.getRawY();
                     }
-                    if(translateY < translateYMin || translateY > translateYMax) {
-                        translateY -= (int) (motionEvent.getRawY() - dy);
-                    }
-                    dx = motionEvent.getRawX();
-                    dy = motionEvent.getRawY();
                     break;
+                case MotionEvent.ACTION_UP:
+                    isScaled = false;
             }
+        } else {
+            isScaled = true;
         }
 
         invalidate();

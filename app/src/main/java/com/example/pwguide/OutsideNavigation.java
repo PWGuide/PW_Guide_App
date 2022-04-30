@@ -36,6 +36,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class OutsideNavigation extends AppCompatActivity implements LocationListener {
 
@@ -245,8 +246,22 @@ public class OutsideNavigation extends AppCompatActivity implements LocationList
             Location locationGPS = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
 
             if(locationGPS == null){
-                locationManager.requestSingleUpdate(LocationManager.GPS_PROVIDER, this, null);
-                locationGPS = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                //locationManager.requestSingleUpdate(LocationManager.GPS_PROVIDER, this, null);
+                locationManager = (LocationManager)getApplicationContext().getSystemService(LOCATION_SERVICE);
+                List<String> providers = locationManager.getProviders(true);
+                Location bestLocation = null;
+                for (String provider : providers) {
+                    Location l = locationManager.getLastKnownLocation(provider);
+                    if (l == null) {
+                        continue;
+                    }
+                    if (bestLocation == null || l.getAccuracy() < bestLocation.getAccuracy()) {
+                        // Found best last known location: %s", l);
+                        bestLocation = l;
+                    }
+                }
+                locationGPS = bestLocation;
+                //locationGPS = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
             }
 
             if (locationGPS != null) {

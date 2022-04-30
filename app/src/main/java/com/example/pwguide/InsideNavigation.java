@@ -7,6 +7,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -132,10 +133,11 @@ public class InsideNavigation extends AppCompatActivity {
                 buldingName = buldingName.replaceAll("\\s+","");
                 buldingName = buldingName + ".txt";
                 System.out.println(buldingName);
-
+                String path = null;
                 try {
                     InputStream input = getBaseContext().getAssets().open(buldingName);
-                    programAlgorithm.programExcute(hall_list1.getText().toString(),input);
+                    path = programAlgorithm.programExcute(hall_list1.getText().toString(),input);
+                    Toast.makeText(getApplicationContext(), path, Toast.LENGTH_LONG).show();
                 } catch (IOException e) {
                        // throw new IllegalArgumentException("File has to be accessible!");
                 }

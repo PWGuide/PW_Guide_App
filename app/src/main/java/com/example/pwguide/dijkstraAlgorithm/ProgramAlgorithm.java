@@ -18,7 +18,7 @@ public class ProgramAlgorithm  extends AppCompatActivity {
     private List<Edge> edges;
     private String[] bufferArray;
 
-    public void programExcute( String classNumber,InputStream input ) throws IOException {
+    public String programExcute( String classNumber,InputStream input ) throws IOException {
         nodes = new HashMap<String, Vertex>();
         edges = new ArrayList<Edge>();
 
@@ -29,9 +29,12 @@ public class ProgramAlgorithm  extends AppCompatActivity {
         dijkstra.execute(nodes.get("21"));
         LinkedList<Vertex> path = dijkstra.getPath(nodes.get(classNumber));
 
+        StringBuilder sb = new StringBuilder();
         for (Vertex vertex : path) {
+            sb.append(vertex.getName()).append(" ");
             System.out.println(vertex);
         }
+        return sb.toString();
     }
 
     private void addVertex(String name, double x, double y, int floor){
