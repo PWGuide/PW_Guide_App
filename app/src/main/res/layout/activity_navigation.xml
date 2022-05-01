@@ -45,7 +45,7 @@
 <!--        app:srcCompat="@drawable/mini_0" />-->
 
 
-    <com.example.pwguide.NavigationCanvas
+    <com.example.pwguide.navigation.NavigationCanvas
         android:id="@+id/navigation_canvas"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -64,7 +64,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/sourceText"
-        app:srcCompat="@drawable/od_do" />
+        app:srcCompat="@drawable/from_to_nav" />
 
     <TextView
         android:id="@+id/sourceText"

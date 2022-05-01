@@ -12,9 +12,14 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.pwguide.dijkstraAlgorithm.ProgramAlgorithm;
+import com.example.pwguide.dijkstraAlgorithm.Vertex;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
 public class InsideNavigation extends AppCompatActivity {
 
@@ -125,23 +130,24 @@ public class InsideNavigation extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(InsideNavigation.this, NavigationActivity.class);
-                startActivity(intent);
-
                 String buldingName = build_list1.getText().toString();
+                LinkedList<Vertex> path = new LinkedList<>();
 
                 buldingName = buldingName.replaceAll("\\s+","");
-                buldingName = buldingName + ".txt";
+                //buldingName = buldingName + ".txt";
+                buldingName = "mini" + ".txt";
                 System.out.println(buldingName);
-                String path = null;
                 try {
                     InputStream input = getBaseContext().getAssets().open(buldingName);
-                    path = programAlgorithm.programExcute(hall_list1.getText().toString(),input);
-                    Toast.makeText(getApplicationContext(), path, Toast.LENGTH_LONG).show();
+                   // path = programAlgorithm.programExcute(hall_list1.getText().toString(),input);
+                    path = programAlgorithm.programExcute("15",input);
+                    //Toast.makeText(getApplicationContext(), path, Toast.LENGTH_LONG).show();
                 } catch (IOException e) {
                        // throw new IllegalArgumentException("File has to be accessible!");
                 }
-
+                Intent intent = new Intent(InsideNavigation.this, NavigationActivity.class);
+                intent.putExtra("pathList", path);
+                startActivity(intent);
             }
         });
 

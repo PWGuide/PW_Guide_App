@@ -1,6 +1,8 @@
 package com.example.pwguide.dijkstraAlgorithm;
 
-public class Vertex {
+import java.io.Serializable;
+
+public class Vertex implements Serializable {
     final private String name;
     final private double x;
     final private double y;

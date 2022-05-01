@@ -18,7 +18,7 @@ public class ProgramAlgorithm  extends AppCompatActivity {
     private List<Edge> edges;
     private String[] bufferArray;
 
-    public String programExcute( String classNumber,InputStream input ) throws IOException {
+    public LinkedList<Vertex> programExcute( String classNumber,InputStream input ) throws IOException {
         nodes = new HashMap<String, Vertex>();
         edges = new ArrayList<Edge>();
 
@@ -26,15 +26,14 @@ public class ProgramAlgorithm  extends AppCompatActivity {
         Graph graph = new Graph(nodes, edges);
         DijkstraAlgorithm dijkstra = new DijkstraAlgorithm(graph);
         // narazie przypiany początkowy, pozniej bedzie to wejscie (lub podana sala)
-        dijkstra.execute(nodes.get("21"));
-        LinkedList<Vertex> path = dijkstra.getPath(nodes.get(classNumber));
+        dijkstra.execute(nodes.get("w1"));
 
-        StringBuilder sb = new StringBuilder();
-        for (Vertex vertex : path) {
-            sb.append(vertex.getName()).append(" ");
-            System.out.println(vertex);
-        }
-        return sb.toString();
+//        StringBuilder sb = new StringBuilder();
+//        for (Vertex vertex : path) {
+//            sb.append(vertex.getName()).append(" ");
+//            System.out.println(vertex);
+//        }
+        return dijkstra.getPath(nodes.get(classNumber));
     }
 
     private void addVertex(String name, double x, double y, int floor){

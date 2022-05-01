@@ -6,9 +6,12 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
 
-import com.google.android.material.bottomsheet.BottomSheetBehavior;
+import com.example.pwguide.dijkstraAlgorithm.Vertex;
+import com.example.pwguide.navigation.NavigationCanvas;
+
+import java.util.ArrayList;
+import java.util.LinkedList;
 
 public class NavigationActivity extends AppCompatActivity {
     TextView targetText, sourceText;
@@ -16,13 +19,12 @@ public class NavigationActivity extends AppCompatActivity {
     String source = "Budynek Wydziału Elektrycznego\nSala 312";
     private NavigationCanvas canvas;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_navigation);
         getSupportActionBar().setTitle("Nawigacja");
+        ArrayList<Vertex> myList = (ArrayList<Vertex>) getIntent().getSerializableExtra("pathList");
         View decorView = getWindow().getDecorView();
         int uiOptions = View.SYSTEM_UI_FLAG_LAYOUT_STABLE |
                 View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION |
@@ -35,14 +37,13 @@ public class NavigationActivity extends AppCompatActivity {
 //        sheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
 
         canvas = findViewById(R.id.navigation_canvas);
-
+        canvas.setPath(myList);
 
         targetText = findViewById(R.id.targetText);
         sourceText = findViewById(R.id.sourceText);
 
         addTargetName(target);
         sourceText.setText(source);
-
 
         ImageButton backButton = findViewById(R.id.back_navigation);
         backButton.setOnClickListener(new View.OnClickListener() {
