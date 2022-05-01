@@ -6,6 +6,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.example.pwguide.dijkstraAlgorithm.Vertex;
 import com.example.pwguide.navigation.NavigationCanvas;
@@ -38,9 +39,11 @@ public class NavigationActivity extends AppCompatActivity {
 
         canvas = findViewById(R.id.navigation_canvas);
         canvas.setPath(myList);
-
         targetText = findViewById(R.id.targetText);
         sourceText = findViewById(R.id.sourceText);
+
+        ConstraintLayout layout = findViewById(R.id.navigation_layout);
+        canvas.addButton(layout);
 
         addTargetName(target);
         sourceText.setText(source);

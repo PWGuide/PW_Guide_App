@@ -140,7 +140,7 @@ public class InsideNavigation extends AppCompatActivity {
                 try {
                     InputStream input = getBaseContext().getAssets().open(buldingName);
                    // path = programAlgorithm.programExcute(hall_list1.getText().toString(),input);
-                    path = programAlgorithm.programExcute("15",input);
+                    path = programAlgorithm.programExcute("107",input);
                     //Toast.makeText(getApplicationContext(), path, Toast.LENGTH_LONG).show();
                 } catch (IOException e) {
                        // throw new IllegalArgumentException("File has to be accessible!");
