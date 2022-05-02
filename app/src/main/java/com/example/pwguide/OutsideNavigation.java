@@ -1,10 +1,13 @@
 package com.example.pwguide;
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.Uri;
@@ -16,81 +19,70 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.ImageView;
-
-import androidx.appcompat.app.AppCompatActivity;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
-
-import android.Manifest;
-import android.content.pm.PackageManager;
-import android.location.Location;
-;
-import android.widget.Toast;
 
 import com.example.pwguide.dijkstraAlgorithm.ProgramAlgorithm;
 import com.example.pwguide.navigation.Building;
-;
+import com.example.pwguide.navigation.ReadNavigaionsFile;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+
 
 public class OutsideNavigation extends AppCompatActivity implements LocationListener {
 
     Button b_select_plan;
     Button b_rozpocznij;
     ArrayList<Building> buildings = new ArrayList<>();
+
     private static final int REQUEST_LOCATION = 1;
     LocationManager locationManager;
     String source_latitude, source_longitude;
     String dest_latitude, dest_longitude;
     private final ProgramAlgorithm programAlgorithm = new ProgramAlgorithm();
-
-
-    ArrayList<String> rooms1 = new ArrayList<>(Arrays.asList("1", "2", "3", "4"));
-    ArrayList<String> rooms2 = new ArrayList<>(Arrays.asList("11", "12", "13", "14"));
-    ArrayList<String> rooms3 = new ArrayList<>(Arrays.asList( "22", "23", "24"));
-    ArrayList<String> rooms4 = new ArrayList<>(Arrays.asList("31", "32", "33", "34"));
+    private final ReadNavigaionsFile readNavigaionsFile = new ReadNavigaionsFile();
     int main_index = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_outside_navigation);
+        try {
+            InputStream input = getBaseContext().getAssets().open("navigation.txt");
+            buildings = readNavigaionsFile.loadNavigationData(input);
+        } catch (IOException e) {
+
+        }
+
 
         b_select_plan = findViewById(R.id.b_select_plan3);
         b_select_plan.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(OutsideNavigation.this, TimetableActivity.class);
-                startActivity(intent);
+                Toast.makeText(getApplicationContext(), buildings.get(0).toString() + ' ' + buildings.get(0).getEntrances().toString(), Toast.LENGTH_SHORT).show();
             }
         });
 
-        buildings.add(new Building("Gmach Główny", 52.22082029751707, 21.010043041354443, rooms1));
-        buildings.add(new Building("Gmach Elektrotechniki", 52.221491504548844, 21.00610232600991, rooms2));
-        buildings.add(new Building("Gmach Mechaniki",  52.22096539698025, 21.008062654846032, rooms3));
-        buildings.add(new Building("Stara Kotłownia",  52.220968233478914, 21.00848696833765, rooms4));
-
         ArrayList<String> build_name = new ArrayList<>();
-        for(Building building:buildings ){
+        for (Building building : buildings) {
             build_name.add(building.getName());
         }
-
-        String[] halls = getResources().getStringArray(R.array.halls);
 
         AutoCompleteTextView editText1 = findViewById(R.id.build_list3);
         ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, build_name);
         editText1.setAdapter(adapter1);
 
-        ImageView arrow1 = (ImageView)findViewById(R.id.drop_down);
+        ImageView arrow1 = (ImageView) findViewById(R.id.drop_down);
 
-        final AutoCompleteTextView build_list = (AutoCompleteTextView)findViewById(R.id.build_list3);
-        final AutoCompleteTextView hall_list = (AutoCompleteTextView)findViewById(R.id.hall_list3);
+        final AutoCompleteTextView build_list = (AutoCompleteTextView) findViewById(R.id.build_list3);
+        final AutoCompleteTextView hall_list = (AutoCompleteTextView) findViewById(R.id.hall_list3);
 
         build_list.setThreshold(1);
 
@@ -111,7 +103,7 @@ public class OutsideNavigation extends AppCompatActivity implements LocationList
                 AutoCompleteTextView editText2 = findViewById(R.id.hall_list3);
                 ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(getBaseContext(), android.R.layout.simple_dropdown_item_1line, buildings.get(index).getRooms());
                 editText2.setAdapter(adapter2);
-                ImageView arrow2 = (ImageView)findViewById(R.id.drop_down2);
+                ImageView arrow2 = (ImageView) findViewById(R.id.drop_down2);
                 hall_list.setThreshold(1);
 
                 arrow2.setOnClickListener(new View.OnClickListener() {
@@ -151,7 +143,7 @@ public class OutsideNavigation extends AppCompatActivity implements LocationList
                 AutoCompleteTextView editText2 = findViewById(R.id.hall_list3);
                 ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(getBaseContext(), android.R.layout.simple_dropdown_item_1line, buildings.get(index).getRooms());
                 editText2.setAdapter(adapter2);
-                ImageView arrow2 = (ImageView)findViewById(R.id.drop_down2);
+                ImageView arrow2 = (ImageView) findViewById(R.id.drop_down2);
                 hall_list.setThreshold(1);
 
                 arrow2.setOnClickListener(new View.OnClickListener() {
@@ -163,37 +155,33 @@ public class OutsideNavigation extends AppCompatActivity implements LocationList
             }
         });
 
-        ActivityCompat.requestPermissions( this, new String[] {Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION);
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION);
         b_rozpocznij = findViewById(R.id.b_rozpocznij2);
         b_rozpocznij.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
 
-                if (build_list.getText().toString().isEmpty()){
+                if (build_list.getText().toString().isEmpty()) {
                     Toast.makeText(getBaseContext(), "Musisz podać nazwę budynku", Toast.LENGTH_SHORT).show();
-                }
-                else if(!build_name.contains(build_list.getText().toString())){
+                } else if (!build_name.contains(build_list.getText().toString())) {
                     Toast.makeText(getBaseContext(), "Niepoprawna nazwa budynku", Toast.LENGTH_SHORT).show();
 
-                }
-                else if(!buildings.get(main_index).getRooms().contains(hall_list.getText().toString())){
+                } else if (!buildings.get(main_index).getRooms().contains(hall_list.getText().toString())) {
                     Toast.makeText(getBaseContext(), "Niepoprawny numer sali dla wybranego budynku", Toast.LENGTH_SHORT).show();
 
-                }
-
-                else {
+                } else {
 
                     String building = build_list.getText().toString();
                     System.out.println(building);
 
-                    String buldingName  = buildings.get(main_index).getName();
-                    buldingName = buldingName.replaceAll("\\s+","");
+                    String buldingName = buildings.get(main_index).getName();
+                    buldingName = buldingName.replaceAll("\\s+", "");
                     buldingName = buldingName + ".txt";
 
                     try {
                         InputStream input = getBaseContext().getAssets().open(buldingName);
-                        programAlgorithm.programExcute(hall_list.getText().toString(),input);
+                        programAlgorithm.programExcute(hall_list.getText().toString(), input);
                     } catch (IOException e) {
 //                        throw new IllegalArgumentException("File has to be accessible!");
                     }
@@ -205,8 +193,8 @@ public class OutsideNavigation extends AppCompatActivity implements LocationList
                             index = i;
                         }
                     }
-                    dest_latitude = String.valueOf(buildings.get(index).getLatitude());
-                    dest_longitude = String.valueOf(buildings.get(index).getLongitude());
+                    dest_latitude = String.valueOf(buildings.get(index).getEntrances().get(0).getLatitude());
+                    dest_longitude = String.valueOf(buildings.get(index).getEntrances().get(0).getLongitude());
 
                     locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
                     if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
@@ -221,7 +209,7 @@ public class OutsideNavigation extends AppCompatActivity implements LocationList
 
     private void OnGPS() {
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("Udziel dostępu do GPSa").setCancelable(false).setPositiveButton("Tak", new  DialogInterface.OnClickListener() {
+        builder.setMessage("Udziel dostępu do GPSa").setCancelable(false).setPositiveButton("Tak", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
@@ -238,16 +226,16 @@ public class OutsideNavigation extends AppCompatActivity implements LocationList
 
     private void getLocation(String dest_latitude, String dest_longitude) {
         if (ActivityCompat.checkSelfPermission(
-                OutsideNavigation.this,Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                OutsideNavigation.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
                 OutsideNavigation.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION);
         } else {
             locationManager.requestSingleUpdate(LocationManager.GPS_PROVIDER, (LocationListener) this, null);
             Location locationGPS = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
 
-            if(locationGPS == null){
+            if (locationGPS == null) {
                 //locationManager.requestSingleUpdate(LocationManager.GPS_PROVIDER, this, null);
-                locationManager = (LocationManager)getApplicationContext().getSystemService(LOCATION_SERVICE);
+                locationManager = (LocationManager) getApplicationContext().getSystemService(LOCATION_SERVICE);
                 List<String> providers = locationManager.getProviders(true);
                 Location bestLocation = null;
                 for (String provider : providers) {
@@ -277,14 +265,14 @@ public class OutsideNavigation extends AppCompatActivity implements LocationList
         }
     }
 
-    private void DisplayTrack(String source_latitude, String source_longitude, String dest_latitude, String dest_longitude){
-        try{
-            Uri uri = Uri.parse("http://maps.google.com/maps?saddr=" + source_latitude +"," + source_longitude + "&daddr=" + dest_latitude +"," + dest_longitude);
+    private void DisplayTrack(String source_latitude, String source_longitude, String dest_latitude, String dest_longitude) {
+        try {
+            Uri uri = Uri.parse("http://maps.google.com/maps?saddr=" + source_latitude + "," + source_longitude + "&daddr=" + dest_latitude + "," + dest_longitude);
             Intent intent = new Intent(Intent.ACTION_VIEW, uri);
             intent.setPackage("com.google.android.apps.maps");
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
-        }catch (ActivityNotFoundException e){
+        } catch (ActivityNotFoundException e) {
             //google map nie jest zainstalowane
             Uri uri = Uri.parse("https://play.google.com/store/apps/details?id=com.google.android.apps.maps");
             Intent intent = new Intent(Intent.ACTION_VIEW, uri);
@@ -317,4 +305,6 @@ public class OutsideNavigation extends AppCompatActivity implements LocationList
     public void onStatusChanged(String provider, int status, Bundle extras) {
 
     }
+
+
 }

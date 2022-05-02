@@ -2,40 +2,36 @@ package com.example.pwguide.navigation;
 
 import java.util.ArrayList;
 
+
 public class Building {
 
     private String name;
-    private double latitude;
-    private double longitude;
+    //private double latitude;
+    //private double longitude;
     private ArrayList <String> rooms;
+    private ArrayList <Entrance> entrances;
 
-    public Building(String name, double latitude, double longitude, ArrayList <String> rooms){
+    public Building(String name, ArrayList <String> rooms, ArrayList <Entrance> entrances){
         this.name = name;
-        this.latitude = latitude;
-        this.longitude = longitude;
+        //this.latitude = latitude;
+        //this.longitude = longitude;
         this.rooms = rooms;
+        this.entrances = entrances;
     }
 
     public String getName() {
         return name;
     }
 
-    public double getLatitude() {
-        return latitude;
-    }
-
-    public double getLongitude() {
-        return longitude;
-    }
-
     public ArrayList<String> getRooms() {return rooms;}
+
+    public ArrayList<Entrance> getEntrances() {return entrances;}
 
     @Override
     public String toString() {
         return "Building{" +
                 "name='" + name + '\'' +
-                ", latitude=" + latitude +
-                ", longitude=" + longitude +
+                ", rooms=" + rooms +
                 '}';
     }
 }
