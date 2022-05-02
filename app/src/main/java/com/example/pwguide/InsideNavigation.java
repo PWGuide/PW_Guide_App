@@ -266,33 +266,24 @@ public class InsideNavigation extends AppCompatActivity {
                     String buldingName = build_list1.getText().toString();
                     LinkedList<Vertex> path = new LinkedList<>();
 
-                buldingName = buldingName.replaceAll("\\s+","");
-                //buldingName = buldingName + ".txt";
-                buldingName = "mini" + ".txt";
-                System.out.println(buldingName);
-                try {
-                    InputStream input = getBaseContext().getAssets().open(buldingName);
-                   // path = programAlgorithm.programExcute(hall_list1.getText().toString(),input);
-                    path = programAlgorithm.programExcute("ee",input);
-                    //Toast.makeText(getApplicationContext(), path, Toast.LENGTH_LONG).show();
-                } catch (IOException e) {
-                       // throw new IllegalArgumentException("File has to be accessible!");
+                    buldingName = buldingName.replaceAll("\\s+", "");
+                    //buldingName = buldingName + ".txt";
+                    buldingName = "mini" + ".txt";
+                    System.out.println(buldingName);
+                    try {
+                        InputStream input = getBaseContext().getAssets().open(buldingName);
+                        // path = programAlgorithm.programExcute(hall_list1.getText().toString(),input);
+                        path = programAlgorithm.programExcute("ee", input);
+                        //Toast.makeText(getApplicationContext(), path, Toast.LENGTH_LONG).show();
+                    } catch (IOException e) {
+                        // throw new IllegalArgumentException("File has to be accessible!");
+                    }
+                    Intent intent = new Intent(InsideNavigation.this, NavigationActivity.class);
+                    intent.putExtra("pathList", path);
+                    startActivity(intent);
                 }
-                Intent intent = new Intent(InsideNavigation.this, NavigationActivity.class);
-                intent.putExtra("pathList", path);
-                startActivity(intent);
             }
+
         });
-
-
-
-
-
-            }
-        });
-
-
     }
-
-
 }
