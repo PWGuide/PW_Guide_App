@@ -26,7 +26,7 @@ public class ProgramAlgorithm  extends AppCompatActivity {
         Graph graph = new Graph(nodes, edges);
         DijkstraAlgorithm dijkstra = new DijkstraAlgorithm(graph);
         // narazie przypiany początkowy, pozniej bedzie to wejscie (lub podana sala)
-        dijkstra.execute(nodes.get("w1"));
+        dijkstra.execute(nodes.get("219"));
 
 //        StringBuilder sb = new StringBuilder();
 //        for (Vertex vertex : path) {

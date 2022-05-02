@@ -167,7 +167,7 @@ public class NavigationCanvas extends View {
             startPoint = null;
             endPoint = null;
             for (Vertex v : path) {
-                if (v.getFloor() == floor && !v.getName().matches("^[0-9]+$")) {
+                if (v.getFloor() == floor && v.getName().matches("^[skw]+[0-9]+$")) {
                     if (first) {
                         startPoint = v;
                         pathToDraw.moveTo(translateX + (float) v.getX() * scale, translateY + (float) v.getY() * scale);
@@ -291,7 +291,10 @@ public class NavigationCanvas extends View {
         }
         floor = path.get(0).getFloor();
 
-        loadImage(R.drawable.mini_0, context);
+        final int resourceId = context.getResources().getIdentifier(building + floor, "drawable",
+                context.getPackageName());
+
+        loadImage(resourceId, context);
     }
 
     public void addButton(ConstraintLayout layout) {
