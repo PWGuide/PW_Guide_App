@@ -83,14 +83,6 @@
     <string name="clear_days">Wybierz dni do wyczyszczenia:</string>
     <string name="choose_days">Widoczne dni:</string>
 
-    <string-array name="buildings">
-        <item>Gmach Główny</item>
-        <item>Gmach Elektrotechniki</item>
-        <item>Gmach Mechaniki</item>
-        <item>Stara Kotłownia</item>
-        <item>Budynek pod Kominem</item>
-    </string-array>
-
     <string-array name="class_types">
         <item>Wykład</item>
         <item>Ćwiczenia</item>
@@ -107,19 +99,6 @@
         <item>P</item>
         <item>JO</item>
         <item>WF</item>
-    </string-array>
-
-    <string-array name="halls">
-        <item>1</item>
-        <item>2</item>
-        <item>3</item>
-        <item>4</item>
-        <item>12</item>
-        <item>123</item>
-        <item>5</item>
-        <item>22</item>
-        <item>23</item>
-        <item>24</item>
     </string-array>
 
 </resources>

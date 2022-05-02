@@ -6,15 +6,11 @@ import java.util.ArrayList;
 public class Building {
 
     private String name;
-    //private double latitude;
-    //private double longitude;
     private ArrayList <String> rooms;
     private ArrayList <Entrance> entrances;
 
     public Building(String name, ArrayList <String> rooms, ArrayList <Entrance> entrances){
         this.name = name;
-        //this.latitude = latitude;
-        //this.longitude = longitude;
         this.rooms = rooms;
         this.entrances = entrances;
     }
