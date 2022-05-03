@@ -2,6 +2,7 @@ package com.example.pwguide;
 
 import android.Manifest;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -201,6 +202,7 @@ public class OutsideNavigation extends AppCompatActivity implements LocationList
                         OnGPS();
                     } else {
                         getLocation(dest_latitude, dest_longitude);
+                        alertDialog();
                     }
                 }
             }
@@ -306,5 +308,21 @@ public class OutsideNavigation extends AppCompatActivity implements LocationList
 
     }
 
+    private void alertDialog(){
+        AlertDialog alertDialog1 = new AlertDialog.Builder(
+                OutsideNavigation.this).create();
 
+        //alertDialog1.setTitle("Alert Dialog");
+
+        alertDialog1.setMessage("Kliknij dalej jeśli jest już w budynku");
+
+        alertDialog1.setButton(Dialog.BUTTON_POSITIVE,"DALEJ", new DialogInterface.OnClickListener() {
+
+            public void onClick(DialogInterface dialog, int which) {
+                Intent intent = new Intent(OutsideNavigation.this, TimetableActivity.class);
+                startActivity(intent);
+            }
+        });
+        alertDialog1.show();
+    }
 }

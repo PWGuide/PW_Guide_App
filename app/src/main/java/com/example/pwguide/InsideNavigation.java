@@ -1,6 +1,11 @@
 package com.example.pwguide;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.ActivityNotFoundException;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -34,6 +39,7 @@ public class InsideNavigation extends AppCompatActivity {
     int main_index2 = 0;
 
     private final ProgramAlgorithm programAlgorithm = new ProgramAlgorithm();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -262,7 +268,12 @@ public class InsideNavigation extends AppCompatActivity {
                     Toast.makeText(getBaseContext(), "Niepoprawna nazwa budynku", Toast.LENGTH_SHORT).show();
                 } else if (!buildings.get(main_index1).getRooms().contains(hall_list1.getText().toString()) || !buildings.get(main_index2).getRooms().contains(hall_list2.getText().toString())) {
                     Toast.makeText(getBaseContext(), "Niepoprawny numer sali dla wybranego budynku", Toast.LENGTH_SHORT).show();
+                } else if (!build_list1.getText().toString().equals(build_list2.getText().toString())) {
+
+                    DisplayTrack(String.valueOf(buildings.get(main_index2).getEntrances().get(0).getLatitude()), String.valueOf(buildings.get(main_index2).getEntrances().get(0).getLongitude()), String.valueOf(buildings.get(main_index1).getEntrances().get(0).getLatitude()), String.valueOf(buildings.get(main_index1).getEntrances().get(0).getLongitude()));
+                    alertDialog(build_list1);
                 } else {
+
                     String buldingName = build_list1.getText().toString();
                     LinkedList<Vertex> path = new LinkedList<>();
 
@@ -281,9 +292,61 @@ public class InsideNavigation extends AppCompatActivity {
                     Intent intent = new Intent(InsideNavigation.this, NavigationActivity.class);
                     intent.putExtra("pathList", path);
                     startActivity(intent);
+
+
                 }
             }
 
         });
+    }
+
+    private void DisplayTrack(String source_latitude, String source_longitude, String dest_latitude, String dest_longitude) {
+        try {
+            Uri uri = Uri.parse("http://maps.google.com/maps?saddr=" + source_latitude + "," + source_longitude + "&daddr=" + dest_latitude + "," + dest_longitude);
+            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+            intent.setPackage("com.google.android.apps.maps");
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+        } catch (ActivityNotFoundException e) {
+            //google map nie jest zainstalowane
+            Uri uri = Uri.parse("https://play.google.com/store/apps/details?id=com.google.android.apps.maps");
+            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+        }
+    }
+
+    private void alertDialog(AutoCompleteTextView build_list1){
+        AlertDialog alertDialog1 = new AlertDialog.Builder(
+                InsideNavigation.this).create();
+
+        //alertDialog1.setTitle("Alert Dialog");
+
+        alertDialog1.setMessage("Kliknij dalej jeśli jest już w budynku");
+
+        alertDialog1.setButton(Dialog.BUTTON_POSITIVE,"DALEJ", new DialogInterface.OnClickListener() {
+
+            public void onClick(DialogInterface dialog, int which) {
+                String buldingName = build_list1.getText().toString();
+                LinkedList<Vertex> path = new LinkedList<>();
+
+                buldingName = buldingName.replaceAll("\\s+", "");
+                //buldingName = buldingName + ".txt";
+                buldingName = "mini" + ".txt";
+                System.out.println(buldingName);
+                try {
+                    InputStream input = getBaseContext().getAssets().open(buldingName);
+                    // path = programAlgorithm.programExcute(hall_list1.getText().toString(),input);
+                    path = programAlgorithm.programExcute("ee", input);
+                    //Toast.makeText(getApplicationContext(), path, Toast.LENGTH_LONG).show();
+                } catch (IOException e) {
+                    // throw new IllegalArgumentException("File has to be accessible!");
+                }
+                Intent intent = new Intent(InsideNavigation.this, NavigationActivity.class);
+                intent.putExtra("pathList", path);
+                startActivity(intent);
+            }
+        });
+        alertDialog1.show();
     }
 }
