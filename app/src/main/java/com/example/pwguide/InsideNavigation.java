@@ -270,7 +270,26 @@ public class InsideNavigation extends AppCompatActivity {
                     Toast.makeText(getBaseContext(), "Niepoprawny numer sali dla wybranego budynku", Toast.LENGTH_SHORT).show();
                 } else if (!build_list1.getText().toString().equals(build_list2.getText().toString())) {
 
-                    DisplayTrack(String.valueOf(buildings.get(main_index2).getEntrances().get(0).getLatitude()), String.valueOf(buildings.get(main_index2).getEntrances().get(0).getLongitude()), String.valueOf(buildings.get(main_index1).getEntrances().get(0).getLatitude()), String.valueOf(buildings.get(main_index1).getEntrances().get(0).getLongitude()));
+                    String entrance_name1 = "w1";
+                    int entrance_index1 = 0;
+                    String entrance_name2 = "w1";
+                    int entrance_index2 = 0;
+
+                    for (int i = 0; i < buildings.get(main_index1).getEntrances().size(); i++) {
+                        if (buildings.get(main_index1).getEntrances().get(i).getName().equals(entrance_name1)) {
+                            entrance_index1 = i;
+                            break;
+                        }
+                    }
+
+                    for (int i = 0; i < buildings.get(main_index2).getEntrances().size(); i++) {
+                        if (buildings.get(main_index2).getEntrances().get(i).getName().equals(entrance_name2)) {
+                            entrance_index2 = i;
+                            break;
+                        }
+                    }
+
+                    DisplayTrack(String.valueOf(buildings.get(main_index2).getEntrances().get(entrance_index2).getLatitude()), String.valueOf(buildings.get(main_index2).getEntrances().get(entrance_index2).getLongitude()), String.valueOf(buildings.get(main_index1).getEntrances().get(entrance_index1).getLatitude()), String.valueOf(buildings.get(main_index1).getEntrances().get(entrance_index1).getLongitude()));
                     alertDialog(build_list1);
                 } else {
 

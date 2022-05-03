@@ -96,7 +96,6 @@ public class OutsideNavigation extends AppCompatActivity implements LocationList
                 int index = 0;
                 for (int i = 0; i < buildings.size(); i++) {
                     if (buildings.get(i).getName().equals(building)) {
-                        System.out.println(buildings.get(i).getName());
                         index = i;
                     }
                 }
@@ -115,7 +114,6 @@ public class OutsideNavigation extends AppCompatActivity implements LocationList
                         int index = 0;
                         for (int i = 0; i < buildings.size(); i++) {
                             if (buildings.get(i).getName().equals(building)) {
-                                System.out.println(buildings.get(i).getName());
                                 index = i;
                             }
                         }
@@ -136,7 +134,6 @@ public class OutsideNavigation extends AppCompatActivity implements LocationList
                 int index = 0;
                 for (int i = 0; i < buildings.size(); i++) {
                     if (buildings.get(i).getName().equals(building)) {
-                        System.out.println(buildings.get(i).getName());
                         index = i;
                     }
                 }
@@ -187,15 +184,18 @@ public class OutsideNavigation extends AppCompatActivity implements LocationList
 //                        throw new IllegalArgumentException("File has to be accessible!");
                     }
 
-                    int index = 0;
-                    for (int i = 0; i < buildings.size(); i++) {
-                        if (buildings.get(i).getName().equals(building)) {
-                            System.out.println(buildings.get(i).getName());
-                            index = i;
+                    String entrance_name = "w1";
+                    int entrance_index = 0;
+
+
+                    for (int i = 0; i < buildings.get(main_index).getEntrances().size(); i++) {
+                        if (buildings.get(main_index).getEntrances().get(i).getName().equals(entrance_name)) {
+                            entrance_index = i;
+                            break;
                         }
                     }
-                    dest_latitude = String.valueOf(buildings.get(index).getEntrances().get(0).getLatitude());
-                    dest_longitude = String.valueOf(buildings.get(index).getEntrances().get(0).getLongitude());
+                    dest_latitude = String.valueOf(buildings.get(main_index).getEntrances().get(entrance_index).getLatitude());
+                    dest_longitude = String.valueOf(buildings.get(main_index).getEntrances().get(entrance_index).getLongitude());
 
                     locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
                     if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
