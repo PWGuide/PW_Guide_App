@@ -18,21 +18,18 @@ public class ProgramAlgorithm  extends AppCompatActivity {
     private List<Edge> edges;
     private String[] bufferArray;
 
-    public LinkedList<Vertex> programExcute( String classNumber,InputStream input ) throws IOException {
+    public LinkedList<Vertex> programExcute( String classNumber, InputStream input, String start ) throws IOException {
         nodes = new HashMap<String, Vertex>();
         edges = new ArrayList<Edge>();
+        System.out.println(classNumber);
+        System.out.println(start);
 
         load(input);
         Graph graph = new Graph(nodes, edges);
         DijkstraAlgorithm dijkstra = new DijkstraAlgorithm(graph);
         // narazie przypiany początkowy, pozniej bedzie to wejscie (lub podana sala)
-        dijkstra.execute(nodes.get("219"));
+        dijkstra.execute(nodes.get(start));
 
-//        StringBuilder sb = new StringBuilder();
-//        for (Vertex vertex : path) {
-//            sb.append(vertex.getName()).append(" ");
-//            System.out.println(vertex);
-//        }
         return dijkstra.getPath(nodes.get(classNumber));
     }
 

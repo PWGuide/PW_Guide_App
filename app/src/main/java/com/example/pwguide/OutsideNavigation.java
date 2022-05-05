@@ -27,13 +27,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import com.example.pwguide.dijkstraAlgorithm.ProgramAlgorithm;
+import com.example.pwguide.dijkstraAlgorithm.Vertex;
 import com.example.pwguide.navigation.Building;
 import com.example.pwguide.navigation.ReadNavigaionsFile;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 
 
 public class OutsideNavigation extends AppCompatActivity implements LocationListener {
@@ -49,6 +52,10 @@ public class OutsideNavigation extends AppCompatActivity implements LocationList
     private final ProgramAlgorithm programAlgorithm = new ProgramAlgorithm();
     private final ReadNavigaionsFile readNavigaionsFile = new ReadNavigaionsFile();
     int main_index = 0;
+    private LinkedList<Vertex> pathInBuilding;
+    private String buildingNameTo;
+    private String buildingName;
+    private String roomTo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -173,18 +180,31 @@ public class OutsideNavigation extends AppCompatActivity implements LocationList
                     String building = build_list.getText().toString();
                     System.out.println(building);
 
-                    String buldingName = buildings.get(main_index).getName();
-                    buldingName = buldingName.replaceAll("\\s+", "");
-                    buldingName = buldingName + ".txt";
+                    buildingName = buildings.get(main_index).getName();
+                    String buildingNameAbbr  = buildingName.toLowerCase(Locale.ROOT);
+                    //System.out.println(building);
+                    StringBuilder sb = new StringBuilder();
+                    for(String s: buildingNameAbbr.split(" ")) {
+                        sb.append(s.charAt(0));
+                    }
+                    //buildingName = buildingName.replaceAll("\\s+", "");
+                    buildingNameAbbr = sb + ".txt";
+                    buildingNameTo = sb.toString();
+                    roomTo = hall_list.getText().toString();
+                    System.out.println(buildingNameAbbr);
+
+                    //Trzeba wyliczyć na podstawie współrzędnych gdzie ktoś się znajduje i zapisanych wejść, które
+                    //jest najbliższe i upewnić się że da się dojść z tego wejścia do sali (czy zwrócona ścieżka
+                    // nie jest pusta, jeśli tak to sprawdzić kolejne wejście
+                    String entrance_name = "w1";
 
                     try {
-                        InputStream input = getBaseContext().getAssets().open(buldingName);
-                        programAlgorithm.programExcute(hall_list.getText().toString(), input);
+                        InputStream input = getBaseContext().getAssets().open(buildingNameAbbr);
+                        pathInBuilding = programAlgorithm.programExcute(hall_list.getText().toString(), input, entrance_name);
                     } catch (IOException e) {
 //                        throw new IllegalArgumentException("File has to be accessible!");
                     }
 
-                    String entrance_name = "w1";
                     int entrance_index = 0;
 
 
@@ -319,7 +339,11 @@ public class OutsideNavigation extends AppCompatActivity implements LocationList
         alertDialog1.setButton(Dialog.BUTTON_POSITIVE,"DALEJ", new DialogInterface.OnClickListener() {
 
             public void onClick(DialogInterface dialog, int which) {
-                Intent intent = new Intent(OutsideNavigation.this, TimetableActivity.class);
+                Intent intent = new Intent(OutsideNavigation.this, NavigationActivity.class);
+                intent.putExtra("pathFrom", pathInBuilding);
+                intent.putExtra("buildingFrom", buildingNameTo);
+                intent.putExtra("buildingToName", buildingName + "\n" + "Sala " + roomTo);
+                intent.putExtra("buildingFromName", "Bieżąca\nlokalizacja");
                 startActivity(intent);
             }
         });

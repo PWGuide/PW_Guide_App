@@ -10,19 +10,25 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Rect;
 import android.graphics.Shader;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.ScaleDrawable;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import androidx.annotation.DrawableRes;
 import androidx.annotation.Nullable;
+import androidx.appcompat.content.res.AppCompatResources;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import com.example.pwguide.InsideNavigation;
+import com.example.pwguide.NavigationActivity;
 import com.example.pwguide.R;
 import com.example.pwguide.dijkstraAlgorithm.Vertex;
 
@@ -49,7 +55,8 @@ public class NavigationCanvas extends View {
     private LinearGradient linearGradient;
     private Vertex startPoint, endPoint;
     private ImageButton up, down;
-    private String building = "mini_";
+    private Button googleMaps;
+    private String building = "gmini_";
 
     public NavigationCanvas(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
@@ -62,6 +69,7 @@ public class NavigationCanvas extends View {
         pathToDraw = new Path();
         up = new ImageButton(context);
         down = new ImageButton(context);
+
         up.setBackground(null);
         down.setBackground(null);
         down.setImageDrawable(context.getDrawable(R.drawable.arrow_down));
@@ -166,6 +174,18 @@ public class NavigationCanvas extends View {
             boolean first = true;
             startPoint = null;
             endPoint = null;
+
+            up.setScaleX(1);
+            up.setScaleY(1);
+            up.setX(getX() + 100);
+            up.setY(getY());
+            down.setScaleX(1);
+            down.setScaleY(1);
+            down.setX(getX());
+            down.setY(getY());
+            if(googleMaps != null) {
+                googleMaps.setVisibility(INVISIBLE);
+            }
             for (Vertex v : path) {
                 if (v.getFloor() == floor && v.getName().matches("^[skw]+[0-9]+$")) {
                     if (first) {
@@ -186,17 +206,36 @@ public class NavigationCanvas extends View {
                         down.setX(translateX + (float) (v.getX() - 50) * scale + getX() - down.getLayoutParams().width / 2);
                         down.setY(translateY + (float) (v.getY() - 50) * scale + getY() - down.getLayoutParams().height / 2);
                     }
+                    if(v.getName().matches("^w[0-9]+$") && googleMaps != null && NavigationActivity.GOOGLE_MAPS_VIS) {
+                        int id = path.indexOf(v) == 0 ? 1 : path.indexOf(v) - 1;
+                        double a, x , y;
+                        double shift = 20;
+                        if(v.getX() - path.get(id).getX() != 0) {
+                            a = (v.getY() - path.get(id).getY()) / (v.getX() - path.get(id).getX());
+                            double m = Math.abs(shift * Math.sin(Math.atan(a)));
+                            if(v.getX() > path.get(id).getX()) {
+                                x = v.getX() + Math.sqrt(shift*shift - m*m);
+                            } else {
+                                x = v.getX() - Math.sqrt(shift*shift - m*m) - googleMaps.getWidth();
+                            }
+                            if(v.getY() > path.get(id).getY()) {
+                                y = v.getY() + m ;
+                            } else {
+                                y = v.getY() - m - googleMaps.getHeight();
+                            }
+                            googleMaps.setX(translateX + (float) x * scale + getX());
+                            googleMaps.setY(translateY + (float) y * scale + getY());
+                        } else {
+                            googleMaps.setX(translateX + (float) (v.getX() * scale + getX() - googleMaps.getWidth()/2));
+                            if(v.getY() > path.get(id).getY()) {
+                                googleMaps.setY(translateY + (float) (v.getY() + shift) * scale + getY());
+                            } else {
+                                googleMaps.setY(translateY + (float) (v.getY() - shift) * scale + getY() - googleMaps.getHeight());
+                            }
+                        }
+                        googleMaps.setVisibility(VISIBLE);
+                    }
                 }
-            }
-            if (first) {
-                up.setScaleX(scale);
-                up.setScaleY(scale);
-                up.setX(getX() + 100);
-                up.setY(getY());
-                down.setScaleX(scale);
-                down.setScaleY(scale);
-                down.setX(getX());
-                down.setY(getY());
             }
 
             if (startPoint != null && endPoint != null) {
@@ -284,27 +323,36 @@ public class NavigationCanvas extends View {
         dest.top = translateY;
     }
 
-    public void setPath(List<Vertex> path) {
+    public void setPath(List<Vertex> path, String buildingName) {
         this.path = path;
         for (Vertex v : path) {
             System.out.println(v.getName());
         }
         floor = path.get(0).getFloor();
+        building = buildingName + "_";
 
         final int resourceId = context.getResources().getIdentifier(building + floor, "drawable",
                 context.getPackageName());
 
         loadImage(resourceId, context);
+        initBitmap();
+        restartDraw();
+        invalidate();
     }
 
     public void addButton(ConstraintLayout layout) {
         layout.addView(up);
         layout.addView(down);
+        layout.addView(googleMaps);
         up.getLayoutParams().height = 130;
         up.getLayoutParams().width = 130;
         down.getLayoutParams().height = 130;
         down.getLayoutParams().width = 130;
         down.setScaleType(ImageView.ScaleType.FIT_XY);
         up.setScaleType(ImageView.ScaleType.FIT_XY);
+    }
+
+    public void setGoogleMapsButton(Button button) {
+        googleMaps = button;
     }
 }
