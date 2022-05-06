@@ -205,6 +205,13 @@ public class NavigationCanvas extends View {
                         down.setScaleY(scale);
                         down.setX(translateX + (float) (v.getX() - 50) * scale + getX() - down.getLayoutParams().width / 2);
                         down.setY(translateY + (float) (v.getY() - 50) * scale + getY() - down.getLayoutParams().height / 2);
+                        if(up.getY() + up.getHeight()/2 < getY()) {
+                            up.setVisibility(INVISIBLE);
+                            down.setVisibility(INVISIBLE);
+                        } else {
+                            up.setVisibility(VISIBLE);
+                            down.setVisibility(VISIBLE);
+                        }
                     }
                     if(v.getName().matches("^w[0-9]+$") && googleMaps != null && NavigationActivity.GOOGLE_MAPS_VIS) {
                         int id = path.indexOf(v) == 0 ? 1 : path.indexOf(v) - 1;
