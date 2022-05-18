@@ -32,4 +32,12 @@ public class Entrance {
                 ", longitude=" + longitude +
                 '}';
     }
+    public double toRadiansLat(double latitude){
+        return Math.toRadians(latitude);
+    }
+    public double toRadiansLon(double longitude){
+        return Math.toRadians(longitude);
+    }
+
+
 }

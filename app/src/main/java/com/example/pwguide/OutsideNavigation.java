@@ -56,6 +56,7 @@ public class OutsideNavigation extends AppCompatActivity implements LocationList
     private String buildingNameTo;
     private String buildingName;
     private String roomTo;
+    ArrayList<String> entrances = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,16 +68,6 @@ public class OutsideNavigation extends AppCompatActivity implements LocationList
         } catch (IOException e) {
 
         }
-
-
-        b_select_plan = findViewById(R.id.b_select_plan3);
-        b_select_plan.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getApplicationContext(), buildings.get(0).toString() + ' ' + buildings.get(0).getEntrances().toString(), Toast.LENGTH_SHORT).show();
-            }
-        });
 
         ArrayList<String> build_name = new ArrayList<>();
         for (Building building : buildings) {
@@ -181,10 +172,10 @@ public class OutsideNavigation extends AppCompatActivity implements LocationList
                     System.out.println(building);
 
                     buildingName = buildings.get(main_index).getName();
-                    String buildingNameAbbr  = buildingName.toLowerCase(Locale.ROOT);
+                    String buildingNameAbbr = buildingName.toLowerCase(Locale.ROOT);
                     //System.out.println(building);
                     StringBuilder sb = new StringBuilder();
-                    for(String s: buildingNameAbbr.split(" ")) {
+                    for (String s : buildingNameAbbr.split(" ")) {
                         sb.append(s.charAt(0));
                     }
                     //buildingName = buildingName.replaceAll("\\s+", "");
@@ -196,35 +187,80 @@ public class OutsideNavigation extends AppCompatActivity implements LocationList
                     //Trzeba wyliczyć na podstawie współrzędnych gdzie ktoś się znajduje i zapisanych wejść, które
                     //jest najbliższe i upewnić się że da się dojść z tego wejścia do sali (czy zwrócona ścieżka
                     // nie jest pusta, jeśli tak to sprawdzić kolejne wejście
-                    String entrance_name = "w1";
-
-                    try {
-                        InputStream input = getBaseContext().getAssets().open(buildingNameAbbr);
-                        pathInBuilding = programAlgorithm.programExcute(hall_list.getText().toString(), input, entrance_name);
-                    } catch (IOException e) {
-//                        throw new IllegalArgumentException("File has to be accessible!");
-                    }
-
-                    int entrance_index = 0;
-
-
-                    for (int i = 0; i < buildings.get(main_index).getEntrances().size(); i++) {
-                        if (buildings.get(main_index).getEntrances().get(i).getName().equals(entrance_name)) {
-                            entrance_index = i;
-                            break;
-                        }
-                    }
-                    dest_latitude = String.valueOf(buildings.get(main_index).getEntrances().get(entrance_index).getLatitude());
-                    dest_longitude = String.valueOf(buildings.get(main_index).getEntrances().get(entrance_index).getLongitude());
 
                     locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
                     if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
                         OnGPS();
                     } else {
-                        getLocation(dest_latitude, dest_longitude);
-                        alertDialog();
+                        ArrayList<Double> coordinates = getLocation();
+
+                        if (!coordinates.isEmpty()) {
+                            source_latitude = String.valueOf(coordinates.get(0));
+                            source_longitude = String.valueOf(coordinates.get(1));
+                            double lat1 = Math.toRadians(coordinates.get(0));
+                            double lon1 = Math.toRadians(coordinates.get(1));
+                            double dlon, dlat, lat2, lon2, dest;
+                            double lastDest = 0;
+                            String tmp_name;
+                            for (int i = 0; i < buildings.get(main_index).getEntrances().size(); i++) {
+                                lat2 = buildings.get(main_index).getEntrances().get(i).toRadiansLat(buildings.get(main_index).getEntrances().get(i).getLatitude());
+                                lon2 = buildings.get(main_index).getEntrances().get(i).toRadiansLon(buildings.get(main_index).getEntrances().get(i).getLongitude());
+                                dlon = lon2 - lon1;
+                                dlat = lat2 - lat1;
+                                dest = Math.pow(Math.sin(dlat / 2), 2) + Math.cos(lat1) * Math.cos(lat2) * Math.pow(Math.sin(dlon / 2), 2);
+                                dest = 2 * Math.asin(Math.sqrt(dest));
+                                if (dest > lastDest) {
+                                    entrances.add(buildings.get(main_index).getEntrances().get(i).getName());
+                                } else {
+                                    tmp_name = entrances.get(i - 1);
+                                    entrances.set(i - 1, buildings.get(main_index).getEntrances().get(i).getName());
+                                    entrances.add(tmp_name);
+                                }
+                                lastDest = dest;
+                            }
+
+                            //w zmiennej entrances są nazwy wejsc ulozone wedlug dystansu od biezacej lokalizacji
+                            //od najblizszego wejscia do najdalszego
+                            String entrance_name = entrances.get(0);
+                            try {
+                                InputStream input = getBaseContext().getAssets().open(buildingNameAbbr);
+                                pathInBuilding = programAlgorithm.programExcute(hall_list.getText().toString(), input, entrance_name);
+                            } catch (IOException e) {
+//                        throw new IllegalArgumentException("File has to be accessible!");
+                            }
+
+                            int entrance_index = 0;
+
+
+                            for (int i = 0; i < buildings.get(main_index).getEntrances().size(); i++) {
+                                if (buildings.get(main_index).getEntrances().get(i).getName().equals(entrance_name)) {
+                                    entrance_index = i;
+                                    break;
+                                }
+                            }
+                            dest_latitude = String.valueOf(buildings.get(main_index).getEntrances().get(entrance_index).getLatitude());
+                            dest_longitude = String.valueOf(buildings.get(main_index).getEntrances().get(entrance_index).getLongitude());
+
+
+                            DisplayTrack(source_latitude, source_longitude, dest_latitude, dest_longitude);
+                            alertDialog();
+
+
+                        } else {
+                            Toast.makeText(getBaseContext(), "Nie można znaleźć twojej lokalizacji.", Toast.LENGTH_SHORT).show();
+                        }
                     }
+
                 }
+            }
+        });
+
+        b_select_plan = findViewById(R.id.b_select_plan3);
+        b_select_plan.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getApplicationContext(), entrances.get(0), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -246,7 +282,8 @@ public class OutsideNavigation extends AppCompatActivity implements LocationList
         alertDialog.show();
     }
 
-    private void getLocation(String dest_latitude, String dest_longitude) {
+    private ArrayList<Double> getLocation() {
+        ArrayList<Double> coordinates = new ArrayList<>();
         if (ActivityCompat.checkSelfPermission(
                 OutsideNavigation.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
                 OutsideNavigation.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -277,14 +314,13 @@ public class OutsideNavigation extends AppCompatActivity implements LocationList
             if (locationGPS != null) {
                 double lat = locationGPS.getLatitude();
                 double longi = locationGPS.getLongitude();
-                source_latitude = String.valueOf(lat);
-                source_longitude = String.valueOf(longi);
-                //Toast.makeText(this,"Twoja lokalizacja: " + "\n" + "Latitude: " + source_latitude + "\n" + "Longitude: " + source_longitude, Toast.LENGTH_SHORT).show();
-                DisplayTrack(source_latitude, source_longitude, dest_latitude, dest_longitude);
-            } else {
-                Toast.makeText(this, "Nie można znaleźć twojej lokalizacji.", Toast.LENGTH_SHORT).show();
+                coordinates.add(lat);
+                coordinates.add(longi);
+
             }
+
         }
+        return coordinates;
     }
 
     private void DisplayTrack(String source_latitude, String source_longitude, String dest_latitude, String dest_longitude) {
@@ -328,7 +364,7 @@ public class OutsideNavigation extends AppCompatActivity implements LocationList
 
     }
 
-    private void alertDialog(){
+    private void alertDialog() {
         AlertDialog alertDialog1 = new AlertDialog.Builder(
                 OutsideNavigation.this).create();
 
@@ -336,7 +372,7 @@ public class OutsideNavigation extends AppCompatActivity implements LocationList
 
         alertDialog1.setMessage("Kliknij dalej jeśli jest już w budynku");
 
-        alertDialog1.setButton(Dialog.BUTTON_POSITIVE,"DALEJ", new DialogInterface.OnClickListener() {
+        alertDialog1.setButton(Dialog.BUTTON_POSITIVE, "DALEJ", new DialogInterface.OnClickListener() {
 
             public void onClick(DialogInterface dialog, int which) {
                 Intent intent = new Intent(OutsideNavigation.this, NavigationActivity.class);
