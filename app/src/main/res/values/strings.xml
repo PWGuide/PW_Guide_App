@@ -34,7 +34,7 @@
     <string name="selected">Selected</string>
 
     <!-- Main Activity strings -->
-    <string name="timetable">TimeTable</string>
+    <string name="timetable">Plan Zajęć</string>
     <string name="seven_days_of_the_week">7 Days of the Week</string>
     <string name="subject">Subject</string>
     <string name="field_error">field can not be empty!</string>
@@ -71,7 +71,7 @@
 
     <string name="select_build">Nazwa budynku</string>
     <string name="select_hall">Numer sali</string>
-    <string name="Wybierz_punkt_początkowy">Wybierz punkt początkowy</string>
+    <string name="Wybierz_punkt_początkowy">Wybierz salę początkową</string>
 
     <string name="timetable_username">Nazwa użytkownika:</string>
     <string name="timetable_apiKey">Klucz API:</string>

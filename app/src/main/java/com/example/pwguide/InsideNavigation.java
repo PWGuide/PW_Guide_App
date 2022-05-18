@@ -34,9 +34,6 @@ import static android.view.View.INVISIBLE;
 
 public class InsideNavigation extends AppCompatActivity {
 
-    Button b_select_plan;
-    Button b_take_photo;
-    Button b_select_plan2;
     Button b_rozpocznij;
     ArrayList<Building> buildings = new ArrayList<>();
     private final ReadNavigaionsFile readNavigaionsFile = new ReadNavigaionsFile();
@@ -225,36 +222,6 @@ public class InsideNavigation extends AppCompatActivity {
                         hall_list2.showDropDown();
                     }
                 });
-            }
-        });
-
-
-        b_select_plan = findViewById(R.id.b_select_plan);
-        b_select_plan.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(InsideNavigation.this, TimetableActivity.class);
-                startActivity(intent);
-            }
-        });
-        b_take_photo = findViewById(R.id.b_take_photo);
-        b_take_photo.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(InsideNavigation.this, CameraActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        b_select_plan2 = findViewById(R.id.b_select_plan2);
-        b_select_plan2.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(InsideNavigation.this, TimetableActivity.class);
-                startActivity(intent);
             }
         });
 

@@ -41,7 +41,6 @@ import java.util.Locale;
 
 public class OutsideNavigation extends AppCompatActivity implements LocationListener {
 
-    Button b_select_plan;
     Button b_rozpocznij;
     ArrayList<Building> buildings = new ArrayList<>();
 
@@ -252,15 +251,6 @@ public class OutsideNavigation extends AppCompatActivity implements LocationList
                     }
 
                 }
-            }
-        });
-
-        b_select_plan = findViewById(R.id.b_select_plan3);
-        b_select_plan.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getApplicationContext(), entrances.get(0), Toast.LENGTH_SHORT).show();
             }
         });
     }
