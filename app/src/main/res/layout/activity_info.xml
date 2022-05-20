@@ -11,24 +11,15 @@
         android:id="@+id/informacjetxt"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/alfa_slab_one"
-        android:textColor="@color/button_text"
-        android:textSize="15sp"
+        android:fontFamily="@font/montserrat_medium"
         android:justificationMode="inter_word"
+        android:ellipsize="end"
+        android:padding="20dp"
+        android:textColor="@color/button_text"
+        android:textSize="14sp"
+        android:scrollbars="none"
         tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="46dp" />
-
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="250dp"
-        android:layout_height="250dp"
-        android:src="@drawable/pikachu"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.929"></ImageView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

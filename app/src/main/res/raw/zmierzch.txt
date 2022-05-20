@@ -1,9 +1,15 @@
 Cześć!
+
 Dziękujemy, że korzystasz z naszej aplikacji!
+
 Jesteśmy piątką studentów Informatyki Stosowanej na wydziale Elektrycznym PW, powyższa aplikacja mobilna została zrealizowana w ramach rocznego projektu zespołowego pod opieką mgr. Pawła Zawadzkiego.
 Pomysł zrodził się z potrzeby, ponieważ sami nieraz się pogubiliśmy wśród gmachów róźnych wydziałów czy wewnątrz budynku szukając odpowiedniej sali.
+
 Teraz z naszą aplikacją możesz znaleźć najkrótszą drogę do każdej sali spod drzwi do drzwi, toalety, windy czy schodów, odkryć nieznanezakamarki korytarza, rozpozanć każdy z budynków naszej Politechniki - i co najważniejsze, punktualnie przychodzić na zajęcia :)
+
 Korzystając z naszej aplikacji możesz poruszać się wewnątrz gmachu Elekroniki, Matematyki i Nauk Informatycznych czy Gmachu Głównego. Ze względów technicznych (brak planów architektonicznych pozostałych budynków) nie mogliśmy rozszerzyć funkcjonalności o pozostałe budynki. Wiemy jednak, że na Politechnice trwają obecnie prace stworzenia właśnie takich planów, więc nie wykluczamy w przyszłości rozwijania naszej aplikacji. Obecnie udostępniamy możliwość każdego z budynków PW(wykorzystujemy w tym celu sieci neuronowe) i zapoznania się z ich krótką historią.
+
 W razie problemów/pytań zachęcamy do kontaktu:
 01153120@pw.edu.pl
+
 Miłego korzystania :)

@@ -1,6 +1,7 @@
 package com.example.pwguide.navigation;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -57,18 +58,20 @@ public class NavigationCanvas extends View {
     private ImageButton up, down;
     private Button googleMaps;
     private String building = "gmini_";
+    private boolean firstFloorDisplay;
 
     public NavigationCanvas(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         this.context = context;
         options = new BitmapFactory.Options();
         options.inTargetDensity = DisplayMetrics.DENSITY_DEFAULT;
-
         paint = new Paint();
         scale = 1;
         pathToDraw = new Path();
         up = new ImageButton(context);
         down = new ImageButton(context);
+
+        System.out.println(Resources.getSystem().getDisplayMetrics().widthPixels);
 
         up.setBackground(null);
         down.setBackground(null);
@@ -189,6 +192,12 @@ public class NavigationCanvas extends View {
             for (Vertex v : path) {
                 if (v.getFloor() == floor && v.getName().matches("^[skw]+[0-9]+$")) {
                     if (first) {
+                        if(firstFloorDisplay) {
+                            translateX = (int)(Resources.getSystem().getDisplayMetrics().widthPixels/2 - v.getX());
+                            translateY = (int)(Resources.getSystem().getDisplayMetrics().heightPixels/2 - v.getY());
+                            calculateDrawingPosition();
+                            firstFloorDisplay = false;
+                        }
                         startPoint = v;
                         pathToDraw.moveTo(translateX + (float) v.getX() * scale, translateY + (float) v.getY() * scale);
                         first = false;
@@ -256,8 +265,8 @@ public class NavigationCanvas extends View {
     }
 
     private void initBitmap() {
-        translateX = getWidth() / 2 - width / 2;
-        translateY = getHeight() / 2 - height / 2;
+        translateX = Resources.getSystem().getDisplayMetrics().widthPixels / 2 - width / 2;
+        translateY = Resources.getSystem().getDisplayMetrics().heightPixels / 2 - height / 2;
 
         src = new Rect(translateX, translateY, translateX + width, translateY + height);
 
@@ -269,6 +278,7 @@ public class NavigationCanvas extends View {
     }
 
     private void loadImage(@DrawableRes int id, Context context) {
+        firstFloorDisplay = true;
         bitmap = BitmapFactory.decodeResource(context.getResources(), id, options);
         width = bitmap != null ? bitmap.getWidth() : 0;
         height = bitmap != null ? bitmap.getHeight() : 0;
