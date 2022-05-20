@@ -65,7 +65,7 @@ public class NavigationActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     DisplayTrack(source_latitude, source_longitude, dest_latitude, dest_longitude);
-                    alertDialog(pathTo, buildingTo);
+                    alertDialog(pathTo, buildingTo, source_latitude, source_longitude, dest_latitude, dest_longitude);
                 }
             });
             GOOGLE_MAPS_VIS = true;
@@ -129,18 +129,32 @@ public class NavigationActivity extends AppCompatActivity {
         }
     }
 
-    private void alertDialog(List<Vertex> pathTo, String buildingTo) {
+    private void alertDialog(List<Vertex> pathTo, String buildingTo, String source_latitude, String source_longitude, String dest_latitude, String dest_longitude) {
         AlertDialog alertDialog1 = new AlertDialog.Builder(
                 NavigationActivity.this).create();
 
-        alertDialog1.setMessage("Kliknij dalej jeśli jest już w budynku");
+        alertDialog1.setMessage("Czy jesteś już w budynku?");
 
-        alertDialog1.setButton(Dialog.BUTTON_POSITIVE, "DALEJ", new DialogInterface.OnClickListener() {
+        alertDialog1.setButton(Dialog.BUTTON_POSITIVE, "Tak", new DialogInterface.OnClickListener() {
 
             public void onClick(DialogInterface dialog, int which) {
                 canvas.setPath(pathTo, buildingTo);
             }
         });
+
+
+        alertDialog1.setButton(Dialog.BUTTON_NEGATIVE, "Nie", new DialogInterface.OnClickListener() {
+
+            public void onClick(DialogInterface dialog, int which) {
+                Uri uri = Uri.parse("http://maps.google.com/maps?saddr=" + source_latitude + "," + source_longitude + "&daddr=" + dest_latitude + "," + dest_longitude);
+                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                intent.setPackage("com.google.android.apps.maps");
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                alertDialog(pathTo, buildingTo, source_latitude, source_longitude, dest_latitude, dest_longitude);
+            }
+        });
+
         alertDialog1.show();
     }
 

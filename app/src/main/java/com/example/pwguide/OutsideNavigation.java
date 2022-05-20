@@ -360,9 +360,9 @@ public class OutsideNavigation extends AppCompatActivity implements LocationList
 
         //alertDialog1.setTitle("Alert Dialog");
 
-        alertDialog1.setMessage("Kliknij dalej jeśli jest już w budynku");
+        alertDialog1.setMessage("Czy jesteś już w budynku?");
 
-        alertDialog1.setButton(Dialog.BUTTON_POSITIVE, "DALEJ", new DialogInterface.OnClickListener() {
+        alertDialog1.setButton(Dialog.BUTTON_POSITIVE, "Tak", new DialogInterface.OnClickListener() {
 
             public void onClick(DialogInterface dialog, int which) {
                 Intent intent = new Intent(OutsideNavigation.this, NavigationActivity.class);
@@ -373,6 +373,22 @@ public class OutsideNavigation extends AppCompatActivity implements LocationList
                 startActivity(intent);
             }
         });
+
+        alertDialog1.setButton(Dialog.BUTTON_NEGATIVE, "Nie", new DialogInterface.OnClickListener() {
+
+            public void onClick(DialogInterface dialog, int which) {
+                ArrayList<Double> coordinates = getLocation();
+                source_latitude = String.valueOf(coordinates.get(0));
+                source_longitude = String.valueOf(coordinates.get(1));
+                Uri uri = Uri.parse("http://maps.google.com/maps?saddr=" + source_latitude + "," + source_longitude + "&daddr=" + dest_latitude + "," + dest_longitude);
+                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                intent.setPackage("com.google.android.apps.maps");
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                alertDialog();
+            }
+        });
+
         alertDialog1.show();
     }
 }
