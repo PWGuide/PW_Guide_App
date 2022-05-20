@@ -10,6 +10,6 @@ Teraz z naszą aplikacją możesz znaleźć najkrótszą drogę do każdej sali 
 Korzystając z naszej aplikacji możesz poruszać się wewnątrz gmachu Elekroniki, Matematyki i Nauk Informatycznych czy Gmachu Głównego. Ze względów technicznych (brak planów architektonicznych pozostałych budynków) nie mogliśmy rozszerzyć funkcjonalności o pozostałe budynki. Wiemy jednak, że na Politechnice trwają obecnie prace stworzenia właśnie takich planów, więc nie wykluczamy w przyszłości rozwijania naszej aplikacji. Obecnie udostępniamy możliwość każdego z budynków PW(wykorzystujemy w tym celu sieci neuronowe) i zapoznania się z ich krótką historią.
 
 W razie problemów/pytań zachęcamy do kontaktu:
-01153120@pw.edu.pl
+nawigator.po.pw@gmail.com
 
 Miłego korzystania :)
