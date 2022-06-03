@@ -13,7 +13,7 @@ public class NavigationMenuActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_navigation_menu);
-        //getSupportActionBar().setTitle("Wybór przejścia");
+        getSupportActionBar().setTitle("Nawigacja");
 
         Button button_plan = findViewById(R.id.btn_plan);
         Button button_manual = findViewById(R.id.btn_manual);

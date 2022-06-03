@@ -47,6 +47,7 @@ public class InsideNavigation extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inside_navigation);
+        getSupportActionBar().setTitle("Nawigacja");
 
         try {
             InputStream input = getBaseContext().getAssets().open("navigation.txt");
@@ -94,7 +95,7 @@ public class InsideNavigation extends AppCompatActivity {
                 int index = 0;
                 for (int i = 0; i < buildings.size(); i++) {
                     if (buildings.get(i).getName().equals(building)) {
-                        System.out.println(buildings.get(i).getName());
+                        //System.out.println(buildings.get(i).getName());
                         index = i;
                     }
                 }
@@ -114,7 +115,7 @@ public class InsideNavigation extends AppCompatActivity {
                         int index = 0;
                         for (int i = 0; i < buildings.size(); i++) {
                             if (buildings.get(i).getName().equals(building)) {
-                                System.out.println(buildings.get(i).getName());
+                                //System.out.println(buildings.get(i).getName());
                                 index = i;
                             }
                         }
@@ -137,7 +138,7 @@ public class InsideNavigation extends AppCompatActivity {
                 int index = 0;
                 for (int i = 0; i < buildings.size(); i++) {
                     if (buildings.get(i).getName().equals(building)) {
-                        System.out.println(buildings.get(i).getName());
+                        //System.out.println(buildings.get(i).getName());
                         index = i;
                     }
                 }
@@ -156,7 +157,7 @@ public class InsideNavigation extends AppCompatActivity {
                         int index = 0;
                         for (int i = 0; i < buildings.size(); i++) {
                             if (buildings.get(i).getName().equals(building)) {
-                                System.out.println(buildings.get(i).getName());
+                                //System.out.println(buildings.get(i).getName());
                                 index = i;
                             }
                         }
@@ -178,7 +179,7 @@ public class InsideNavigation extends AppCompatActivity {
                 int index = 0;
                 for (int i = 0; i < buildings.size(); i++) {
                     if (buildings.get(i).getName().equals(building)) {
-                        System.out.println(buildings.get(i).getName());
+                        //System.out.println(buildings.get(i).getName());
                         index = i;
                     }
                 }
@@ -205,7 +206,7 @@ public class InsideNavigation extends AppCompatActivity {
                 int index = 0;
                 for (int i = 0; i < buildings.size(); i++) {
                     if (buildings.get(i).getName().equals(building)) {
-                        System.out.println(buildings.get(i).getName());
+                        //System.out.println(buildings.get(i).getName());
                         index = i;
                     }
                 }
@@ -307,6 +308,12 @@ public class InsideNavigation extends AppCompatActivity {
                         // throw new IllegalArgumentException("File has to be accessible!");
                     }
                     if(!build_list1.getText().toString().equals(build_list2.getText().toString())) {
+                        for(Vertex s: pathFrom) {
+                            System.out.println(s.getName());
+                        }
+                        for(Vertex s: pathTo) {
+                            System.out.println(s.getName());
+                        }
                         pathFrom.removeLast();
                         pathTo.removeFirst();
                     }

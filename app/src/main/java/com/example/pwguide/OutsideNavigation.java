@@ -61,6 +61,7 @@ public class OutsideNavigation extends AppCompatActivity implements LocationList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_outside_navigation);
+        getSupportActionBar().setTitle("Nawigacja");
         try {
             InputStream input = getBaseContext().getAssets().open("navigation.txt");
             buildings = readNavigaionsFile.loadNavigationData(input);
