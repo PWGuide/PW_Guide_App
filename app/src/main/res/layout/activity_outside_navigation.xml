@@ -58,9 +58,9 @@
                 android:layout_alignRight="@+id/build_list3"
                 android:layout_alignBottom="@+id/build_list3"
                 android:layout_marginStart="4dp"
+                android:layout_marginTop="40dp"
                 android:padding="5dp"
                 android:src="@mipmap/outline_arrow_drop_down_black_24"
-                app:layout_constraintBottom_toBottomOf="@+id/build_list3"
                 app:layout_constraintStart_toEndOf="@+id/build_list3"
                 app:layout_constraintTop_toTopOf="@+id/build_list3" />
 
@@ -119,9 +119,9 @@
                 android:layout_alignRight="@+id/hall_list3"
                 android:layout_alignBottom="@+id/hall_list3"
                 android:layout_marginStart="2dp"
+                android:layout_marginTop="40dp"
                 android:padding="5dp"
                 android:src="@mipmap/outline_arrow_drop_down_black_24"
-                app:layout_constraintBottom_toBottomOf="@+id/hall_list3"
                 app:layout_constraintStart_toEndOf="@+id/hall_list3"
                 app:layout_constraintTop_toTopOf="@+id/hall_list3" />
 
