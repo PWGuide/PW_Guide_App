@@ -26,6 +26,10 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
     useLibrary 'org.apache.http.legacy'
+
+    packagingOptions {
+        exclude 'META-INF/native-image/**'
+    }
 }
 
 
@@ -63,4 +67,7 @@ dependencies {
     implementation 'com.google.android.gms:play-services-location:19.0.1'
     implementation 'com.google.android.gms:play-services-maps:18.0.2'
 
+    implementation 'org.deeplearning4j:deeplearning4j-core:1.0.0-M2'
+    implementation "org.nd4j:nd4j-native:1.0.0-M2"
+    implementation 'org.datavec:datavec-data-image:0.6.0'
 }

@@ -39,26 +39,14 @@ public class MenuActivity extends AppCompatActivity {
             }
         });
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(MenuActivity.this);
 
         btn_camera = findViewById(R.id.btn_camera);
         btn_camera.setOnClickListener(new View.OnClickListener() {
-            ActivityResultLauncher<Intent> someActivityResultLauncher = registerForActivityResult(
-                    new ActivityResultContracts.StartActivityForResult(),
-                    new ActivityResultCallback<ActivityResult>() {
-                        @Override
-                        public void onActivityResult(ActivityResult result) {
-                            if (result.getResultCode() == Activity.RESULT_OK) {
-                                setResult(Activity.RESULT_FIRST_USER);
-                                alert.createAlert(builder);
-                            }
-                        }
-                    });
 
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                someActivityResultLauncher.launch(intent);
+                Intent intent = new Intent(MenuActivity.this, CameraActivity.class);
+                startActivity(intent);
             }
 
         });
