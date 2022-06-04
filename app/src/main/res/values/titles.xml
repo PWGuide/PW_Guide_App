@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="titles_array">
+        <item>Gmach Wydziału Architektury</item>
+        <item>CZIiT</item>
+        <item>Gmach Elektrotechniki</item>
+        <item>Budynek Wydziału EiTI</item>
+        <item>Gmach Chemii</item>
+        <item>Gmach Fizyki</item>
+        <item>Gmach Główny</item>
+        <item>Gmach Mechaniki</item>
+        <item>Budynek Wydziału IBHiŚ</item>
+        <item>Budynek Wydziału IChiP</item>
+        <item>Budynek Wydziału Inżynierii Lądowej</item>
+        <item>Budynek Wydziału Inżynierii Materiałowej</item>
+        <item>Gmach Instytutu Techniki Cieplnej</item>
+        <item>Budynek Wydziału Mechatroniki</item>
+        <item>Budynek Wydziału MEiL</item>
+        <item>Gmach MiNI</item>
+        <item>Gmach Nowy Technologiczny</item>
+        <item>Riviera</item>
+        <item>Budynek Wydziału SiMR</item>
+        <item>Stara Kotłownia</item>
+        <item>Gmach Stary Technologiczny</item>
+        <item>Budynek Wydziału Transportu</item>
+        <item>Nierozpoznany budynek</item>
+    </string-array>
+</resources>

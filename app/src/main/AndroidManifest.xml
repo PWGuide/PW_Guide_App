@@ -17,7 +17,6 @@
         android:theme="@style/Theme.PWGuide">
         <activity android:name=".NavigationActivity" />
         <activity android:name=".TimetableActivity" />
-        <activity android:name=".CameraActivity" />
         <activity android:name=".InfoActivity" />
         <activity android:name=".MenuActivity" />
         <activity android:name=".OutsideNavigation" />
