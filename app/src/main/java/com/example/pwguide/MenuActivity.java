@@ -59,27 +59,64 @@ public class MenuActivity extends AppCompatActivity {
             }
         });
 
+        AlertDialog.Builder builder = new AlertDialog.Builder(MenuActivity.this);
+
         inputStream = getResources().openRawResource(R.raw.trained_model_vgg16_6);
 
         titles = getResources().getStringArray(R.array.titles_array);
         short_texts = getResources().getStringArray(R.array.short_texts_array);
         long_texts = getResources().getStringArray(R.array.long_texts_array);
 
-        {
-            try {
+        try {
                 model = ModelSerializer.restoreMultiLayerNetwork(inputStream);
             } catch (IOException e) {
                 e.printStackTrace();
-            }
         }
 
         btn_camera = findViewById(R.id.btn_camera);
         btn_camera.setOnClickListener(new View.OnClickListener() {
+            ActivityResultLauncher<Intent> someActivityResultLauncher = registerForActivityResult(
+                    new ActivityResultContracts.StartActivityForResult(),
+                    new ActivityResultCallback<ActivityResult>() {
+                        @Override
+                        public void onActivityResult(ActivityResult result) {
+                            if (result.getResultCode() == Activity.RESULT_OK) {
+                                setResult(Activity.RESULT_FIRST_USER);
+                                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                                Bitmap bitmap = (Bitmap) intent.getExtras().get("data");
+
+                                NativeImageLoader loader = new NativeImageLoader(150, 150, 3);
+
+                                INDArray image = null;
+
+                                try {
+                                    image = loader.asMatrix(bitmap);
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+
+                                DataNormalization scalar = new ImagePreProcessingScaler(0, 1);
+                                scalar.transform(image);
+
+                                INDArray output = model.output(image);
+
+                                int index;
+
+                                index = getIndex(output);
+
+                                String title = titles[index];
+                                String short_txt = short_texts[index];
+                                String long_txt = long_texts[index];
+
+                                alert.createAlert(builder, title, short_txt, long_txt);
+                            }
+                        }
+                    });
 
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                startActivityForResult(intent, 101);
+                someActivityResultLauncher.launch(intent);
             }
         });
 
@@ -103,41 +140,6 @@ public class MenuActivity extends AppCompatActivity {
             }
         });
 
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 101) {
-            Bitmap bitmap = (Bitmap) data.getExtras().get("data");
-
-            NativeImageLoader loader = new NativeImageLoader(150, 150, 3);
-
-            INDArray image = null;
-
-            try {
-                image = loader.asMatrix(bitmap);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            DataNormalization scalar = new ImagePreProcessingScaler(0, 1);
-            scalar.transform(image);
-
-            INDArray output = model.output(image);
-
-            AlertDialog.Builder builder = new AlertDialog.Builder(MenuActivity.this);
-
-            int index;
-
-            index = getIndex(output);
-
-            String title = titles[index];
-            String short_txt = short_texts[index];
-            String long_txt = long_texts[index];
-
-            alert.createAlert(builder, title, short_txt, long_txt);
-        }
     }
 
     int getIndex(INDArray output) {
