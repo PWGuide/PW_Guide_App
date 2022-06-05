@@ -13,3 +13,70 @@ W razie problemów/pytań zachęcamy do kontaktu:
 nawigator.po.pw@gmail.com
 
 Miłego korzystania :)
+
+
+INSTRUKCJA OBSŁUGI APLIKACJI  
+
+1. Nawigacja  
+
+1.1 Na zewnątrz  
+
+1.1.1 Wybierając opcje “Zrób zdjęcie” należy nakierować kamerę na najbliższy budynek i zrobić zdjęcie. Aplikacja rozpozna budynek i automatycznie wczyta jako bieżącą lokalizacje  
+
+1.1.2 Należy wpisać miejsce docelowe. Apliacja po zaakceptowaniu zgody automatycznie odczyta naszą lokalizacje.  
+
+1.1.3 Aplikacja przeniesie nas do aplikacji Google Maps (lub do sklepu Plany gdzie należy pobrać taką aplikacje) z ustawioną trasą do przebycia.  
+
+1.1.4 Klikając przycisk powrotu z aplikacji Google Maps należy potwierdzić, że znajdujesz się wewnątrz budynku. 
+
+ 1.1.5 Następnie wyświetlona zostanie zaznaczona trasa do przejścia na skalowalnym planie danego budynku. Zmianę piętra umożliwiają przycisku “góra”, “dół” znajdujące 	się przy klatkach schodowych.  
+
+1.2 Wewnątrz  
+
+1.2.1 Należy wskazać miejsce aktualnego pobytu. Aplikacja wyświetli najoptymalniejszą trasę do wyjścia.  
+
+1.2.2 Następnie zostaniesz przekierowany do Google Maps z zaznaczoną trasą do	przebycia. 
+
+ 1.2.3 Po znalezieniu się wewnątrz budynku aplikacja pokaże kolejną trasę naniesioną	na budynek.  
+
+2. Kamera  
+
+2.1 Należy nakierować aparat na najbliższy lub interesujący nas budynek PW i wykonanć	zdjęcie.  
+
+2.2 Aplikacja odczyta obiekt i wyświetli podstawowe dane o tym budynku. Opcja “czytaj więcej” pozwala zapoznać się z dodatkowymi informacjami dotyczącymi danego obiektu. 
+
+ 
+3. Plan zajęć  
+
+3.1 Dodanie zajęć  
+
+3.1.1 Naciskając przycisk “+” możesz po uzupełnieniu wymaganych informacji dodać 	zajęcia do planu. 
+
+ 3.2 Dodanie planu z ISODa 
+
+ 3.2.1 W zakładce więcej możesz znaleźć przycisk “załaduj plan z ISODa”.  
+
+3.2.2 Aplikacja zapyta o nazwę użytkownika i klucz API. Klucz API można pobrać 	logując się na stronie isod.stud.pl, klikając w swoje imię i nazwisko umieszczone w	lewym górnym rogu. Następnie na dole znajduje się przycisk „Wygeneruj klucz API”. Wygenerowany klucz API należy skopiować i wkleić w naszej aplikacji. 
+
+ 3.2.3 Po zatwierdzeniu danych Twój plan zajęć załaduje się do aplikacji.  
+
+3.3 Dodanie planu z USOSa 
+
+ 3.3.1 W zakładce więcej można znaleźć przycisk „załaduj plan z USOSa” 
+
+ 3.3.2 Pojawi się okienko do logowania na stronie USOS. Należy poprawnie wpisać swoje dane i zatwierdzić.  
+
+3.3.3 Należy wyrazić zgodę na dostęp aplikacji do planu zajęć.  
+
+3.3.4 Należy skopiować wygenerowany klucz i wrócić do aplikacji.  
+
+3.3.5 Klucz wklejamy w odpowiednie pole. Następnie Twój plan zajęć załaduje się do aplikacji. 
+
+3.4 Edycja widoczności dni tygodnia  
+
+3.4.1 W zakładce „więcej” można znaleźć przycisk „edycja widoczności dni tygodnia”. Odznaczając/zaznaczając wybrane dni można je ukryć/wyświetlić w widoku.  
+
+3.5 Wyczyść plan zajęć 
+
+3.5.1 W zakładce „więcej” można wybrać dni tygodnia z których chce się całkowicie usuwać wszystkie obecne zajęcia. 
+
