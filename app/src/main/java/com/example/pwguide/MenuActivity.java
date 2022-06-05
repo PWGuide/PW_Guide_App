@@ -17,12 +17,14 @@ import android.view.View;
 import android.widget.Button;
 
 import org.datavec.image.loader.NativeImageLoader;
+import org.deeplearning4j.nn.graph.ComputationGraph;
 import org.deeplearning4j.nn.multilayer.MultiLayerNetwork;
 import org.deeplearning4j.util.ModelSerializer;
 import org.nd4j.linalg.api.ndarray.INDArray;
 import org.nd4j.linalg.dataset.api.preprocessor.DataNormalization;
 import org.nd4j.linalg.dataset.api.preprocessor.ImagePreProcessingScaler;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -33,7 +35,8 @@ public class MenuActivity extends AppCompatActivity {
     Button btn_navig;
     Button btn_info;
 
-    MultiLayerNetwork model;
+    //MultiLayerNetwork model;
+    ComputationGraph model;
 
     InputStream inputStream;
 
@@ -61,14 +64,16 @@ public class MenuActivity extends AppCompatActivity {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(MenuActivity.this);
 
-        inputStream = getResources().openRawResource(R.raw.trained_model_vgg16_6);
+        //inputStream = getResources().openRawResource(R.raw.trained_model_vgg16_6);
+        inputStream = getResources().openRawResource(R.raw.trained_model_mn2);
 
         titles = getResources().getStringArray(R.array.titles_array);
         short_texts = getResources().getStringArray(R.array.short_texts_array);
         long_texts = getResources().getStringArray(R.array.long_texts_array);
 
         try {
-                model = ModelSerializer.restoreMultiLayerNetwork(inputStream);
+                //model = ModelSerializer.restoreMultiLayerNetwork(inputStream);
+                model = ModelSerializer.restoreComputationGraph(inputStream);
             } catch (IOException e) {
                 e.printStackTrace();
         }
@@ -82,10 +87,11 @@ public class MenuActivity extends AppCompatActivity {
                         public void onActivityResult(ActivityResult result) {
                             if (result.getResultCode() == Activity.RESULT_OK) {
                                 setResult(Activity.RESULT_FIRST_USER);
-                                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                                Intent intent = result.getData();
                                 Bitmap bitmap = (Bitmap) intent.getExtras().get("data");
 
-                                NativeImageLoader loader = new NativeImageLoader(150, 150, 3);
+                                //NativeImageLoader loader = new NativeImageLoader(150, 150, 3);
+                                NativeImageLoader loader = new NativeImageLoader(128, 128, 3);
 
                                 INDArray image = null;
 
@@ -98,11 +104,11 @@ public class MenuActivity extends AppCompatActivity {
                                 DataNormalization scalar = new ImagePreProcessingScaler(0, 1);
                                 scalar.transform(image);
 
-                                INDArray output = model.output(image);
+                                INDArray[] output = model.output(image);
 
                                 int index;
 
-                                index = getIndex(output);
+                                index = getIndex(output[0]);
 
                                 String title = titles[index];
                                 String short_txt = short_texts[index];
