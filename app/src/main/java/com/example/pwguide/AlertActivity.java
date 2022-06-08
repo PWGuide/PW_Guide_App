@@ -10,7 +10,7 @@ public class AlertActivity extends AppCompatActivity {
         builder.setTitle(title);
         builder.setMessage(short_txt);
         builder.setCancelable(true);
-        if (!recognised) {
+        if (recognised) {
             builder.setPositiveButton("Więcej", new DialogInterface.OnClickListener() {
 
                 @Override
