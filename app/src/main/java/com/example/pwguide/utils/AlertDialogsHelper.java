@@ -49,15 +49,19 @@ import org.xdty.preference.colorpicker.ColorPickerSwatch;
 
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Random;
 import java.util.Set;
+import java.util.TimeZone;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -388,7 +392,7 @@ public class AlertDialogsHelper {
                     TimetableISOD timetableISOD = timetableDownload.downloadTimetableFromISOD(username, apiKey, semester);
                     if(timetableISOD != null) {
                         Random random = new Random();
-                        SimpleDateFormat format24 = new SimpleDateFormat("HH:mm");
+                        SimpleDateFormat format24 = new SimpleDateFormat("HH:mm", Locale.getDefault());
                         for (TimetableISOD.Subject sub: timetableISOD.getPlanItems()
                         ) {
                             final Week week = new Week();

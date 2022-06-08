@@ -56,7 +56,6 @@
             android:layout_height="wrap_content"
             android:layout_width="0dp"
             android:backgroundTint="@color/button_text"
-            android:popupBackground="@drawable/yellow_outline"
             android:spinnerMode="dropdown"
             android:textAlignment="textStart"
             android:layout_weight=".7"/>
@@ -205,6 +204,7 @@
             style="@style/Widget.AppCompat.Button.ButtonBar.AlertDialog"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColor="@color/secondary_action"
             android:layout_weight="1"
             android:text="@string/cancel" />
 

@@ -1,6 +1,6 @@
 <resources>
-    <string name="app_name">PWGuide</string>
-    <string name="kamera">Kamera</string>
+    <string name="app_name">PW Guide</string>
+    <string name="kamera">Rozpoznawanie budynków</string>
     <string name="navigation">Nawigacja</string>
     <string name="info">Informacje</string>
     <string name="wybierz_plan">Na zewnątrz</string>
@@ -67,7 +67,7 @@
 
     <!-- Notification -->
     <string name="notification_title">Today\'s lessons</string>
-    <string name="do_not_have_lessons">You do not have lessons!</string>
+    <string name="do_not_have_lessons">Brak zajęć!</string>
 
     <string name="select_build">Nazwa budynku</string>
     <string name="select_hall">Numer sali</string>
@@ -100,5 +100,6 @@
         <item>JO</item>
         <item>WF</item>
     </string-array>
+
 
 </resources>

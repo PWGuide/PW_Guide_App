@@ -31,6 +31,7 @@ import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.text.SimpleDateFormat;
+import java.util.Locale;
 import java.util.Random;
 
 public class USOSTimetableDownload {
@@ -161,7 +162,7 @@ public class USOSTimetableDownload {
 
     private static void insertTimetableToDatabase(TimetableUSOS[] timetable, Activity activity, FragmentsTabAdapter adapter) {
         Random random = new Random();
-        SimpleDateFormat format24 = new SimpleDateFormat("HH:mm");
+        SimpleDateFormat format24 = new SimpleDateFormat("HH:mm", Locale.getDefault());
         for (TimetableUSOS sub: timetable
         ) {
             final Week week = new Week();

@@ -113,7 +113,7 @@ public class MenuActivity extends AppCompatActivity {
                                 String short_txt = short_texts[index];
                                 String long_txt = long_texts[index];
 
-                                alert.createAlert(builder, title, short_txt, long_txt);
+                                alert.createAlert(builder, title, short_txt, long_txt, index != 22);
                             }
                         }
                     });

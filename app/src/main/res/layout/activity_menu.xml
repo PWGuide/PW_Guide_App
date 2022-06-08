@@ -11,86 +11,89 @@
         android:id="@+id/btn_table"
         android:layout_width="180dp"
         android:layout_height="180dp"
-        android:layout_marginStart="2dp"
-        android:layout_marginLeft="2dp"
-        android:layout_marginTop="128dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="132dp"
         android:layout_marginEnd="5dp"
-        android:layout_marginRight="5dp"
         android:fontFamily="@font/alfa_slab_one"
         android:text="@string/timetable"
         android:textColor="@color/button_text"
         android:textSize="15.5sp"
         app:backgroundTint="@color/button"
+        app:layout_constraintBottom_toTopOf="@+id/guideline3"
         app:layout_constraintDimensionRatio="H,1:1"
         app:layout_constraintEnd_toStartOf="@+id/guideline"
-        app:layout_constraintHorizontal_bias="0.736"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
 
     <Button
         android:id="@+id/btn_camera"
         android:layout_width="180dp"
         android:layout_height="180dp"
         android:layout_marginStart="5dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginTop="128dp"
-        android:layout_marginEnd="2dp"
-        android:layout_marginRight="2dp"
+        android:layout_marginTop="156dp"
         android:fontFamily="@font/alfa_slab_one"
         android:text="@string/kamera"
         android:textColor="@color/button_text"
-        android:textSize="15.5sp"
+        android:textSize="12sp"
         app:backgroundTint="@color/button"
+        app:layout_constraintBottom_toTopOf="@+id/guideline3"
         app:layout_constraintDimensionRatio="W,1:1"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.222"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/guideline"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
 
     <Button
         android:id="@+id/btn_navig"
         android:layout_width="180dp"
         android:layout_height="180dp"
-        android:layout_marginStart="2dp"
-        android:layout_marginLeft="2dp"
         android:layout_marginEnd="5dp"
-        android:layout_marginRight="5dp"
         android:fontFamily="@font/alfa_slab_one"
+
         android:text="@string/navigation"
         android:textColor="@color/button_text"
         android:textSize="15.5sp"
-
         app:backgroundTint="@color/button"
-        app:layout_constraintDimensionRatio="W,1:1"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/guideline"
-        app:layout_constraintHorizontal_bias="0.736"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_table" />
+        app:layout_constraintTop_toBottomOf="@+id/btn_table"
+        app:layout_constraintVertical_bias="0.0" />
 
     <Button
         android:id="@+id/btn_info"
         android:layout_width="180dp"
         android:layout_height="180dp"
         android:layout_marginStart="5dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginEnd="2dp"
-        android:layout_marginRight="2dp"
         android:fontFamily="@font/alfa_slab_one"
         android:text="@string/info"
         android:textColor="@color/button_text"
         android:textSize="15.5sp"
         app:backgroundTint="@color/button"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintDimensionRatio="W,1:1"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.222"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/guideline"
-        app:layout_constraintTop_toBottomOf="@+id/btn_camera" />
+        app:layout_constraintTop_toTopOf="@+id/guideline3"
+        app:layout_constraintVertical_bias="0.0" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.5" />
 
 

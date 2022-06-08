@@ -2,14 +2,84 @@ Cześć!
 
 Dziękujemy, że korzystasz z naszej aplikacji!
 
-Jesteśmy piątką studentów Informatyki Stosowanej na wydziale Elektrycznym PW, powyższa aplikacja mobilna została zrealizowana w ramach rocznego projektu zespołowego pod opieką mgr. Pawła Zawadzkiego.
-Pomysł zrodził się z potrzeby, ponieważ sami nieraz się pogubiliśmy wśród gmachów róźnych wydziałów czy wewnątrz budynku szukając odpowiedniej sali.
+Jesteśmy piątką studentów Informatyki Stosowanej na Wydziale Elektrycznym PW, a aplikacja PW Guide została zrealizowana w ramach rocznego projektu zespołowego pod opieką mgra Pawła Zawadzkiego.
+Pomysł zrodził się z własnego doświadczenia, ponieważ sami nieraz się pogubiliśmy wśród gmachów różnych wydziałów czy wewnątrz budynku szukając odpowiedniej sali.
 
-Teraz z naszą aplikacją możesz znaleźć najkrótszą drogę do każdej sali spod drzwi do drzwi, toalety, windy czy schodów, odkryć nieznanezakamarki korytarza, rozpozanć każdy z budynków naszej Politechniki - i co najważniejsze, punktualnie przychodzić na zajęcia :)
+Teraz z naszą aplikacją możesz znaleźć najkrótszą trasę do każdej sali niezależnie od tego, gdzie się znajdujesz, dzięki czemu będziesz mieć pewność, że zawsze znajdziesz drogę na zajęcia. Jeżeli dopiero rozpoczynasz swoją przygodę z uczelnią, to nasza aplikacja pomoże ci zidentyfikować za pomocą aparatu w telefonie dowolny budynek Politechniki Warszawskiej, a przy okazji dowiedzieć się o nim kilku interesujących faktów.
 
-Korzystając z naszej aplikacji możesz poruszać się wewnątrz gmachu Elekroniki, Matematyki i Nauk Informatycznych czy Gmachu Głównego. Ze względów technicznych (brak planów architektonicznych pozostałych budynków) nie mogliśmy rozszerzyć funkcjonalności o pozostałe budynki. Wiemy jednak, że na Politechnice trwają obecnie prace stworzenia właśnie takich planów, więc nie wykluczamy w przyszłości rozwijania naszej aplikacji. Obecnie udostępniamy możliwość każdego z budynków PW(wykorzystujemy w tym celu sieci neuronowe) i zapoznania się z ich krótką historią.
+Korzystając z naszej aplikacji możesz poruszać się wewnątrz Gmachu Elektrotechniki, Matematyki i Nauk Informatycznych i Gmachu Głównego. Ze względów technicznych (brak planów architektonicznych pozostałych budynków) nie mogliśmy rozszerzyć funkcjonalności o pozostałe budynki :(. Nie wykluczamy jednak dalszego rozwoju aplikacji.
+W przypadku funkcji rozpoznawania budynków – dzięki naszej niesamowicie mądrej sieci neuronowej ;) – ograniczenie to już nie obowiązuje.
 
 W razie problemów/pytań zachęcamy do kontaktu:
 nawigator.po.pw@gmail.com
 
 Miłego korzystania :)
+
+
+INSTRUKCJA OBSŁUGI APLIKACJI
+
+NAWIGACJA
+
+Na zewnątrz
+
+1. Należy wybrać docelowy budynek i salę. Aplikacja po zaakceptowaniu zgody na korzystanie z lokalizacji automatycznie odczyta Twoją bieżącą lokalizację.
+
+2. Aplikacja przeniesie Cię do aplikacji Google Maps (lub do sklepu Play gdzie należy pobrać taką aplikację) z ustawioną trasą do przebycia.
+
+3. Klikając przycisk powrotu z aplikacji Google Maps możesz potwierdzić, że udało Ci się już trafić do odpowieniego budynku (jeśli nie, to zostaniesz z powrotem przeniesiony/a do Google Maps).
+
+4. Następnie wyświetlona zostanie zaznaczona trasa do przejścia na skalowalnym planie danego budynku. Zmianę piętra umożliwiają przyciskiu „góra”, „dół” znajdujące 	się przy klatkach schodowych.
+
+Wewnątrz
+
+1. Należy wskazać miejsce aktualnego pobytu (budynek i salę). Aplikacja wyświetli najoptymalniejszą trasę do wyjścia.
+
+2. Następnie zostaniesz przekierowany/a do Google Maps z zaznaczoną drogą do docelowego budynku.
+
+3. Klikając przycisk powrotu z aplikacji Google Maps możesz potwierdzić, że udało Ci się już trafić do odpowieniego budynku (jeśli nie, to zostaniesz z powrotem przeniesiony/a do Google Maps).
+
+4. Po znalezieniu się wewnątrz docelowego budynku aplikacja pokaże trasę do wybranej wcześniej sali.
+
+
+ROZPOZNAWANIE BUDYNKÓW
+
+1. Należy nakierować aparat na interesujący nas budynek PW i wykonać	zdjęcie.
+
+2. Aplikacja rozpozna obiekt i wyświetli podstawowe dane o tym budynku. Opcja „więcej” pozwala na zapoznanie się z dłuższym jego opisem.
+
+
+PLAN ZAJĘĆ
+
+Dodanie zajęć
+
+1. Naciskając przycisk „+” możesz po uzupełnieniu wymaganych informacji dodać zajęcia do planu.
+
+Dodanie planu z ISODa
+
+1. W zakładce więcej możesz znaleźć przycisk „Pobierz plan z ISODa”.
+
+2. Aplikacja zapyta o nazwę użytkownika (należy podać login taki jakim logujesz się do ISODa) i klucz API. Klucz API można pobrać logując się na stronie isod.ee.pw.edu.pl, a następnie klikając w swoje imię i nazwisko umieszczone w	lewym górnym rogu. Następnie na dole strony znajduje się przycisk „Wygeneruj klucz API”. Wygenerowany klucz API należy skopiować i wkleić w odpowiednie pole w naszej aplikacji.
+
+3. Po zatwierdzeniu danych Twój plan zajęć zostanie pobrany i dodany do aplikacji.
+
+Dodanie planu z USOSa
+
+1. W zakładce więcej można znaleźć przycisk „Pobierz plan z USOSa”.
+
+2. Zostaniesz przekierowany/a na stronę logowania do systemu USOS.
+
+3. Należy wyrazić zgodę na dostęp* aplikacji do planu zajęć (upewnij się, że aplikacja prosi wyłącznie o dostęp do ogólnych informacji o Twoich studiach i dostęp do podstawowych informacji o Tobie).
+
+4. Należy skopiować wygenerowany PIN i wrócić do aplikacji.
+
+5. PIN wklejamy w odpowiednie pole. Następnie Twój plan zajęć załaduje się do aplikacji.
+
+*po pobraniu możesz wycofać prawa dostępu przechodząc na USOSie do zakładki "dla wszystkich" -> "MOBILNY USOS" -> "Moje aplikacje"
+
+Edycja widoczności dni tygodnia
+
+1. W zakładce „więcej” można znaleźć przycisk „Edytuj dni tygodnia”. Odznaczając/zaznaczając wybrane dni można je ukryć/wyświetlić w widoku planu zajęć.
+
+Wyczyść plan zajęć
+
+1. W zakładce „więcej” można wybrać dni tygodnia, z których chce się całkowicie usunąć wszystkie dodane zajęcia.
