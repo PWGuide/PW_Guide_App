@@ -65,7 +65,7 @@ public class MenuActivity extends AppCompatActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(MenuActivity.this);
 
         //inputStream = getResources().openRawResource(R.raw.trained_model_vgg16_6);
-        inputStream = getResources().openRawResource(R.raw.trained_model_mn2);
+        inputStream = getResources().openRawResource(R.raw.trained_model_mn2_v16);
 
         titles = getResources().getStringArray(R.array.titles_array);
         short_texts = getResources().getStringArray(R.array.short_texts_array);
@@ -90,7 +90,6 @@ public class MenuActivity extends AppCompatActivity {
                                 Intent intent = result.getData();
                                 Bitmap bitmap = (Bitmap) intent.getExtras().get("data");
 
-                                //NativeImageLoader loader = new NativeImageLoader(150, 150, 3);
                                 NativeImageLoader loader = new NativeImageLoader(128, 128, 3);
 
                                 INDArray image = null;
@@ -159,7 +158,7 @@ public class MenuActivity extends AppCompatActivity {
             }
         }
 
-        if (max < 0.8){
+        if (max < 0.65){
             index = 22;
         }
 
