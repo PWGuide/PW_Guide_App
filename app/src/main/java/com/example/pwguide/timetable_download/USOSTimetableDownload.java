@@ -33,6 +33,7 @@ import java.net.URISyntaxException;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 import java.util.Random;
+import java.util.TimeZone;
 
 public class USOSTimetableDownload {
     public static void USOSAuthorization(Activity activity, FragmentsTabAdapter adapter, AlertDialog usosAlert) {
@@ -163,6 +164,7 @@ public class USOSTimetableDownload {
     private static void insertTimetableToDatabase(TimetableUSOS[] timetable, Activity activity, FragmentsTabAdapter adapter) {
         Random random = new Random();
         SimpleDateFormat format24 = new SimpleDateFormat("HH:mm", Locale.getDefault());
+        format24.setTimeZone(TimeZone.getTimeZone("GMT"));
         for (TimetableUSOS sub: timetable
         ) {
             final Week week = new Week();

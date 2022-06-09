@@ -9,6 +9,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -49,11 +50,9 @@ import org.xdty.preference.colorpicker.ColorPickerSwatch;
 
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -76,6 +75,17 @@ public class AlertDialogsHelper {
                 R.array.class_types, R.layout.textview_to_spinner);
         spinnerAdapter.setDropDownViewResource(R.layout.textview_to_spinner);
         class_type.setAdapter(spinnerAdapter);
+        class_type.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                ((TextView) parent.getChildAt(0)).setTextColor(Color.WHITE);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
         final EditText building = alertLayout.findViewById(R.id.building_dialog);
         editTextHashs.put(R.string.building, building);
         final EditText room = alertLayout.findViewById(R.id.room_dialog);
@@ -157,7 +167,6 @@ public class AlertDialogsHelper {
                     public void onColorSelected(int color) {
                         select_color.setBackgroundColor(color);
                         select_color.setText("Kolor wybrany");
-                        System.out.println(color);
                     }
                 });
                 dialog.show(activity.getFragmentManager(), "color_dialog");
@@ -217,6 +226,17 @@ public class AlertDialogsHelper {
         ArrayAdapter<CharSequence> spinnerAdapter = ArrayAdapter.createFromResource(activity,
                 R.array.class_types, R.layout.textview_to_spinner);
         spinnerAdapter.setDropDownViewResource(R.layout.textview_to_spinner);
+        class_type.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                ((TextView) parent.getChildAt(0)).setTextColor(Color.WHITE);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
         class_type.setAdapter(spinnerAdapter);
         final EditText building = alertLayout.findViewById(R.id.building_dialog);
         editTextHashs.put(R.string.building, building);
@@ -351,11 +371,24 @@ public class AlertDialogsHelper {
         });
     }
 
-    public static AlertDialog createAddFromISODDialog(Activity activity, View alertLayout, FragmentsTabAdapter adapter){
+    public static AlertDialog createAddFromISODDialog(Activity activity, View alertLayout, FragmentsTabAdapter adapter) {
         final AlertDialog.Builder alert = new AlertDialog.Builder(activity);
         alert.setView(alertLayout);
         alert.setCancelable(false);
         final AlertDialog dialog = alert.create();
+
+
+        AdapterView.OnItemSelectedListener listener = new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                ((TextView) parent.getChildAt(0)).setTextColor(Color.WHITE);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        };
 
         List<String> sems = getPossibleSemesters();
         final Spinner semesterSpinner = alertLayout.findViewById(R.id.isod_timetable_spinner);
@@ -363,6 +396,7 @@ public class AlertDialogsHelper {
         spinnerAdapter.setDropDownViewResource(R.layout.textview_to_spinner);
         semesterSpinner.setAdapter(spinnerAdapter);
         semesterSpinner.setSelection(spinnerAdapter.getPosition(sems.get(1)));
+        semesterSpinner.setOnItemSelectedListener(listener);
 
         Button cancel = alertLayout.findViewById(R.id.timetable_cancel);
         Button download = alertLayout.findViewById(R.id.timetable_download);
@@ -383,7 +417,7 @@ public class AlertDialogsHelper {
         download.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String username = usernameView.getText().toString();
+                String username = usernameView.getText().toString().trim();
                 String apiKey = apiKeyView.getText().toString();
 
                 ISODTimetableDownload timetableDownload = new ISODTimetableDownload();
@@ -393,6 +427,7 @@ public class AlertDialogsHelper {
                     if(timetableISOD != null) {
                         Random random = new Random();
                         SimpleDateFormat format24 = new SimpleDateFormat("HH:mm", Locale.getDefault());
+                        format24.setTimeZone(TimeZone.getTimeZone("GMT"));
                         for (TimetableISOD.Subject sub: timetableISOD.getPlanItems()
                         ) {
                             final Week week = new Week();

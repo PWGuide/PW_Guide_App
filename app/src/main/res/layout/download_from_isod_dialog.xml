@@ -85,7 +85,6 @@ android:padding="15dp">
             android:layout_height="wrap_content"
             android:layout_width="0dp"
             android:backgroundTint="@color/button_text"
-            android:popupBackground="@drawable/yellow_outline"
             android:spinnerMode="dropdown"
             android:textAlignment="textStart"
             android:layout_weight=".7"/>
